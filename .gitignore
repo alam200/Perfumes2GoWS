@@ -19,8 +19,10 @@ package-lock.json
 # Mac config
 .DS_Store
 
+# Ng Dist config
+dist
+
 # Editor config
-.vscode
 .idea
 .project
 .strong-pm
