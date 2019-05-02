@@ -1,0 +1,97 @@
+<!-- <app-list-products></app-list-products> -->
+<section *ngIf="orderItems.length !== 0">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Brand</th>
+          <th>Type</th>
+          <th>ProductCode</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orderItems">
+          <td>
+            <img *ngIf="!item.product.image" src="../../../../assets/product_placeholder.png" alt='image' height="42" width="42" />
+            <img *ngIf="item.product.image" class="zoom" [src]="item.product.image" alt="image" height="42" width="42">
+          </td>
+          <td>{{item.product.brand}}</td>
+          <td>{{item.product.type}}</td>
+          <td>{{item.product.productCode}}</td>
+          <td>{{item.product.description}}</td>
+          <td>{{item.product.price | currency:'USD'}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.subtotal | currency:'USD'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary-block shopping-cart text-center center-block">
+    <span class="shopping-cart-quantity">
+      Products: {{ orderItems.length }}
+      <i class="fa fa-cubes"></i>
+      Quantity: {{ quantity }} </span>
+    <br>
+    <br>
+    <span class="shopping-cart-total">TOTAL: {{ total | currency:'USD'}}</span>
+    <br>
+  </div>
+</section>
+
+<!--This section would be shown if cart is empty-->
+<section class="summary-table clear" *ngIf="orderItems.length === 0">
+  <div class="shopping-cart text-center center-block">
+    <h2>Your cart is empty.</h2>
+    <h5>Try adding products by setting the desired quantity and clicking on the add button.</h5>
+    <div class="form-group text-center" style="margin-top:60px;">
+      <a [routerLink]="['/products']">
+        <button class="btn btn-success btn-sm place-order">
+          <i class="fa fa-reply"></i> View Products
+        </button>
+      </a>
+
+      <a *ngIf="!isUserLoggedIn" [routerLink]="['/user/login']">
+        <button class="btn btn-success btn-sm place-order">
+          <i class="fa fa-sign-in"></i> Login
+        </button>
+      </a>
+
+      <a *ngIf="!isUserLoggedIn" [routerLink]="['/user/register']">
+        <button class="btn btn-success btn-sm place-order">
+          <i class="fa fa-user-plus"></i> Register
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!--Below div will be shown when cart is not empty-->
+<div *ngIf="orderItems.length !== 0">
+
+  <!-- This section would be shown if user is not logged-in -->
+  <section *ngIf="!isUserLoggedIn" class="summary-table clear">
+    <div class="text-center center-block">
+      <h2>Login or Create an Account to Continue</h2>
+      <div class="form-group text-center">
+        <a [routerLink]="['/user/login']">
+          <button class="btn btn-primary btn-sm">
+            <i class="fa fa-sign-in"></i> Login</button>
+        </a>
+
+        <a [routerLink]="['/user/register']">
+          <button class="btn btn-success btn-sm">
+            <i class="fa fa-user-plus"></i> Register</button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- This would be shown in user is logged-in -->
+  <app-contact-info *ngIf="isUserLoggedIn"></app-contact-info>
+</div>

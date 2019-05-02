@@ -1,0 +1,42 @@
+.zoom {
+    transition: transform .2s;
+    /* Animation */
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    position: absolute;
+    transform: scale(5);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    /* margin-left: 3vw; */
+    z-index: 1;
+}
+.shopping-cart-total {
+    font-size: 24px;
+    font-weight: bold;
+}
+.shopping-cart-quantity {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6c6c6c;
+}
+.summary-block {
+    padding: 30px;
+    background-color: #fff;
+    border-top: solid 3px #337AB7;
+}
+.shopping-cart {
+    margin-top: 50px;
+}
+.summary-table {
+    margin-top: 20px;
+    padding: 15px;
+}
+
+button{
+    margin-left: 3px;
+}
+
+h2 {
+    font-size: 30px;
+}

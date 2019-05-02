@@ -1,0 +1,50 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<section class="contact-information-container">
+  <h4 class="contact-information-title text-center">Contact Information</h4>
+  <p class="text-center">Please, fill out the following information to complete the order.</p>
+  <div class="center-block text-center">
+    <a [routerLink]="['/addresses/add-address']">
+      <button class="btn btn-success btn-sm">
+        <i class="fa fa-plus"></i> Add Address</button>
+    </a>
+    <a [routerLink]="['/addresses']">
+      <button class="btn btn-success btn-sm">
+        <i class="fa fa-map-marker"></i> Manage Addresses</button>
+    </a>
+  </div>
+<form  name="form"   (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <div class="col-md-8 col-sm-12 mx-auto">
+      <div class="card">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="form-group row">
+                <label for="addressId" class="col-md-3 col-sm-12 text-right col-form-label">Ship to:</label>
+                <div class="col-md-9 col-sm-12">
+                  <select id="addressId" class="form-control" name="addressId" [(ngModel)]="model.addressId" #addressId="ngModel" [ngClass]="{ 'is-invalid': f.submitted }" required>
+                    <option [ngValue]='addressId' disabled>Select</option>
+                    <option value="{{address._id}}" *ngFor="let address of addresses">
+                      <!-- X ( ABC 123 CA, CA 222222 INDIA) -->
+                      {{  address.attentionTo + " (" + address.addressLine1 + (address.addressLine2 ? address.addressLine2 : '') +
+                      ", "+ address.country + ", "+ address.state + ', ' + address.city + "-" + address.zipcode +")" }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="userRemarks" class="col-md-3 col-sm-12 text-right col-form-label">Notes:</label>
+                <div class="col-md-9 col-sm-12">
+                  <textarea class="form-control" rows="4" placeholder="Comments or Instructions" id="userRemarks" name="userRemarks" [(ngModel)]="model.userRemarks" #userRemarks="ngModel" [ngClass]="{ 'is-invalid': f.submitted && userRemarks.invalid }"></textarea>
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order" [disabled]='!f.form.valid'>
+                  <i class="fa fa-send-o"></i> Place Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</form>
+</section>

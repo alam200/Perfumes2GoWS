@@ -1,0 +1,34 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<section class="success-information-container" >
+  <div *ngFor="let address of addresses">  
+    <div class="summary-block center-block mb15">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          {{ address.attentionTo }}<br>
+          {{ address.addressLine1 }}
+          {{ address.addressLine2 }}<br>
+          {{ address.state + ', ' + address.city + "-" + address.zipcode}}<br>
+          {{ address.country }}<br>
+          {{ address.email }}<br>
+          {{address.phone}}<br>
+        </div>
+        <div class="col-md-6 col-sm-12">
+
+          <span class="btn btn-danger btn-sm place-order pull-right ml10 delete-address" (click)="deleteAddress(address._id)">
+            <i class="fa fa-trash"></i> Delete
+          </span>
+
+          <a routerLink="/addresses/edit-address/{{address._id}}">
+          <span class="btn btn-success btn-sm place-order pull-right">
+            <i class="fa fa-pencil"></i> Edit
+          </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="addresses.length === 0" >
+      <h2 style="text-align: center;">No address is added yet</h2>
+  </div>
+</section>

@@ -1,0 +1,185 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<div class="container-fluid">
+    <div class="card" *ngIf="orderInfo">
+        <div class="card-body">
+            <div class="card-title">
+                <div class="col-md-6 mx-auto order-status-row">
+                    <div class="row">
+                        <div class="col-md-3 text-right font-weight-bold">Order No.:</div>
+                        <div class="col-md-3">{{orderInfo.orderNo}}</div>
+                        <div class="col-md-3 text-right font-weight-bold">Order Status:</div>
+                        <div class="col-md-3">{{orderInfo.orderStatus}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-text">
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset *ngIf="orderInfo.customerId">
+                            <legend>Customer Details</legend>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">First Name:</div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.firstName }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Last Name:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.lastName }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Phone Number:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.phoneNumber }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Mobile Number:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.mobileNumber }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Email:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.email }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Company Name:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.customerId.companyName }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Remarks:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.userRemarks }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset *ngIf="orderInfo.addressId">
+                            <legend>Delivery Address</legend>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Attention to:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.attentionTo }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Address Line1:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.addressLine1 }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Address Line2:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.addressLine2 }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    City:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.city + "-" + orderInfo.addressId.zipcode }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Country:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.country }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Email:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.email }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    Phone:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.phone }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 text-right">
+                                    State:
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="font-weight-bold">{{ orderInfo.addressId.state }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>ProductCode</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="orderInfo">
+                <tr *ngFor="let item of orderInfo.orderItems">
+                    <td>
+                        <img *ngIf="!item.productId.image" src="../../../../assets/product_placeholder.png" alt='image' height="42" width="42" />
+                        <img *ngIf="item.productId.image" class="zoom" [src]="item.productId.image" alt="image" height="42" width="42">
+                    </td>
+                    <td>{{item.productId.brand}}</td>
+                    <td>{{item.productId.type}}</td>
+                    <td>{{item.productId.productCode}}</td>
+                    <td>{{item.productId.description}}</td>
+                    <td>{{item.productId.price | currency:'USD'}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{(item.productId.price * item.quantity) | currency:'USD'}}</td>
+                </tr>
+                <tr class="grand-total-row-bg">
+                    <td colspan="7" class="text-right font-weight-bold">Grand Total</td>
+                    <td class="font-weight-bold">{{orderInfo.orderAmount | currency:'USD'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

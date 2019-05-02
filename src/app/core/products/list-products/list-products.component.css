@@ -1,0 +1,143 @@
+.form-element {
+    position: absolute !important;
+    padding-right: 1vw;
+    right: 20vw;
+    left: 35vw;
+    z-index: 1;
+}
+
+.form-element label {
+    display: inline-block;
+    width: 4vw;
+}
+
+.form-control {
+    display: inline-block !important;
+    width: auto;
+}
+
+.form-element .select-brand{
+    width: 140px;
+}
+
+.no-data-available {
+    text-align: center;
+}
+
+.quantity-input {
+    width: 6vw;
+}
+
+.dataTable td {
+  word-break: break-all;
+}
+
+.zoom {
+    transition: transform .2s;
+    /* Animation */
+    margin: 0 auto;
+}
+
+​ .zoom:hover {
+    position: absolute;
+    transform: scale(5);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    /* margin-left: 3vw; */
+    z-index: 1;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    opacity: 0
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/80% no-repeat;
+    color: rgba(0, 0, 0, 0);
+    opacity: 0.5
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/80% no-repeat;
+    opacity: 0.8
+}
+
+.deactive-product {
+    background-color: lightgrey;
+}
+
+.table-striped>tbody>tr.deactive-product {
+    background-color: lightgrey !important;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, .0001) !important;
+}
+
+.modal-header {
+    padding: 0rem .5rem 0rem 0rem !important;
+    border-bottom: none !important;
+}
+
+.modal-dialog {
+    text-align: center;
+}
+
+.modal-content {
+    display: inline-block;
+}
+
+.col-form-label-sm {
+    text-align: right;
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: auto;
+        max-width: auto;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .form-element.product-filters {
+        position: relative !important;
+        left: 15px;
+        padding-bottom: 0;
+        margin-right: 15px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .form-element.product-filters .form-control {
+        display: block !important;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1124px) and (min-width: 885px) {
+    .form-element.product-filters {
+        right: 28vw;
+        left: 22vw;
+    }
+}
+
+@media screen and (max-width: 884px) and (min-width: 577px) {
+    .form-element.product-filters {
+      position: relative !important;
+      left: 0;
+    }
+}
+#productImage {
+    width: auto;
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto\9;
+    /* ie8 */
+}
+
+#pdImg:hover {
+  cursor: pointer;
+}
+
+[class*=" col-"] {
+  padding-left: 0 !important;
+}

@@ -1,0 +1,95 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<div class="form-element product-filters">
+  <div class="form-group row clearfix">
+    <label class="col-md-2 col-sm-2 col-form-label-sm">Type: </label>
+    <div class="col-md-4 col-sm-4">
+      <select class="form-control form-control-sm" #type (change)="selectType(type.value)">
+        <option selected>ALL</option>
+        <option *ngFor="let type of types" [value]="type">{{type}}</option>
+      </select>
+    </div>
+    <label class="col-md-2 col-sm-2 col-form-label-sm">Brand: </label>
+    <div class="col-md-4 col-sm-4">
+      <select class="form-control form-control-sm select-brand" #brand (change)="selectBrand(brand.value)">
+        <option selected>ALL</option>
+        <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <div class="grid-table-wrapper">
+    <table id='datTable' datatable [dtOptions]="dtOptions" class="table table-bordered table-striped responsive" cellspacing="0"
+      width="100%">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Brand</th>
+          <th>Type</th>
+          <th>Product Code</th>
+          <th>Description</th>
+          <th  *ngIf="userCategory === 'Admin'">SKU</th>
+          <th>Price</th>
+          <th>Available</th>
+          <th *ngIf="userCategory === 'Customer'">Quantity</th>
+          <th *ngIf="userCategory === 'Customer'">Subtotal</th>
+          <th *ngIf="userCategory === 'Admin'" class="text-center">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index;" [ngClass]="{'deactive-product':product.productStatus === 'deactive'}">
+          <td id="pdImg">
+            <img *ngIf="!product.image" src="../../../../assets/product_placeholder.png" alt='image' height="42" width="42" />
+            <img *ngIf="product.image" class="zoom" [src]="product.image" alt="image" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
+              (click)="openModal(product.image)">
+          </td>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.type }}</td>
+          <td>{{ product.productCode }}</td>
+          <td>{{ product.description }}</td>
+          <td  *ngIf="userCategory === 'Admin'">{{ product.SKU }}</td>
+          <td>{{ product.price | currency:'USD'}}</td>
+          <td>{{ product.stock }}</td>
+          <td *ngIf="userCategory === 'Customer'">
+            <div class="form-group">
+              <input type="number" class="form-control form-control-sm quantity-input" min="0" max="{{product.stock}}" value="{{product.quantity}}"
+                (input)="calculateProductSubTotal($event, product)">
+            </div>
+          </td>
+          <td *ngIf="userCategory === 'Customer'">{{ product.subtotal | currency:'USD'}}</td>
+          <td text-center *ngIf="userCategory === 'Admin'" class="text-center">
+            <div></div>
+            <a routerLink="/product-details/{{product.SKU}}" class="d-inline-block">
+              <span class="btn btn-success btn-sm place-order pull-right">
+                <i class="fa fa-edit"></i>&nbsp; Edit
+              </span>
+            </a>
+          </td>
+        </tr>
+        <tr *ngIf="products?.length == 0">
+          <td colspan="9" class="no-data-available">No Product Found!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div>
+  <!-- <app-item-image-modal modalId="imageDialogModal" blocking="true" [dialogData]="imageData" closebtn="true">
+  </app-item-image-modal> -->
+  <div class="modal fade bd-modal-sm" id="imageDialogModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="productImage" class="img-responsive" src="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

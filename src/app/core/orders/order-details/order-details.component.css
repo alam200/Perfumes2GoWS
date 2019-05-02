@@ -1,0 +1,28 @@
+.card {
+    border-top-width: 3px;
+    margin-bottom: 25px;
+    color: #6e6e6e;
+  }
+  .card-title {    
+    font-size: 0.95rem;
+  }
+  .card-text {
+    font-size: 0.92rem;
+  }
+  legend{
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    font-size: 1.1rem;
+    padding-bottom: 10px;
+  }  
+.grand-total-row-bg {
+  background-color: rgba(0,0,0,.02) !important;
+}
+.order-status-row {
+  background: #f9f9f9;
+  font-size: 0.85rem;
+  color: #3c3c3c;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #f1f1f1;
+  border-radius: 3px;
+}

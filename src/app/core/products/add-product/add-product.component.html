@@ -1,0 +1,133 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<div class="col-md-8 col-sm-12 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      Product
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <div class="row">
+            <label for="SKU" class="col-md-3 col-sm-12 text-right col-form-label">SKU:</label>
+            <div class="col-md-9 col-sm-12">
+              <!-- <input type="text" class="form-control" id="SKU" name="SKU" [(ngModel)]="model.SKU" #SKU="ngModel" [ngClass]="{ 'is-invalid': f.submitted && SKU.invalid }"
+                required> -->
+              <ng-select [items]="productCodes" [addTag]="true" name="productCode" bindLabel="productCode" bindValue="id" #productCode="ngModel" [ngClass]="{ 'is-invalid': f.submitted && productCode.invalid }"
+                [(ngModel)]="model.SKU" (ngModelChange)="onChange($event)" [disabled]="!isSKUEditable">
+              </ng-select>
+              <div [hidden]="productCode.valid || productCode.untouched">
+                <small *ngIf="productCode.errors && productCode.errors.required" class="form-text text-left error-msg">Product Code is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="brand" class="col-md-3 col-sm-12 text-right col-form-label">Brand:</label>
+            <div class="col-md-9 col-sm-12">
+              <ng-select [items]="brands" name="brand" [addTag]="true" bindLabel="brands" bindValue="id" #brand="ngModel" [ngClass]="{ 'is-invalid': f.submitted && brand.invalid }"
+                [(ngModel)]="model.brand">
+              </ng-select>
+              <div [hidden]="brand.valid || brand.untouched">
+                <small *ngIf="brand.errors && brand.errors.required" class="form-text text-left error-msg">Brand is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="description" class="col-md-3 col-sm-12 text-right col-form-label">Description:</label>
+            <div class="col-md-9 col-sm-12">
+              <textarea type="text" class="form-control" id="description" name="description" [(ngModel)]="model.description" #description="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="type" class="col-md-3 col-sm-12 text-right col-form-label">Type:</label>
+            <div class="col-md-9 col-sm-12">
+              <ng-select [items]="types" name="type" [addTag]="true" bindLabel="types" bindValue="id" #type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && type.invalid }"
+                [(ngModel)]="model.type">
+              </ng-select>
+              <div [hidden]="type.valid || type.untouched">
+                <small *ngIf="type.errors && type.errors.required" class="form-text text-left error-msg">Type is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="stoke" class="col-md-3 col-sm-12 text-right col-form-label">Stock:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="number" class="form-control" id="stock" name="stock" min="0" (input)="restrictNegativeValue($event)" [(ngModel)]="model.stock"
+                #stock="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock.invalid }" required>
+              <div [hidden]="stock.valid || stock.untouched">
+                <small *ngIf="stock.errors && stock.errors.required" class="form-text text-left error-msg">Stock is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="price" class="col-md-3 col-sm-12 text-right col-form-label">Price:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="number" class="form-control" id="price" name="price" min="0" (input)="restrictNegativeValue($event)" [(ngModel)]="model.price"
+                #price="ngModel" [ngClass]="{ 'is-invalid': f.submitted && price.invalid }" required>
+              <div [hidden]="price.valid || price.untouched">
+                <small *ngIf="price.errors && price.errors.required" class="form-text text-left error-msg">Price is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="description" class="col-md-3 col-sm-12 text-right col-form-label">Category:</label>
+            <div class="col-md-9 col-sm-12">
+              <label class="radio-inline">
+                <input name="normal" id="input-type-normal" value="normal" type="radio" [(ngModel)]="model.category" #category="ngModel"
+                  checked/> Normal
+              </label>
+              <label class="radio-inline">
+                <input name="special" id="input-type-special" value="special" type="radio" [(ngModel)]="model.category" #category="ngModel"
+                /> Special
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="status" class="col-md-3 col-sm-12 text-right col-form-label">Status:</label>
+            <div class="col-md-9 col-sm-12">
+              <label class="radio-inline">
+                <input name="active" id="input-type-active" value="active" type="radio" [(ngModel)]="model.productStatus" #productStatus="ngModel"
+                  checked/> Active
+              </label>
+              <label class="radio-inline">
+                <input name="deactive" id="input-type-deactive" value="deactive" type="radio" [(ngModel)]="model.productStatus" #productStatus="ngModel"
+                /> Deactive
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="filePicker" class="col-md-3 col-sm-12 text-right col-form-label">Upload Image:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="file" id="filePicker" (change)="onFileChange($event)">
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order" [disabled]='!f.form.valid'>
+            <i class="fa fa-send-o"></i> {{buttonLabel}}
+          </button>
+          &nbsp;
+          <button type="button" class="btn btn-danger btn-sm" (click)="cancel()">
+            <i class="fa fa-send-o"></i> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

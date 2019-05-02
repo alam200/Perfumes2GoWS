@@ -1,0 +1,112 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    padding-top: 5vw;
+    padding-bottom: 40px;
+    font-size: 0.85rem;
+}
+
+.dataTables_empty {
+    display: none;
+}
+
+.table {
+    font-size: 0.85rem;
+    border-top: 1px solid #5f5f5f;
+}
+
+.table thead th {
+    font-weight: 600;
+    border: 1px solid #dddddd;
+    border-bottom-width: 1px;
+    padding-top: .50rem;
+    padding-bottom: .50rem;
+    border-bottom-width: 1px !important;
+}
+
+.table td,
+.table th {
+    padding: 0.50rem !important;
+}
+
+table.dataTable .form-group {
+    margin-bottom: 0;
+}
+
+.card {
+    background-color: #fcfbfb;
+    border-radius: 0;
+}
+
+.card-header {
+    font-size: 20px;
+}
+
+.body-content-wrapper {
+    padding: 0px 15px 21px;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, .02) !important;
+}
+
+table.dataTable {
+    border-top: 0;
+}
+
+table.dataTable thead th {
+    border-bottom: 0;
+}
+
+div.dataTables_wrapper div.dataTables_paginate,
+div.dataTables_wrapper div.dataTables_info {
+    font-size: 0.85rem;
+}
+
+.btn-primary {
+  background-color: #276fb0;
+}
+
+.grid-table-wrapper > #datTable_wrapper {
+    padding-bottom: 25px;
+}
+
+@media only screen and (max-width: 1210px) and (min-width: 1025px)  {
+    .body-content-wrapper {
+        padding-top: 10px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .body-content-wrapper {
+        padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 768px){
+  .body-content-wrapper {
+    padding-top: 30px;
+  }
+  .form-horizontal .col-form-label {
+      text-align: left !important;
+  }
+}
+
+@media screen and (max-width: 767px){
+    .grid-table-wrapper > #datTable_wrapper > .row:first-child > .col-sm-12 {
+        width: 50%;
+        max-width: 50%;
+        flex: auto;
+    }
+}
+
+@media screen and (max-width: 575px){
+    body {
+        padding-bottom: 100px;
+        padding-top: 45px;
+    }
+}
+
+.error-msg {
+  color: red;
+}

@@ -1,0 +1,21 @@
+.success-information-container {
+    padding: 30px 15px;
+}
+span{
+    margin-left : 3px;
+}
+
+.summary-block {
+    padding: 30px;
+    background-color: #fff;
+    border-top: solid 3px #337AB7;
+}
+.mb15 {
+    margin-bottom: 15px;
+}
+.row{
+    background: #fbfbfb;
+}
+.place-order {
+    margin-top: 25px;
+}

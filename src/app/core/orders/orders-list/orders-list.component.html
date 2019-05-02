@@ -1,0 +1,80 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <div class="form-group row">
+      <label class="col-sm-2 text-right col-form-label pt-sm-0">Start Date: </label>
+      <div class="col-sm-2"><input type="date" class="form-control form-control-sm" [(ngModel)]="fromDate" (input)="getOrdersList()"></div>
+      <label class="col-sm-2 text-right col-form-label pt-sm-0">End Date: </label>
+      <div class="col-sm-2"><input type="date" class="form-control form-control-sm" [(ngModel)]="toDate" (input)="getOrdersList()"></div>
+      <label class="col-sm-2 text-right col-form-label pt-sm-0">Order Status: </label>
+      <div class="col-sm-2">
+        <select class="form-control form-control-sm" [(ngModel)]="orderStatus" (change)="getOrdersList()">
+          <option selected>ALL</option>
+          <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">{{orderStatus}}</option>
+        </select>
+      </div>
+  </div>
+</div>
+</div>
+<section>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Order No</th>
+                <th>Order Date</th>
+                <th>Order Amount</th>
+                <th>Customer Name</th>
+                <th>Order Status</th>
+                <th>Customer Remark</th>
+                <th>Action</th>
+                <th class="text-center">View</th>
+             </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders">
+                <td>{{order.orderNo}}</td>
+                <td>{{order.createdAt | date : 'dd MMM, yyyy'}}</td>
+                <td>{{order.orderAmount | currency:'USD'}}</td>
+                <td>{{order.customerId.firstName + ' ' +order.customerId.lastName }}</td>
+                <td>{{order.orderStatus}}</td>
+                <td>{{order.userRemarks}}</td>
+                <td>
+                  <select #status (change)="orderStatusChanged(order, status.value)" [disabled]="order.orderStatus === 'Cancelled'">
+                    <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus" [selected]="order.orderStatus === orderStatus">{{orderStatus}}</option>
+                  </select>
+                </td>
+                <td class="text-center">
+                    <a routerLink="order-details/{{order._id}}" class="d-inline-block">
+                        <span class="btn btn-success btn-sm place-order pull-right">
+                          <i class="fa fa-eye"></i> Details View
+                        </span>
+                    </a>
+                </td>
+              </tr>
+              <tr *ngIf="orders.length === 0">
+                <td colspan="8" >
+                  <div style="text-align: center;">No orders found</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</section>
+<section>
+  <div id="orderConfirmationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">Are you sure you want to cancel this order? This can not be undone.</div>
+        <div class="modal-footer" align="right">
+          <button type="button" id="btnOK" class="btn btn-primary btn-sm" (click)="deleteOrder()">
+            Yes, Cancel it</button>
+          <button type="button" id="btnClose" class="btn btn-danger btn-sm" (click)=" closeModal() ">
+            No, Keep it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
