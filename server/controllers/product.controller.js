@@ -40,13 +40,19 @@ exports.update = (req, res, next) => {
 };
 
 /**
- * Get product list
+ * Get product list | DEPRECATED ?
  * @public
  */
 exports.list = async (req, res, next) => {
   try {
     const products = await Product.find({});
-    res.json(products);
+    // res.json(products);
+
+    const count = await Product.find({}).count();
+    res.json({
+      productList: products,
+      totalProducts: count
+    });
   } catch (error) {
     next(error);
   }
@@ -82,6 +88,10 @@ exports.isProductCodeExists = async (req, res, next) => {
   }
 };
 
+/**
+ * Get product list
+ * @public
+ */
 exports.list = async (req, res, next) => {
   try {
     const index = Number.parseInt(req.query.pageNo, 10) - 1;
@@ -91,7 +101,6 @@ exports.list = async (req, res, next) => {
     const type = req.query.type;
     const listType = req.query.productListType;
     const userCategory = req.query.userCategory;
-
 
     let filterOptions = {};
 
@@ -114,13 +123,14 @@ exports.list = async (req, res, next) => {
     let searchOptions = {};
     if (searchText && searchText.trim().length > 0) {
       searchOptions = {
-        $or: [{ brand: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-        { type: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-        { SKU: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-        { productCode: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-       // { stock: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-        { description: { $regex: '.*' + searchText + '.*', $options: 'i' } },
-       // { price: { $regex: '.*' + searchText + '.*', $options: 'i' } }
+        $or: [
+          { brand: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          { type: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          { SKU: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          { productCode: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          // { stock: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          { description: { $regex: '.*' + searchText + '.*', $options: 'i' } },
+          // { price: { $regex: '.*' + searchText + '.*', $options: 'i' } }
         ]
       }
     }

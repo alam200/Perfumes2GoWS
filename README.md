@@ -14,15 +14,15 @@ $ npm i
 - switch MongoDB connection URI in `/server/routes/api.js`
 ```
 /** PRODUCTION */
-// const db = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+// const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
-const db = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
+const dbUri = "mongodb://localhost:27017/fds_db";
 ```
 - Run Mongo Daemon by `mongod`
 ```
 $ mongod
 ```
-- Press `F5` to launch **node.js** debug tool
+- Press `F5` to launch **node.js** debug tool of VS Code
 > launch.json
 ```
 {
@@ -33,7 +33,7 @@ $ mongod
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/server.js",
-            "preLaunchTask": "npm: build",
+            "preLaunchTask": "npm: start", // ng build | refer 2 package.json
             "env": {
                 "port": "3000"
             }
@@ -41,6 +41,24 @@ $ mongod
     ]
 }
 ```
+> package.json
+```
+{
+  ...
+  "scripts": {
+    "ng": "ng",
+    "serve": "ng serve",
+    "start": "ng build",
+    "build": "ng build --prod --build-optimizer",
+    "test": "snyk test && ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  ...
+}
+
+```
+- connect `http://localhost:3000/`
 
 ---
 
