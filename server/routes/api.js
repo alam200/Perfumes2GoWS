@@ -7,13 +7,18 @@ const productsRoutes = require('./product.route');
 const addressesRoutes = require('./address.route');
 const ordersRoutes = require('./order.route');
 
+/** PRODUCTION */
 // const db = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+/** DEVELOPMENT */
 const db = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
+
 mongoose.Promise = global.Promise;
 
 mongoose.connect(db, (err) => {
     if (err) {
         console.log("error", err);
+    } else {
+        console.log('mongodb connected');
     }
 });
 
