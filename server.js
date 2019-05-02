@@ -12,7 +12,7 @@ const port = 3000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname,'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(cors());
 app.use(helmet())
@@ -26,7 +26,7 @@ app.use(express.static('images'));
 app.use(passport.initialize());
 passport.use('jwt', strategies.jwt);
 
-app.use('/api',api);
+app.use('/api', api);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);
@@ -37,10 +37,10 @@ app.use(error.notFound);
 // error handler, send stacktrace only during development
 app.use(error.handler);
 
-app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,'dist/index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.listen(port,()=>{
-    console.log("server is running on port "+port);
+app.listen(port, () => {
+    console.log(`server is running on port ${port}`);
 });
