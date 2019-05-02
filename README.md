@@ -16,7 +16,7 @@ $ npm i
 /** PRODUCTION */
 // const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
-const dbUri = "mongodb://localhost:27017/fds_db";
+const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 ```
 - Run Mongo Daemon by `mongod`
 ```
