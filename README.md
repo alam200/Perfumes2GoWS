@@ -12,6 +12,12 @@
 $ npm i
 ```
 - switch MongoDB connection URI in `/server/routes/api.js`
+```
+/** PRODUCTION */
+// const db = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+/** DEVELOPMENT */
+const db = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
+```
 - Run Mongo Daemon by `mongod`
 ```
 $ mongod
@@ -44,11 +50,11 @@ $ mongod
 
 **start:**
 ```
-nginx -c nginx.conf -p $(pwd)
+$ nginx -c nginx.conf -p $(pwd)
 ```
 > You should be able to access it on 0.0.0.0:8080
 
 **stop:**
 ```
-nginx -s stop
+$ nginx -s stop
 ```
