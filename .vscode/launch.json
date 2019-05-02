@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/server.js",
-            "preLaunchTask": "npm: build",
+            "preLaunchTask": "npm: start", // ng build | refer 2 package.json
             "env": {
                 "port": "3000"
             }

@@ -6,7 +6,7 @@ const { authorize, ADMIN } = require('../middlewares/auth');
 /**
  * Load product when API with productCode route parameter is hit
  */
-router.param('productCode', controller.load);
+router.param('productCode', controller.load)
 
 router
   .route('/')
@@ -26,7 +26,7 @@ router
    */
   .patch(authorize(), controller.update)
    /**
-   * @api {delete} api/products/productCode | Delete Product
+   * @api {delete} api/products/:productCode | Delete Product
    */
   .delete(authorize(), controller.remove);
 
@@ -43,7 +43,7 @@ router
    * @api {get} api/products/isProductCodeExists/:productCode 
    */
   .get(authorize(), controller.isProductCodeExists);
-  
+
 router
   .route('/brands')
   /**
@@ -71,6 +71,5 @@ router
    * @api {post} api/products/upload
    */
   .post(controller.uploadProducts);
-
 
 module.exports = router;

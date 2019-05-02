@@ -8,17 +8,21 @@ const addressesRoutes = require('./address.route');
 const ordersRoutes = require('./order.route');
 
 /** PRODUCTION */
-const db = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+// const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
-// const db = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
+const dbUri = "mongodb://localhost:27017/fds_db";
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(db, (err) => {
+mongoose.connect(dbUri, (err) => {
     if (err) {
         console.log("error", err);
     } else {
-        console.log('mongodb connected');
+        if (dbUri.indexOf('localhost') !== -1) {
+            console.log('mongodb(local) connected');
+        } else {
+            console.log('mongodb(remote) connected');
+        }
     }
 });
 
