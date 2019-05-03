@@ -63,6 +63,7 @@ export class ListProductsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    console.log(environment.baseUrl);
     if (this.session.retrieveUserCategory()) {
       this.userCategory = this.session.retrieveUserCategory();
     }
@@ -72,8 +73,10 @@ export class ListProductsComponent implements OnInit {
         { data: 'image' }, { data: 'brand' },
         { data: 'type' }, { data: 'productCode' },
         { data: 'description' }, { data: 'SKU' }, { data: 'price' },
-        { data: 'stock' }, { data: 'view' }];
-    } else { // if user is customer
+        { data: 'stock' }, { data: 'view' }
+      ];
+    } else {
+      // if user is customer
       if (this.cartService.getCartItems().length > 0) {
         this.defaultOrder = [7, 'asc'];
       }
