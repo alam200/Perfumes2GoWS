@@ -39,7 +39,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let product of products; let i = index;" [ngClass]="{'deactive-product':product.productStatus === 'deactive'}">
-          <td id="pdImg">
+          <td id="pdImg" class="text-center">
             <img *ngIf="!product.image" src="../../../../assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
             <img *ngIf="product.image" class="zoom" [src]="product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
               (click)="openModal(product.image)" onError="this.src='../../../../assets/product_placeholder.png';">
@@ -48,8 +48,8 @@
           <td>{{ product.type }}</td>
           <td>{{ product.productCode }}</td>
           <td>{{ product.description }}</td>
-          <td  *ngIf="userCategory === 'Admin'">{{ product.SKU }}</td>
-          <td>{{ product.price | currency:'USD'}}</td>
+          <td *ngIf="userCategory === 'Admin'">{{ product.SKU }}</td>
+          <td>{{ product.price | currency:'USD' }}</td>
           <td>{{ product.stock }}</td>
           <td *ngIf="userCategory === 'Customer'">
             <div class="form-group">
@@ -57,7 +57,7 @@
                 (input)="calculateProductSubTotal($event, product)">
             </div>
           </td>
-          <td *ngIf="userCategory === 'Customer'">{{ product.subtotal | currency:'USD'}}</td>
+          <td *ngIf="userCategory === 'Customer'">{{ product.subtotal | currency:'USD' }}</td>
           <td text-center *ngIf="userCategory === 'Admin'" class="text-center">
             <div></div>
             <a routerLink="/product-details/{{product.SKU}}" class="d-inline-block">
@@ -75,6 +75,7 @@
   </div>
 </div>
 
+<!-- modal template -->
 <div>
   <!-- <app-item-image-modal modalId="imageDialogModal" blocking="true" [dialogData]="imageData" closebtn="true">
   </app-item-image-modal> -->
