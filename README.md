@@ -3,7 +3,6 @@
 [Perfumes2GoWS](http://www.perfumes2go.net) - wholesale
 
 ---
----
 
 ## Development with VS Code
 
@@ -11,18 +10,18 @@
 ```
 $ npm i
 ```
-- switch MongoDB connection URI in `/server/routes/api.js`
+- switch Mongo connection URI in `/server/routes/api.js` for **local DB**
 ```
 /** PRODUCTION */
 // const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
-const dbUri = "mongodb://localhost:27017/fds_db";
+const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 ```
 - Run Mongo Daemon by `mongod`
 ```
 $ mongod
 ```
-- Press `F5` to launch **node.js** debug tool of VS Code
+- Press `F5` to launch **node.js** server with debug tool
 > launch.json
 ```
 {
@@ -33,7 +32,6 @@ $ mongod
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/server.js",
-            "preLaunchTask": "npm: start", // ng build | refer 2 package.json
             "env": {
                 "port": "3000"
             }
@@ -41,24 +39,28 @@ $ mongod
     ]
 }
 ```
-> package.json
+- launch Angular app with **hot-reload** mode
 ```
-{
-  ...
-  "scripts": {
-    "ng": "ng",
-    "serve": "ng serve",
-    "start": "ng build",
-    "build": "ng build --prod --build-optimizer",
-    "test": "snyk test && ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
-  ...
-}
+$ npm start
+```
+- Angular app runs on [http://localhost:4200/](http://localhost:4200/), on the other hand, API server listens to [http://localhost:3000/api/](http://localhost:3000/api/)
 
+---
+
+## Setting up Production Release
+
+- switch Mongo connection URI in `/server/routes/api.js` for **remote DB**
 ```
-- connect `http://localhost:3000/`
+/** PRODUCTION */
+const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+/** DEVELOPMENT */
+// const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
+```
+- build Angular app with production mode
+```
+$ npm run build
+```
+- Press `F5` or execute `$ node server.js` to go [http://localhost:3000/](http://localhost:3000/)
 
 ---
 
@@ -66,13 +68,13 @@ $ mongod
 
 ### macOS and ubuntu
 
-**start:**
+*start*
 ```
 $ nginx -c nginx.conf -p $(pwd)
 ```
 > You should be able to access it on 0.0.0.0:8080
 
-**stop:**
+*stop*
 ```
 $ nginx -s stop
 ```

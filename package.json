@@ -4,8 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve",
-    "start": "ng build",
+    "start": "ng serve --open",
     "build": "ng build --prod --build-optimizer",
     "test": "snyk test && ng test",
     "lint": "ng lint",

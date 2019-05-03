@@ -45,7 +45,9 @@ exports.update = (req, res, next) => {
  */
 exports.list = async (req, res, next) => {
   try {
-    const products = await Product.find({});
+    const recordsPerPage = 50;
+
+    const products = await Product.find({}).limit(recordsPerPage);
     // res.json(products);
 
     const count = await Product.find({}).count();
@@ -94,13 +96,17 @@ exports.isProductCodeExists = async (req, res, next) => {
  */
 exports.list = async (req, res, next) => {
   try {
-    const index = Number.parseInt(req.query.pageNo, 10) - 1;
-    const recordsPerPage = Number.parseInt(req.query.recordsPerPage);
+    let index = Number.parseInt(req.query.pageNo, 10) - 1;
+    let recordsPerPage = Number.parseInt(req.query.recordsPerPage);
     const searchText = req.query.searchText;
     const brand = req.query.brand;
     const type = req.query.type;
     const listType = req.query.productListType;
     const userCategory = req.query.userCategory;
+
+    /** exception handler */
+    if (isNaN(index)) index = 0;
+    if (isNaN(recordsPerPage)) recordsPerPage = 50;
 
     let filterOptions = {};
 
@@ -138,10 +144,20 @@ exports.list = async (req, res, next) => {
     var sortObject = {};
     var sType = req.query.column;
     var sdir = req.query.sdir;
-    sortObject[sType] = sdir;
+    if (sType && sdir) {
+      // avoid adding 'undefined'
+      sortObject[sType] = sdir;
+    }
 
     if (sType === 'brand') {
       sortObject['description'] = 'asc';
+    }
+    /** exception handler */
+    if (!Object.keys(sortObject).length && sortObject.constructor === Object) {
+      sortObject = {
+        brand: 'asc',
+        description: 'asc'
+      };
     }
     let products;
     let count = 0;
