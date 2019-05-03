@@ -19,7 +19,7 @@ import { ResetPasswordComponent } from './core/users/reset-password/reset-passwo
 import { MessageComponent } from './core/users/core/users/message/message.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: '', redirectTo: '/user/login', pathMatch: 'full' },
   { path: 'products/special', component: ListProductsComponent },
   { path: 'products/new', component: ListProductsComponent },
   { path: 'products', component: ListProductsComponent },
@@ -39,7 +39,8 @@ const routes: Routes = [
   { path: 'orders', component: OrdersListComponent, canActivate: [AdminGuard] },
   { path: 'orders/order-details/:orderId', component: OrderDetailsComponent, canActivate: [AdminGuard] },
   { path: 'order-placed', component: OrderPlacedComponent, canActivate: [AuthGuard] },
-  { path: '**', component: ListProductsComponent }];
+  { path: '**', component: LoginComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],

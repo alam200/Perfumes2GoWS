@@ -10,6 +10,7 @@ import { CartService } from '../../../services/cart.service';
 import { InterceptorSkipHeader } from '../../../services/http.request.interceptor';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -53,7 +54,8 @@ export class ListProductsComponent implements OnInit {
     private cartService: CartService,
     private location: Location,
     private session: SessionService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {
     if (location.path() === '/products/special') {
       this.productListType = 'special';
@@ -65,27 +67,31 @@ export class ListProductsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.session.retrieveUserCategory()) {
-      this.userCategory = this.session.retrieveUserCategory();
-    }
-
-    if (this.userCategory === 'Admin') {
-      this.tableColumns = [
-        { data: 'image' }, { data: 'brand' },
-        { data: 'type' }, { data: 'productCode' },
-        { data: 'description' }, { data: 'SKU' }, { data: 'price' },
-        { data: 'stock' }, { data: 'view' }
-      ];
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/user/login']);
     } else {
-      // if user is customer
-      if (this.cartService.getCartItems().length > 0) {
-        this.defaultOrder = [7, 'asc'];
+      if (this.session.retrieveUserCategory()) {
+        this.userCategory = this.session.retrieveUserCategory();
       }
+  
+      if (this.userCategory === 'Admin') {
+        this.tableColumns = [
+          { data: 'image' }, { data: 'brand' },
+          { data: 'type' }, { data: 'productCode' },
+          { data: 'description' }, { data: 'SKU' }, { data: 'price' },
+          { data: 'stock' }, { data: 'view' }
+        ];
+      } else {
+        // if user is customer
+        if (this.cartService.getCartItems().length > 0) {
+          this.defaultOrder = [7, 'asc'];
+        }
+      }
+  
+      this.getProductsData(); // default
+      this.getTypes();
+      this.getBrands();
     }
-
-    this.getProductsData(); // default
-    this.getTypes();
-    this.getBrands();
   }
 
   getProductsData() {
@@ -147,17 +153,18 @@ export class ListProductsComponent implements OnInit {
           });
       },
       columns: this.tableColumns,
-      columnDefs: [{
-        targets: this.columnDefsTarget,
-        searchable: false,
-        orderable: false,
-        visible: true
-      },
-      { width: '15%', targets: 1 },
-      { width: '10%', targets: 3 },
-      { width: '30%', targets: 4 },
-      { width: '7%', targets: 5 },
-      { width: '8%', targets: 6 }
+      columnDefs: [
+        {
+          targets: this.columnDefsTarget,
+          searchable: false,
+          orderable: false,
+          visible: true
+        },
+        { width: '15%', targets: 1 },
+        { width: '10%', targets: 3 },
+        { width: '30%', targets: 4 },
+        { width: '7%', targets: 5 },
+        { width: '8%', targets: 6 }
       ],
       language: {
         emptyTable: 'No data available in table',
@@ -201,12 +208,9 @@ export class ListProductsComponent implements OnInit {
     if (+event.target.value > +product.stock) {
       event.target.value = product.stock;
     }
-
     if (+event.target.value < 0) {
       event.target.value = 0;
     }
-
-
     const quantity = event.target.value === '' ? 0 : event.target.value;
     const productPrice = product.price;
     const subTotal = (quantity * productPrice);
