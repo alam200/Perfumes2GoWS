@@ -15,7 +15,7 @@ export class CartService {
   private orderItems: OrderItem[] = [];
   public cartObservable: Subject<any> = new Subject<any>();
 
-  public   ORDERS_URL = environment.baseUrl + 'orders';
+  public ORDERS_URL = environment.baseUrl + 'orders';
   constructor(private httpClient: HttpClient) { }
 
   updateCart(orderItem: OrderItem) {
