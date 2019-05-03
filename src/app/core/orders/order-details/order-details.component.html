@@ -7,9 +7,9 @@
                 <div class="col-md-6 mx-auto order-status-row">
                     <div class="row">
                         <div class="col-md-3 text-right font-weight-bold">Order No.:</div>
-                        <div class="col-md-3">{{orderInfo.orderNo}}</div>
+                        <div class="col-md-3">{{ orderInfo.orderNo }}</div>
                         <div class="col-md-3 text-right font-weight-bold">Order Status:</div>
-                        <div class="col-md-3">{{orderInfo.orderStatus}}</div>
+                        <div class="col-md-3">{{ orderInfo.orderStatus }}</div>
                     </div>
                 </div>
             </div>
@@ -163,23 +163,44 @@
             </thead>
             <tbody *ngIf="orderInfo">
                 <tr *ngFor="let item of orderInfo.orderItems">
-                    <td>
+                    <td class="text-center">
                         <img *ngIf="!item.productId.image" src="../../../../assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
-                        <img *ngIf="item.productId.image" class="zoom" [src]="item.productId.image" alt="Perfumes2Go" height="42" width="42" onError="this.src='../../../../assets/product_placeholder.png';">
+                        <img *ngIf="item.productId.image" class="zoom" [src]="item.productId.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
+                            (click)="openModal(item.productId.image)" onError="this.src='../../../../assets/product_placeholder.png';">
                     </td>
-                    <td>{{item.productId.brand}}</td>
-                    <td>{{item.productId.type}}</td>
-                    <td>{{item.productId.productCode}}</td>
-                    <td>{{item.productId.description}}</td>
-                    <td>{{item.productId.price | currency:'USD'}}</td>
-                    <td>{{item.quantity}}</td>
-                    <td>{{(item.productId.price * item.quantity) | currency:'USD'}}</td>
+                    <td>{{ item.productId.brand }}</td>
+                    <td>{{ item.productId.type }}</td>
+                    <td>{{ item.productId.productCode }}</td>
+                    <td>{{ item.productId.description }}</td>
+                    <td>{{ item.productId.price | currency:'USD' }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ (item.productId.price * item.quantity) | currency:'USD' }}</td>
                 </tr>
                 <tr class="grand-total-row-bg">
                     <td colspan="7" class="text-right font-weight-bold">Grand Total</td>
-                    <td class="font-weight-bold">{{orderInfo.orderAmount | currency:'USD'}}</td>
+                    <td class="font-weight-bold">{{ orderInfo.orderAmount | currency:'USD' }}</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- modal template -->
+<div>
+    <!-- <app-item-image-modal modalId="imageDialogModal" blocking="true" [dialogData]="imageData" closebtn="true">
+    </app-item-image-modal> -->
+    <div class="modal fade bd-modal-sm" id="imageDialogModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img id="productImage" class="img-responsive" src="" onError="this.src='../../../../assets/product_placeholder.png';">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
