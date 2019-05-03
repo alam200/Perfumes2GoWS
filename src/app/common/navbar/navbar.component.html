@@ -51,8 +51,8 @@
     <div class="mx-auto order-0 position-relative">
       <span class="pull-right header-shopping-cart">
         <p *ngIf="showCart" class="total" id="shopping-cart-total">
-          <i class="fa fa-shopping-cart fa-3x"></i><span class="cart-total">{{(productsQuantity && productsQuantity !== 0) ? orderItems.length + "("+productsQuantity+")" : orderItems.length
-          }}</span>
+          <i class="fa fa-shopping-cart fa-3x"></i>
+          <span class="cart-total">{{ (productsQuantity && productsQuantity !== 0) ? orderItems.length + "(" + productsQuantity + ")" : orderItems.length }}</span>
         </p>
       </span>
     </div>

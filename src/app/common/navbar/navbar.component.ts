@@ -63,7 +63,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       for (let index = 0; index < orderItems.length; index++) {
         this.productsQuantity += Number.parseInt(orderItems[index].quantity);
       }
-      });
+    });
     this.orderItems = this.cartService.getCartItems();
 
     this.router.events.subscribe(() => {
@@ -141,6 +141,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.session.retrieveToken() != null) {
       this.session.destroy();
       this.cartService.clearCart();
+      this.productsQuantity = 0; // clear cache
       this.authService.isLoggedIn.next(false);
       this.alert.success('Successfully signed out');
       this.router.navigate(['/user/login']);
