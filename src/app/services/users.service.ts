@@ -1,6 +1,7 @@
-import { environment } from './../../environments/environment.prod';
+import { environment as env } from './../../environments/environment';
+import { environment as envProd } from './../../environments/environment.prod';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -10,15 +11,15 @@ import { InterceptorSkipHeader } from './http.request.interceptor';
   providedIn: 'root'
 })
 export class UsersService {
-  public REGISTER_URL = environment.baseUrl + 'auth/register';
-  public VERIFY_EMAIL = environment.baseUrl + 'auth/verify';
-  public LOGIN_URL = environment.baseUrl + 'auth/login';
-  public USERS_URL = environment.baseUrl + 'users';
-  public ADD_ADDRESS_URL = environment.baseUrl + 'addresses';
-  public ADDRESSES_URL = environment.baseUrl + 'addresses';
-  public SEND_FORGOT_PASSWORD_URL = environment.baseUrl + 'auth/forgot';
-  public RESET_PASSWORD_URL = environment.baseUrl + 'auth/reset';
-  public RESEND_TOKEN_URL = environment.baseUrl + 'auth/resend';
+  public REGISTER_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/register`;
+  public VERIFY_EMAIL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/verify`;
+  public LOGIN_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/login`;
+  public USERS_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}users`;
+  public ADD_ADDRESS_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}addresses`;
+  public ADDRESSES_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}addresses`;
+  public SEND_FORGOT_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/forgot`;
+  public RESET_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/reset`;
+  public RESEND_TOKEN_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/resend`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -51,7 +52,6 @@ export class UsersService {
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
   }
-
 
   getUserDetails(userId) {
     let params = new HttpParams();

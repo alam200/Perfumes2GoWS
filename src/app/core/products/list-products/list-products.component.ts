@@ -37,7 +37,8 @@ export class ListProductsComponent implements OnInit {
     { data: 'image' }, { data: 'brand' },
     { data: 'type' }, { data: 'productCode' },
     { data: 'description' }, { data: 'price' },
-    { data: 'stock' }, { data: 'quantity' }, { data: 'subtotal' }];
+    { data: 'stock' }, { data: 'quantity' }, { data: 'subtotal' }
+  ];
   public brands = [];
   public types = [];
 
@@ -52,7 +53,8 @@ export class ListProductsComponent implements OnInit {
     private cartService: CartService,
     private location: Location,
     private session: SessionService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService
+  ) {
     if (location.path() === '/products/special') {
       this.productListType = 'special';
     } else if (location.path() === '/products/new') {
@@ -63,7 +65,6 @@ export class ListProductsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(environment.baseUrl);
     if (this.session.retrieveUserCategory()) {
       this.userCategory = this.session.retrieveUserCategory();
     }
