@@ -8,6 +8,7 @@ export class SessionService {
   private userName = 'user_name';
   private cartData = 'cart_data';
   private userData = 'user_data';
+
   constructor() {
   }
 
@@ -32,9 +33,11 @@ export class SessionService {
   public saveCartData(cartData) {
     sessionStorage.setItem(this.cartData, cartData);
   }
+
   public retrieveCartData() {
     return sessionStorage.getItem(this.cartData);
   }
+
   public removeCartData() {
     sessionStorage.removeItem(this.cartData);
   }
@@ -42,6 +45,7 @@ export class SessionService {
   public saveUserData(userData) {
     sessionStorage.setItem(this.userData, userData);
   }
+
   public retrieveUserData() {
     return sessionStorage.getItem(this.userData);
   }
@@ -55,5 +59,10 @@ export class SessionService {
 
   public destroy(): void {
     sessionStorage.clear();
+  }
+
+  /** alidavid0418 */
+  public isLoggedIn() {
+    return this.retrieveToken() && this.retrieveUserId();
   }
 }

@@ -19,9 +19,19 @@ export class LoginComponent implements OnInit {
     private session: SessionService,
     private authService: AuthenticationService,
     private spinner: NgxSpinnerService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/products']);
+    } else {
+      if (this.router.url !== '/user/login') {
+        /** page not found */
+        this.router.navigate(['/user/login']);
+      }
+      // stay here 2 authenticate
+    }
   }
 
   onSubmit() {
