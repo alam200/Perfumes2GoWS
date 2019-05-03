@@ -19,9 +19,9 @@ mongoose.connect(dbUri, (err) => {
         console.log("error", err);
     } else {
         if (dbUri.indexOf('localhost') !== -1) {
-            console.log('mongodb(local) connected');
+            console.log('MongoDB(local) connected');
         } else {
-            console.log('mongodb(remote) connected');
+            console.log('MongoDB(remote) connected');
         }
     }
 });
