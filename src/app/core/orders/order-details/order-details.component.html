@@ -164,9 +164,9 @@
             <tbody *ngIf="orderInfo">
                 <tr *ngFor="let item of orderInfo.orderItems">
                     <td class="text-center">
-                        <img *ngIf="!item.productId.image" src="../../../../assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
+                        <img *ngIf="!item.productId.image" src="/assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
                         <img *ngIf="item.productId.image" class="zoom" [src]="item.productId.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
-                            (click)="openModal(item.productId.image)" onError="this.src='../../../../assets/product_placeholder.png';">
+                            (click)="openModal(item.productId.image)" onError="this.src='/assets/product_placeholder.png';">
                     </td>
                     <td>{{ item.productId.brand }}</td>
                     <td>{{ item.productId.type }}</td>
@@ -198,7 +198,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img id="productImage" class="img-responsive" src="" onError="this.src='../../../../assets/product_placeholder.png';">
+                    <img id="productImage" class="img-responsive" src="" onError="this.src='/assets/product_placeholder.png';">
                 </div>
             </div>
         </div>
