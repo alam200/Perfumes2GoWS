@@ -83,16 +83,16 @@ div.dataTables_wrapper div.dataTables_info {
     }
 }
 
-@media screen and (max-width: 768px){
-  .body-content-wrapper {
-    padding-top: 30px;
-  }
-  .form-horizontal .col-form-label {
-      text-align: left !important;
-  }
+@media screen and (max-width: 768px) {
+    .body-content-wrapper {
+        padding-top: 30px;
+    }
+    .form-horizontal .col-form-label {
+        text-align: left !important;
+    }
 }
 
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
     .grid-table-wrapper > #datTable_wrapper > .row:first-child > .col-sm-12 {
         width: 50%;
         max-width: 50%;
@@ -100,7 +100,7 @@ div.dataTables_wrapper div.dataTables_info {
     }
 }
 
-@media screen and (max-width: 575px){
+@media screen and (max-width: 575px) {
     body {
         padding-bottom: 100px;
         padding-top: 45px;
@@ -109,4 +109,21 @@ div.dataTables_wrapper div.dataTables_info {
 
 .error-msg {
   color: red;
+}
+
+/* 
+ * Angular Image Slider with Lightbox
+ */
+.ng-image-slider {
+    margin-bottom: 20px;
+}
+
+.ng-image-slider .container {
+    padding: 0;
+}
+
+.ng-image-slider .container .main {
+    max-width: 633px;
+    position: relative !important;
+    margin: 0 auto;
 }
