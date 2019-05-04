@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showUploadProducts = false;
   public showMenu = true;
   public isUserLoggedIn = false;
+  public showFaqItem = false;
   public userName: string;
   private cartSubscription: Subscription;
 
@@ -93,9 +94,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showLogin = false;
       this.showSignup = false;
       this.showMyAccount = true;
-
       if (path === '/user/details') {
         this.showMyAccount = false;
+      }
+      // FAQ item visibility
+      let category = JSON.parse(this.session.retrieveUserData()).category;
+      if (category === 'Customer') {
+        this.showFaqItem = true;
       }
     } else {
       // this.showMenu = false;
