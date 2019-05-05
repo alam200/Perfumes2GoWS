@@ -127,3 +127,7 @@ div.dataTables_wrapper div.dataTables_info {
     position: relative !important;
     margin: 0 auto;
 }
+
+.ng-image-slider .container .main .main-inner .img-div img {
+    object-fit: contain;
+}

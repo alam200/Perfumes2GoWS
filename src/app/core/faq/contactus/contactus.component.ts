@@ -36,6 +36,7 @@ export class ContactusComponent implements OnInit {
 
   onSubmit() {
     console.log(this.model);
+    this.alertService.error('working...');
     // /** spinner starts */
     // this.spinner.show();
     // this.usersService.updateUser(this.model, this.session.retrieveUserId()).subscribe(
