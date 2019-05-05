@@ -16,17 +16,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of orderItems">
-          <td>
-            <img *ngIf="!item.product.image" src="../../../../assets/product_placeholder.png" alt='image' height="42" width="42" />
-            <img *ngIf="item.product.image" class="zoom" [src]="item.product.image" alt="image" height="42" width="42">
+          <td class="text-center">
+            <img *ngIf="!item.product.image" src="/assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
+            <img *ngIf="item.product.image" class="zoom" [src]="item.product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
+              (click)="openModal(item.product.image)" onError="this.src='/assets/product_placeholder.png';">
           </td>
-          <td>{{item.product.brand}}</td>
-          <td>{{item.product.type}}</td>
-          <td>{{item.product.productCode}}</td>
-          <td>{{item.product.description}}</td>
-          <td>{{item.product.price | currency:'USD'}}</td>
-          <td>{{item.quantity}}</td>
-          <td>{{item.subtotal | currency:'USD'}}</td>
+          <td>{{ item.product.brand }}</td>
+          <td>{{ item.product.type }}</td>
+          <td>{{ item.product.productCode }}</td>
+          <td>{{ item.product.description }}</td>
+          <td>{{ item.product.price | currency:'USD' }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.subtotal | currency:'USD' }}</td>
         </tr>
       </tbody>
     </table>
@@ -39,7 +40,7 @@
       Quantity: {{ quantity }} </span>
     <br>
     <br>
-    <span class="shopping-cart-total">TOTAL: {{ total | currency:'USD'}}</span>
+    <span class="shopping-cart-total">TOTAL: {{ total | currency:'USD' }}</span>
     <br>
   </div>
 </section>
@@ -94,4 +95,24 @@
 
   <!-- This would be shown in user is logged-in -->
   <app-contact-info *ngIf="isUserLoggedIn"></app-contact-info>
+</div>
+
+<!-- modal template -->
+<div>
+  <!-- <app-item-image-modal modalId="imageDialogModal" blocking="true" [dialogData]="imageData" closebtn="true">
+  </app-item-image-modal> -->
+  <div class="modal fade bd-modal-sm" id="imageDialogModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="productImage" class="img-responsive" src="" onError="this.src='/assets/product_placeholder.png';">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

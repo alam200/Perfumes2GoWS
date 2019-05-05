@@ -1,0 +1,72 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+
+<div class="col-md-8 col-sm-12 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      Contact Us
+    </div>
+    <div class="card-body">
+      <form name="form" class="form-horizontal" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <div class="row">
+            <label for="firstName" class="col-md-3 col-sm-12 text-right col-form-label">First Name:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required>
+              <small *ngIf="f.submitted && firstName.invalid" class="form-text text-left error-msg">First name is required</small>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label">Last Name:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel">
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="email" class="col-md-3 col-sm-12 text-right col-form-label">E-mail:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required>
+              <small *ngIf="f.submitted && email.invalid && email.errors.required" class="form-text text-left error-msg">Email is required</small>
+              <small *ngIf="f.submitted && email.invalid && email.errors.pattern" class="form-text text-left error-msg">Email is invalid</small>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="subject" class="col-md-3 col-sm-12 text-right col-form-label">Subject:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="model.subject" #subject="ngModel">
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="comments" class="col-md-3 col-sm-12 text-right col-form-label">Comments:</label>
+            <div class="col-md-9 col-sm-12">
+              <textarea class="form-control" name="comments" id="comments" rows="5" [(ngModel)]="model.comments" #comments="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && comments.invalid }" required>
+              </textarea>
+              <small *ngIf="f.submitted && comments.invalid" class="form-text text-left error-msg">Comments is required</small>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group text-center">
+          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order">
+            <i class="fa fa-send-o"></i>&nbsp;Send Message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

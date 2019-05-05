@@ -17,6 +17,8 @@ import { AuthGuardService as AuthGuard } from './services/auth.guard.service';
 import { AdminGuardService as AdminGuard } from './services/admin.guard.service';
 import { ResetPasswordComponent } from './core/users/reset-password/reset-password.component';
 import { MessageComponent } from './core/users/core/users/message/message.component';
+import { AboutusComponent } from './core/faq/aboutus/aboutus.component';
+import { ContactusComponent } from './core/faq/contactus/contactus.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },
@@ -39,6 +41,8 @@ const routes: Routes = [
   { path: 'orders', component: OrdersListComponent, canActivate: [AdminGuard] },
   { path: 'orders/order-details/:orderId', component: OrderDetailsComponent, canActivate: [AdminGuard] },
   { path: 'order-placed', component: OrderPlacedComponent, canActivate: [AuthGuard] },
+  { path: 'aboutus', component: AboutusComponent },
+  { path: 'contactus', component: ContactusComponent },
   { path: '**', component: LoginComponent },
 ];
 

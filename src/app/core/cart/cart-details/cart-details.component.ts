@@ -4,19 +4,25 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../services/session.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
   styleUrls: ['./cart-details.component.css']
 })
+
 export class CartDetailsComponent implements OnInit {
   total: number;
   quantity: number;
   orderItems: OrderItem[] = [];
   public isUserLoggedIn = false;
+  public productImage;
+
   constructor(private cartService: CartService,
     private session: SessionService,
-    private authService: AuthenticationService) {
+    private authService: AuthenticationService
+  ) {
     this.authService.isLoggedIn.subscribe(value => {
       if (session.retrieveToken() != null || value) {
         this.isUserLoggedIn = true;
@@ -25,6 +31,7 @@ export class CartDetailsComponent implements OnInit {
       }
     });
   }
+
   ngOnInit() {
     this.orderItems = this.cartService.getCartItems();
 
@@ -38,6 +45,7 @@ export class CartDetailsComponent implements OnInit {
 
     this.getTotalAndQuantity();
   }
+
   getTotalAndQuantity() {
     this.total = 0;
     this.quantity = 0;
@@ -45,6 +53,16 @@ export class CartDetailsComponent implements OnInit {
       this.quantity += Number.parseInt(this.orderItems[i].quantity.toString());
       this.total += this.orderItems[i].subtotal;
     }
+  }
+
+  public openModal(image) {
+    if (image.indexOf('/product_placeholder.png') !== -1) {
+      image = image.replace('product_placeholder.png', 'coming_soon.jpg');
+    }
+
+    this.productImage = image;
+    $('#productImage').attr('src', image);
+    $('#imageDialogModal').modal('show');
   }
 
 }

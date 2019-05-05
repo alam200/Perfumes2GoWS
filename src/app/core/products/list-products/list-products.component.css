@@ -32,20 +32,25 @@
   word-break: break-all;
 }
 
-.zoom {
+/* 
+ * disable hover zoom
+ */
+
+/* .zoom {
     transition: transform .2s;
-    /* Animation */
     margin: 0 auto;
 }
-
-​ .zoom:hover {
+.zoom:hover {
     position: absolute;
     transform: scale(5);
-    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    /* margin-left: 3vw; */
     z-index: 1;
-}
+} */
 
+#pdImg > img:hover {
+    cursor: pointer;
+    border: 1px solid #cccccc;
+}
+  
 input[type="date"]::-webkit-inner-spin-button {
     opacity: 0
 }
@@ -126,16 +131,13 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
       left: 0;
     }
 }
+
 #productImage {
     width: auto;
     max-width: 100%;
     max-height: 70vh;
     width: auto\9;
     /* ie8 */
-}
-
-#pdImg:hover {
-  cursor: pointer;
 }
 
 [class*=" col-"] {

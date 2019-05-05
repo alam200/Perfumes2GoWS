@@ -26,3 +26,32 @@
   border: 1px solid #f1f1f1;
   border-radius: 3px;
 }
+
+img.zoom:hover {
+  cursor: pointer;
+  border: 1px solid #cccccc;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, .0001) !important;
+}
+
+.modal-header {
+  padding: 0rem .5rem 0rem 0rem !important;
+  border-bottom: none !important;
+}
+
+.modal-dialog {
+  text-align: center;
+}
+
+.modal-content {
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+      width: auto;
+      max-width: auto;
+  }
+}

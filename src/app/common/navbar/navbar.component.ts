@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showUploadProducts = false;
   public showMenu = true;
   public isUserLoggedIn = false;
+  public showFaqItem = false;
   public userName: string;
   private cartSubscription: Subscription;
 
@@ -63,7 +64,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       for (let index = 0; index < orderItems.length; index++) {
         this.productsQuantity += Number.parseInt(orderItems[index].quantity);
       }
-      });
+    });
     this.orderItems = this.cartService.getCartItems();
 
     this.router.events.subscribe(() => {
@@ -93,9 +94,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showLogin = false;
       this.showSignup = false;
       this.showMyAccount = true;
-
       if (path === '/user/details') {
         this.showMyAccount = false;
+      }
+      // FAQ item visibility
+      let category = JSON.parse(this.session.retrieveUserData()).category;
+      if (category === 'Customer') {
+        this.showFaqItem = true;
       }
     } else {
       // this.showMenu = false;
@@ -141,6 +146,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.session.retrieveToken() != null) {
       this.session.destroy();
       this.cartService.clearCart();
+      this.productsQuantity = 0; // clear cache
       this.authService.isLoggedIn.next(false);
       this.alert.success('Successfully signed out');
       this.router.navigate(['/user/login']);
