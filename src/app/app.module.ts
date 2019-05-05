@@ -35,6 +35,7 @@ import { SessionService } from './services/session.service';
 import { MessageComponent } from './core/users/core/users/message/message.component';
 import { ResetPasswordComponent } from './core/users/reset-password/reset-password.component';
 import { AboutusComponent } from './core/faq/aboutus/aboutus.component';
+import { ContactusComponent } from './core/faq/contactus/contactus.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgImageSliderModule } from 'ng-image-slider';
 
@@ -61,7 +62,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
     EqualValidatorDirective,
     MessageComponent,
     ResetPasswordComponent,
-    AboutusComponent
+    AboutusComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,
