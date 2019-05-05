@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../common/alert/alert.service';
 import { UsersService } from '../../../services/users.service';
 
-
 @Component({
   selector: 'app-contactus',
   templateUrl: './contactus.component.html',
@@ -36,6 +35,7 @@ export class ContactusComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.model);
     // /** spinner starts */
     // this.spinner.show();
     // this.usersService.updateUser(this.model, this.session.retrieveUserId()).subscribe(

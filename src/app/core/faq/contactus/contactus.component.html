@@ -14,10 +14,11 @@
             <div class="col-md-9 col-sm-12">
               <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required>
-              <small *ngIf="f.submitted && firstName.invalid" id="emailHelp" class="form-text text-left error-msg">First name is required</small>
+              <small *ngIf="f.submitted && firstName.invalid" class="form-text text-left error-msg">First name is required</small>
             </div>
           </div>
         </div>
+        <!--  -->
         <div class="form-group">
           <div class="row">
             <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label">Last Name:</label>
@@ -26,6 +27,7 @@
             </div>
           </div>
         </div>
+        <!--  -->
         <div class="form-group">
           <div class="row">
             <label for="email" class="col-md-3 col-sm-12 text-right col-form-label">E-mail:</label>
@@ -37,6 +39,28 @@
             </div>
           </div>
         </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="subject" class="col-md-3 col-sm-12 text-right col-form-label">Subject:</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="model.subject" #subject="ngModel">
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="form-group">
+          <div class="row">
+            <label for="comments" class="col-md-3 col-sm-12 text-right col-form-label">Comments:</label>
+            <div class="col-md-9 col-sm-12">
+              <textarea class="form-control" name="comments" id="comments" rows="5" [(ngModel)]="model.comments" #comments="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && comments.invalid }" required>
+              </textarea>
+              <small *ngIf="f.submitted && comments.invalid" class="form-text text-left error-msg">Comments is required</small>
+            </div>
+          </div>
+        </div>
+        <!--  -->
         <div class="form-group text-center">
           <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order">
             <i class="fa fa-send-o"></i>&nbsp;Send Message
