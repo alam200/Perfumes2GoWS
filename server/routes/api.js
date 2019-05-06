@@ -14,7 +14,12 @@ const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(dbUri, (err) => {
+const parseConfig = {
+    useNewUrlParser: true
+};
+mongoose.set('useCreateIndex', true);
+
+mongoose.connect(dbUri, parseConfig, (err) => {
     if (err) {
         console.log("error", err);
     } else {
