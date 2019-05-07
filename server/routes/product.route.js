@@ -45,11 +45,11 @@ router
   .get(authorize(), controller.isProductCodeExists);
 
 router
-  .route('/all')
+  .route('/exportcsv')
   /**
-   * @api {get} api/products/all | Get All the Products 4 CSV
+   * @api {get} api/products/exportcsv | Get All the Data 4 CSV
    */
-  .get(controller.getProductsAll);
+  .get(controller.getExportData);
 
 router
   .route('/brands')

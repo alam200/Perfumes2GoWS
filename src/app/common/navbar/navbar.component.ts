@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from '../../services/products.service';
 import { saveAs } from 'file-saver';
+import { async } from 'q';
 
 declare var $: any;
 
@@ -159,27 +160,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
     event.stopPropagation(); // PREVENT multiple modals open
   }
   
-  downloadCSV() {
+  downloadCsvFiles() {
     $('#exportDialogModal').modal('hide');
     this.spinner.show();
     const userId = this.session.retrieveUserId();
-    this.productsService.getProductsAll(userId).then(
+    const bFlagProducts: Boolean = true;
+    const bFlagCustomers: Boolean = true;
+    const bFlagOrders: Boolean = true;
+    this.productsService.getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders).then(
       (data: any) => {
         if (data.success) {
           try {
-            const mydata = data.products;
-            const replacer = (key, value) => value === null ? '' : value;
-            const header = Object.keys(mydata[0]);
-            let csv = mydata.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-            csv.unshift(header.join(','));
-            let csvArr = csv.join('\r\n');
-            const BOM = '\uFEFF';
-            csvArr = BOM + csvArr;
-            var blob = new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
-            let filename = `export_${this.getTimestampStr()}.csv`;
-  
+            const products = data.products;
+            const customers = data.customers;
+            const orders = data.orders;
+
+            let blobArr: any = [];
+            blobArr.push(this.getCsvBlob(products));
+            blobArr.push(this.getCsvBlob(customers));
+            blobArr.push(this.getCsvBlob(orders));
+            const timestamp: String = this.getTimestampStr();
+            const pathArr: any = [
+              `export_products_${timestamp}.csv`,
+              `export_customers_${timestamp}.csv`,
+              `export_orders_${timestamp}.csv`
+            ];
             this.spinner.hide();
-            saveAs(blob, filename);
+
+            blobArr.forEach(async (blob, index) => {
+              saveAs(blob, pathArr[index]);
+              await new Promise(r => setTimeout(r, 1000));
+            });
           } catch (e) {
             this.spinner.hide();
             console.log(e);
@@ -198,6 +209,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private getTimestampStr() {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5).replace(/-|:|T/g, '');
+  }
+
+  private getCsvBlob(params) {
+    const replacer = (key, value) => value === null ? '' : value;
+    const header = Object.keys(params[0]);
+    let csv = params.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    csv.unshift(header.join(','));
+    let csvArr = csv.join('\r\n');
+    const BOM = '\uFEFF';
+    csvArr = BOM + csvArr;
+    return new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
   }
 
   logout() {

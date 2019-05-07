@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const { handler: errorHandler } = require('../middlewares/error');
 const Product = require('../models/product');
 const User = require('../models/user.model');
+const Order = require('../models/order');
 const multer = require('multer');
 const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
@@ -188,25 +189,34 @@ exports.list = async (req, res, next) => {
 };
 
 /**
- * Get all the products
+ * Get all the data 4 CSV export
  * @public
  */
-exports.getProductsAll = async (req, res, next) => {
+exports.getExportData = async (req, res, next) => {
   try {
     const userId = req.query.userId;
+    const bFlagProducts = Boolean(req.query.bFlagProducts);
+    const bFlagCustomers = Boolean(req.query.bFlagCustomers);
+    const bFlagOrders = Boolean(req.query.bFlagOrders);
 
     const user = await User.findById({ _id: userId }).exec();
     if (user.isVerified && user.category === 'Admin') {
       const products = await Product.find({}).exec();
+      const customers = await User.find({ category: 'Customer' }).exec();
+      const orders = await Order.find({}).exec();
       res.json({
         success: true,
-        products: products
+        products: products,
+        customers: customers,
+        orders: orders
       });
     } else {
       // access denied
       res.json({
         success: false,
-        products: null
+        products: null,
+        customers: null,
+        orders: null
       });
     }
   } catch (error) {

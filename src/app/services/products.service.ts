@@ -11,10 +11,10 @@ import { InterceptorSkipHeader } from './http.request.interceptor';
 })
 export class ProductsService {
   public PRODUCTS_URL = environment.baseUrl + 'products';
-  public PRODUCTS_ALL = environment.baseUrl + 'products/all';
   public GET_BRAND = environment.baseUrl + 'products/brands';
   public GET_TYPES = environment.baseUrl + 'products/types';
   public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
+  public GET_EXPORT_DATA = environment.baseUrl + 'products/exportcsv';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -31,12 +31,15 @@ export class ProductsService {
       .catch(err => Promise.reject(err));
   }
 
-  getProductsAll(userId) {
+  getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders) {
     const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
-    return this.httpClient.get(this.PRODUCTS_ALL, {
+    return this.httpClient.get(this.GET_EXPORT_DATA, {
       headers: headers,
       params: {
-        userId: userId
+        userId: userId,
+        bFlagProducts: bFlagProducts,
+        bFlagCustomers: bFlagCustomers,
+        bFlagOrders: bFlagOrders
       }
     }).toPromise().catch(err => Promise.reject(err));
   }
