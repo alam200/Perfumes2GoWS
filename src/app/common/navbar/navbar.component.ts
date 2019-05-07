@@ -10,6 +10,7 @@ import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from '../../services/products.service';
+import { saveAs } from 'file-saver';
 
 declare var $: any;
 
@@ -164,13 +165,39 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const userId = this.session.retrieveUserId();
     this.productsService.getProductsAll(userId).then(
       (data: any) => {
-        this.spinner.hide();
-        console.log(data);
+        if (data.success) {
+          try {
+            const mydata = data.products;
+            const replacer = (key, value) => value === null ? '' : value;
+            const header = Object.keys(mydata[0]);
+            let csv = mydata.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+            csv.unshift(header.join(','));
+            let csvArr = csv.join('\r\n');
+            const BOM = '\uFEFF';
+            csvArr = BOM + csvArr;
+            var blob = new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
+            let filename = `export_${this.getTimestampStr()}.csv`;
+  
+            this.spinner.hide();
+            saveAs(blob, filename);
+          } catch (e) {
+            this.spinner.hide();
+            console.log(e);
+          }
+        } else {
+          // exception handler | access denied
+          this.spinner.hide();
+        }
       },
       error => {
         this.spinner.hide();
         console.log('service down ', error);
       });
+  }
+
+  private getTimestampStr() {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5).replace(/-|:|T/g, '');
   }
 
   logout() {
