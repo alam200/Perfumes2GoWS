@@ -194,6 +194,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           } catch (e) {
             this.spinner.hide();
             console.log(e);
+            this.alert.error('Failed to export CSV data');
           }
         } else {
           // exception handler | access denied
@@ -214,7 +215,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private getCsvBlob(params) {
     const replacer = (key, value) => value === null ? '' : value;
     const header = Object.keys(params[0]);
-    let csv = params.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    // let csv = params.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    let csv = params.map(row => header.map(fieldName => {
+      if (typeof row[fieldName] === 'object') {
+        // multiline in a CSV field
+        return `"${JSON.stringify(row[fieldName], replacer).replace(/"|{|}|\[|\]/g, '').replace(/,/g, '\r\n')}"`;
+      } else {
+        return JSON.stringify(row[fieldName], replacer);
+      }
+    }).join(','));
     csv.unshift(header.join(','));
     let csvArr = csv.join('\r\n');
     const BOM = '\uFEFF';
