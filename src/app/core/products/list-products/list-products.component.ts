@@ -289,14 +289,14 @@ export class ListProductsComponent implements OnInit {
     }
   }
 
-  public openModal(image) {
+  public openModal(image, event) {
     if (image.indexOf('/product_placeholder.png') !== -1) {
       image = image.replace('product_placeholder.png', 'coming_soon.jpg');
     }
-
     this.productImage = image;
     $('#productImage').attr('src', image);
     $('#imageDialogModal').modal('show');
+    event.stopPropagation(); // PREVENT multiple modals open
   }
 
   sortBasedOnQuantity(sortOrder: string) {

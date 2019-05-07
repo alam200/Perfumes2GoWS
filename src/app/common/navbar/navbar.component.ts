@@ -8,6 +8,9 @@ import { AlertService } from '../alert/alert.service';
 import { OrderItem } from '../../models/orderItem.model';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs/Subscription';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+declare var $: any;
 
 @Component({
   selector: 'app-navbar',
@@ -40,7 +43,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private router: Router,
     private authService: AuthenticationService,
-    public location: Location
+    public location: Location,
+    private spinner: NgxSpinnerService
   ) {
     this.authService.isLoggedIn.subscribe(value => {
       if (session.retrieveToken() != null || value) {
@@ -147,8 +151,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/order']);
   }
 
-  promptExportCsv() {
-    console.log('TODO Export CSV');
+  promptExportCsv(event) {
+    $('#exportDialogModal').modal('show');
+    event.stopPropagation(); // PREVENT multiple modals open
+  }
+  
+  downloadCSV() {
+    $('#exportDialogModal').modal('hide');
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
   }
 
   logout() {
