@@ -45,6 +45,13 @@ router
   .get(authorize(), controller.isProductCodeExists);
 
 router
+  .route('/all')
+  /**
+   * @api {get} api/products/all | Get All the Products 4 CSV
+   */
+  .get(controller.getProductsAll);
+
+router
   .route('/brands')
   /**
    * @api {get} api/products/brands | Get Product's Brands List

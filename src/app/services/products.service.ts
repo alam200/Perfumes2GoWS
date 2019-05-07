@@ -11,6 +11,7 @@ import { InterceptorSkipHeader } from './http.request.interceptor';
 })
 export class ProductsService {
   public PRODUCTS_URL = environment.baseUrl + 'products';
+  public PRODUCTS_ALL = environment.baseUrl + 'products/all';
   public GET_BRAND = environment.baseUrl + 'products/brands';
   public GET_TYPES = environment.baseUrl + 'products/types';
   public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
@@ -28,6 +29,16 @@ export class ProductsService {
       .then((data: any) => {
       })
       .catch(err => Promise.reject(err));
+  }
+
+  getProductsAll(userId) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.PRODUCTS_ALL, {
+      headers: headers,
+      params: {
+        userId: userId
+      }
+    }).toPromise().catch(err => Promise.reject(err));
   }
 
   getBrands() {

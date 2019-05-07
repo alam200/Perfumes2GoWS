@@ -9,6 +9,7 @@ import { OrderItem } from '../../models/orderItem.model';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ProductsService } from '../../services/products.service';
 
 declare var $: any;
 
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private cartSubscription: Subscription;
 
   constructor(private cartService: CartService,
+    private productsService: ProductsService,
     private session: SessionService,
     private alert: AlertService,
     private router: Router,
@@ -159,9 +161,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   downloadCSV() {
     $('#exportDialogModal').modal('hide');
     this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+    const userId = this.session.retrieveUserId();
+    this.productsService.getProductsAll(userId).then(
+      (data: any) => {
+        this.spinner.hide();
+        console.log(data);
+      },
+      error => {
+        this.spinner.hide();
+        console.log('service down ', error);
+      });
   }
 
   logout() {

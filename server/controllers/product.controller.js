@@ -1,10 +1,10 @@
 const httpStatus = require('http-status');
 const { handler: errorHandler } = require('../middlewares/error');
 const Product = require('../models/product');
+const User = require('../models/user.model');
 const multer = require('multer');
 const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
-
 
 /**
  * Create new Categories
@@ -182,6 +182,33 @@ exports.list = async (req, res, next) => {
       productList: products,
       totalProducts: count
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Get all the products
+ * @public
+ */
+exports.getProductsAll = async (req, res, next) => {
+  try {
+    const userId = req.query.userId;
+
+    const user = await User.findById({ _id: userId }).exec();
+    if (user.isVerified && user.category === 'Admin') {
+      const products = await Product.find({}).exec();
+      res.json({
+        success: true,
+        products: products
+      });
+    } else {
+      // access denied
+      res.json({
+        success: false,
+        products: null
+      });
+    }
   } catch (error) {
     next(error);
   }

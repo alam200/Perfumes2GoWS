@@ -5,7 +5,7 @@ const Token = require('../models/token.model');
 const moment = require('moment-timezone');
 const APIError = require('../utils/APIError');
 const { jwtExpirationInterval } = require('../config/vars');
-var nodemailer = require("nodemailer");
+var nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
 /*
