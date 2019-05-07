@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showMenu = true;
   public isUserLoggedIn = false;
   public showFaqItem = false;
+  public showMngData = false;
   public userName: string;
   private cartSubscription: Subscription;
 
@@ -125,22 +126,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showAddItem = true;
         this.showOrders = true;
         this.showUploadProducts = true;
+        this.showMngData = true;
       } else {
         this.showCart = true;
         this.showAddItem = false;
         this.showOrders = false;
         this.showUploadProducts = false;
+        this.showMngData = false;
       }
     } else {
       this.showAddItem = false;
       this.showOrders = false;
       this.showUploadProducts = false;
+      this.showMngData = false;
     }
   }
 
   showCartDetails() {
     this.session.saveCartData(JSON.stringify(this.cartService.getCartItems()));
     this.router.navigate(['/order']);
+  }
+
+  promptExportCsv() {
+    console.log('TODO Export CSV');
   }
 
   logout() {

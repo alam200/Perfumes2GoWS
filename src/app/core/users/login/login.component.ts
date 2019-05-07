@@ -12,7 +12,7 @@ import { UsersService } from '../../../services/users.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-@Injectable ()
+@Injectable()
 
 export class LoginComponent implements OnInit {
   model: any = {};
