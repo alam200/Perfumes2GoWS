@@ -39,7 +39,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private router: Router,
     private authService: AuthenticationService,
-    public location: Location) {
+    public location: Location
+  ) {
     this.authService.isLoggedIn.subscribe(value => {
       if (session.retrieveToken() != null || value) {
         this.showLogin = false;
@@ -50,10 +51,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMyAccount = false;
         this.isUserLoggedIn = false;
       }
-
       if (session.retrieveUserData() != null || value) {
         this.userName = JSON.parse(session.retrieveUserData()).firstName;
       }
+      // RESET
+      this.showFaqItem = false;
     });
   }
 
@@ -98,7 +100,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMyAccount = false;
       }
       // FAQ item visibility
-      let category = JSON.parse(this.session.retrieveUserData()).category;
+      const category = JSON.parse(this.session.retrieveUserData()).category;
       if (category === 'Customer') {
         this.showFaqItem = true;
       }
@@ -134,7 +136,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showOrders = false;
       this.showUploadProducts = false;
     }
-
   }
 
   showCartDetails() {
