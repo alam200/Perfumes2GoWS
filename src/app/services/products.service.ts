@@ -14,6 +14,7 @@ export class ProductsService {
   public GET_BRAND = environment.baseUrl + 'products/brands';
   public GET_TYPES = environment.baseUrl + 'products/types';
   public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
+  public GET_EXPORT_DATA = environment.baseUrl + 'products/exportcsv';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,6 +29,19 @@ export class ProductsService {
       .then((data: any) => {
       })
       .catch(err => Promise.reject(err));
+  }
+
+  getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_EXPORT_DATA, {
+      headers: headers,
+      params: {
+        userId: userId,
+        bFlagProducts: bFlagProducts,
+        bFlagCustomers: bFlagCustomers,
+        bFlagOrders: bFlagOrders
+      }
+    }).toPromise().catch(err => Promise.reject(err));
   }
 
   getBrands() {

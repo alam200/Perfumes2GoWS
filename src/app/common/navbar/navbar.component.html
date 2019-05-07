@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+
 <nav class="navbar navbar-expand-md navbar-toggleable-md  fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -137,16 +140,18 @@
                 <i class="fa fa-file-excel-o"></i>&nbsp;Upload Products
               </span>
             </a>
-            <!-- <a class="dropdown-item" [routerLink]="['user/download']">
-              <span class="btn-text">
-                <i class="fa fa-file-excel-o"></i>&nbsp;XLS List
-              </span>
-            </a> -->
             <a class="dropdown-item" [routerLink]="['orders']" *ngIf="showOrders">
               <span class="btn-text">
                 <i class="fa fa-arrow-right"></i>&nbsp;Orders
               </span>
             </a>
+            <div class="dropdown-divider" *ngIf="showMngData"></div>
+            <a class="dropdown-item tap-here" (click)="promptExportCsv($event)" *ngIf="showMngData">
+              <span class="btn-text">
+                <i class="fa fa-download"></i>&nbsp;Export Data
+              </span>
+            </a>
+            <div class="dropdown-divider" *ngIf="showMngData"></div>
             <a class="dropdown-item" [routerLink]="['/aboutus']" *ngIf="showFaqItem">
               <span class="btn-text">
                 <i class="fa fa-book"></i>&nbsp;About Us
@@ -157,7 +162,8 @@
                 <i class="fa fa-comments"></i>&nbsp;Contact Us
               </span>
             </a>
-            <a *ngIf="isUserLoggedIn" id="loginBtn" class="dropdown-item" (click)="logout()">
+            <div class="dropdown-divider" *ngIf="showFaqItem"></div>
+            <a class="dropdown-item tap-here" (click)="logout()" *ngIf="isUserLoggedIn">
               <span class="btn-text">
                 <i class="fa fa-sign-out"></i>&nbsp;Logout
               </span>
@@ -169,3 +175,20 @@
     </div>
   </div>
 </nav>
+
+<!-- modal template -->
+<div class="modal fade bd-modal-sm" id="exportDialogModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-center"><br>All the data on DB will be exported as CSV format.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="downloadCsvFiles()">
+          <i class="fa fa-download">&nbsp;</i>Export (.csv)
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

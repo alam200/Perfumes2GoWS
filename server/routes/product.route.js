@@ -45,6 +45,13 @@ router
   .get(authorize(), controller.isProductCodeExists);
 
 router
+  .route('/exportcsv')
+  /**
+   * @api {get} api/products/exportcsv | Get All the Data 4 CSV
+   */
+  .get(controller.getExportData);
+
+router
   .route('/brands')
   /**
    * @api {get} api/products/brands | Get Product's Brands List

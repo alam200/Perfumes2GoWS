@@ -43,7 +43,7 @@
           <td id="pdImg" class="text-center">
             <img *ngIf="!product.image" src="/assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
             <img *ngIf="product.image" class="zoom" [src]="product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
-              (click)="openModal(product.image)" onError="this.src='/assets/product_placeholder.png';">
+              (click)="openModal(product.image, $event)" onError="this.src='/assets/product_placeholder.png';">
           </td>
           <td>{{ product.brand }}</td>
           <td>{{ product.type }}</td>
