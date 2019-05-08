@@ -171,9 +171,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data.success) {
           try {
-            const products = data.products;
-            const customers = data.customers;
-            const orders = data.orders;
+            const products = data.products && data.products || [];
+            const customers = data.customers && data.customers || [];
+            const orders = data.orders && data.orders || [];
 
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
