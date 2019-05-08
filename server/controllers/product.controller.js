@@ -195,9 +195,6 @@ exports.list = async (req, res, next) => {
 exports.getExportData = async (req, res, next) => {
   try {
     const userId = req.query.userId;
-    const bFlagProducts = Boolean(req.query.bFlagProducts);
-    const bFlagCustomers = Boolean(req.query.bFlagCustomers);
-    const bFlagOrders = Boolean(req.query.bFlagOrders);
 
     const user = await User.findById({ _id: userId }).exec();
     if (user.isVerified && user.category === 'Admin') {
@@ -206,9 +203,9 @@ exports.getExportData = async (req, res, next) => {
       const orders = await Order.find({}).exec();
       res.json({
         success: true,
-        products: bFlagProducts && products || null,
-        customers: bFlagCustomers && customers || null,
-        orders: bFlagOrders && orders || null
+        products: products,
+        customers: customers,
+        orders: orders
       });
     } else {
       // access denied
@@ -225,13 +222,54 @@ exports.getExportData = async (req, res, next) => {
 };
 
 /**
+ * Delete & Retreive Data
+ * @public
+ */
+exports.retreiveDeleteData = async (req, res, next) => {
+  try {
+    const userId = req.query.userId;
+    const collection = req.query.deleteCollection;
+
+    const user = await User.findById({ _id: userId }).exec();
+    let retreival = [];
+    if (user.isVerified && user.category === 'Admin') {
+      if (collection === 'products') {
+        retreival = await Product.find({}).exec();
+        // delete
+        await Product.deleteMany({}).exec();
+      } else if (collection === 'customers') {
+        retreival = await User.find({ category: 'Customer' }).exec();
+        // delete
+        await User.deleteMany({ category: 'Customer' }).exec();
+      } else if (collection === 'orders') {
+        retreival = await Order.find({}).exec();
+        // delete
+        await Order.deleteMany({}).exec();
+      }
+      res.json({
+        success: true,
+        retreival: retreival
+      });
+    } else {
+      // access denied
+      res.json({
+        success: false,
+        retreival: retreival
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Get brand list
  * @public
  */
 exports.getBrands = async (req, res, next) => {
   try {
     let brands = await Product.distinct('brand').distinct();
-    brands = brands.filter(element => element !=null && element.trim() != '');
+    brands = brands.filter(element => element != null && element.trim() != '');
     res.json(brands.sort());
   } catch (error) {
     next(error);

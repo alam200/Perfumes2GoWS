@@ -169,10 +169,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     $('#exportDialogModal').modal('hide');
     this.spinner.show();
     const userId = this.session.retrieveUserId();
-    const bFlagProducts: Boolean = true;
-    const bFlagCustomers: Boolean = true;
-    const bFlagOrders: Boolean = true;
-    this.productsService.getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders).then(
+    this.productsService.getExportData(userId).then(
       (data: any) => {
         if (data.success) {
           try {
@@ -238,11 +235,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   promptDelete(event) {
     this.deleteItemList = [
-      { name: 'radioProducts', caption: 'Products', value: 'product' },
-      { name: 'radioCustomers', caption: 'Customers', value: 'customer' },
-      { name: 'radioOrders', caption: 'Orders', value: 'order' }
+      { name: 'radioProducts', caption: 'Products', value: 'products' },
+      { name: 'radioCustomers', caption: 'Customers', value: 'customers' },
+      { name: 'radioOrders', caption: 'Orders', value: 'orders' }
     ];
-    this.radioSelected = 'product';
+    this.radioSelected = 'products';
     this.getSelectedItem();
 
     $('#deleteDialogModal').modal('show');
@@ -262,7 +259,39 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   deleteData(item) {
-    console.log(item);
+    $('#deleteDialogModal').modal('hide');
+    this.spinner.show();
+    const userId = this.session.retrieveUserId();
+    this.productsService.retreiveDeleteData(userId, item).then(
+      (data: any) => {
+        if (data.success) {
+          try {
+            const retreival = data.retreival;
+            if (retreival.length) {
+              const blob = this.getCsvBlob(retreival);
+              const filename = `${item}_deleted_${this.getTimestampStr()}.csv`;
+              this.spinner.hide();
+              saveAs(blob, filename);
+              this.alert.success(`${this.radioSelectedStr} - Deleted`);
+            } else {
+              // no data to delete
+              this.spinner.hide();
+              this.alert.error(`${this.radioSelectedStr} - Nothing to Delete`);
+            }
+          } catch (e) {
+            this.spinner.hide();
+            console.log(e);
+            this.alert.error(`${this.radioSelectedStr} - Failed to Delete`);
+          }
+        } else {
+          // exception handler | access denied
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+        console.log('service down ', error);
+      });
   }
 
   logout() {
