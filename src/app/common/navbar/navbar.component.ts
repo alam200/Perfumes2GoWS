@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   orderItems: OrderItem[] = [];
   productsQuantity: number;
   count: number;
+
   public showLogin = true;
   public showSignup = true;
   public showMyAccount = false;
@@ -40,6 +41,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showMngData = false;
   public userName: string;
   private cartSubscription: Subscription;
+
+  radioSelected: String;
+  radioSelectedStr: String;
+  deleteItemList: any = [];
 
   constructor(private cartService: CartService,
     private productsService: ProductsService,
@@ -229,6 +234,35 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const BOM = '\uFEFF';
     csvArr = BOM + csvArr;
     return new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
+  }
+
+  promptDelete(event) {
+    this.deleteItemList = [
+      { name: 'radioProducts', caption: 'Products', value: 'product' },
+      { name: 'radioCustomers', caption: 'Customers', value: 'customer' },
+      { name: 'radioOrders', caption: 'Orders', value: 'order' }
+    ];
+    this.radioSelected = 'product';
+    this.getSelectedItem();
+
+    $('#deleteDialogModal').modal('show');
+    event.stopPropagation(); // PREVENT multiple modals open
+  }
+
+  getSelectedItem() {
+    try {
+      this.radioSelectedStr = this.deleteItemList.find(item => item.value === this.radioSelected).caption;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  onRadioItemChange() {
+    this.getSelectedItem();
+  }
+
+  deleteData(item) {
+    console.log(item);
   }
 
   logout() {

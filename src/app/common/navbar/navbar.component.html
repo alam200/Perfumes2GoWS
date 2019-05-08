@@ -151,6 +151,11 @@
                 <i class="fa fa-download"></i>&nbsp;Export Data
               </span>
             </a>
+            <a class="dropdown-item tap-here" (click)="promptDelete($event)" *ngIf="showMngData">
+              <span class="btn-text">
+                <i class="fa fa-trash"></i>&nbsp;DELETE Data
+              </span>
+            </a>
             <div class="dropdown-divider" *ngIf="showMngData"></div>
             <a class="dropdown-item" [routerLink]="['/aboutus']" *ngIf="showFaqItem">
               <span class="btn-text">
@@ -176,7 +181,7 @@
   </div>
 </nav>
 
-<!-- modal template -->
+<!-- modal templates -->
 <div class="modal fade bd-modal-sm" id="exportDialogModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -186,6 +191,34 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="downloadCsvFiles()">
           <i class="fa fa-download">&nbsp;</i>Export (.csv)
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-modal-sm" id="deleteDialogModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-center text-danger">
+          <br>DELETE which data?
+        </p>
+        <div class="form-check" *ngFor="let item of deleteItemList">
+          <input class="form-check-input" type="radio" [(ngModel)]="radioSelected" name="{{ item.name }}" id="{{ item.name }}" value="{{ item.value }}" (change)="onRadioItemChange()">
+          <label class="form-check-label" for="{{ item.name }}">
+            {{ item.caption }}
+          </label>
+        </div>
+        <br>
+        <div class="alert alert-success" role="alert">
+          It will export all data of <b>{{ radioSelectedStr }}</b> in CSV format prior to DELETE.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteData(radioSelected)">
+          <i class="fa fa-trash">&nbsp;</i>DELETE
         </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
