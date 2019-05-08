@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   orderItems: OrderItem[] = [];
   productsQuantity: number;
   count: number;
+
   public showLogin = true;
   public showSignup = true;
   public showMyAccount = false;
@@ -40,6 +41,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showMngData = false;
   public userName: string;
   private cartSubscription: Subscription;
+
+  radioSelected: String;
+  radioSelectedStr: String;
+  deleteItemList: any = [];
 
   constructor(private cartService: CartService,
     private productsService: ProductsService,
@@ -164,10 +169,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     $('#exportDialogModal').modal('hide');
     this.spinner.show();
     const userId = this.session.retrieveUserId();
-    const bFlagProducts: Boolean = true;
-    const bFlagCustomers: Boolean = true;
-    const bFlagOrders: Boolean = true;
-    this.productsService.getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders).then(
+    this.productsService.getExportData(userId).then(
       (data: any) => {
         if (data.success) {
           try {
@@ -229,6 +231,67 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const BOM = '\uFEFF';
     csvArr = BOM + csvArr;
     return new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
+  }
+
+  promptDelete(event) {
+    this.deleteItemList = [
+      { name: 'radioProducts', caption: 'Products', value: 'products' },
+      { name: 'radioCustomers', caption: 'Customers', value: 'customers' },
+      { name: 'radioOrders', caption: 'Orders', value: 'orders' }
+    ];
+    this.radioSelected = 'products';
+    this.getSelectedItem();
+
+    $('#deleteDialogModal').modal('show');
+    event.stopPropagation(); // PREVENT multiple modals open
+  }
+
+  getSelectedItem() {
+    try {
+      this.radioSelectedStr = this.deleteItemList.find(item => item.value === this.radioSelected).caption;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  onRadioItemChange() {
+    this.getSelectedItem();
+  }
+
+  deleteData(item) {
+    $('#deleteDialogModal').modal('hide');
+    this.spinner.show();
+    const userId = this.session.retrieveUserId();
+    this.productsService.retreiveDeleteData(userId, item).then(
+      (data: any) => {
+        if (data.success) {
+          try {
+            const retreival = data.retreival;
+            if (retreival.length) {
+              const blob = this.getCsvBlob(retreival);
+              const filename = `${item}_deleted_${this.getTimestampStr()}.csv`;
+              this.spinner.hide();
+              saveAs(blob, filename);
+              this.alert.success(`${this.radioSelectedStr} - Deleted`);
+            } else {
+              // no data to delete
+              this.spinner.hide();
+              this.alert.error(`${this.radioSelectedStr} - Nothing to Delete`);
+            }
+          } catch (e) {
+            this.spinner.hide();
+            console.log(e);
+            this.alert.error(`${this.radioSelectedStr} - Failed to Delete`);
+          }
+        } else {
+          // exception handler | access denied
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+        console.log('service down ', error);
+      });
   }
 
   logout() {

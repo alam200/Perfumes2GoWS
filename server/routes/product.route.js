@@ -52,6 +52,13 @@ router
   .get(controller.getExportData);
 
 router
+  .route('/delete/collection')
+  /**
+   * @api {get} api/products/delete/collection | Delete & Retreive Data
+   */
+  .get(controller.retreiveDeleteData);
+
+router
   .route('/brands')
   /**
    * @api {get} api/products/brands | Get Product's Brands List

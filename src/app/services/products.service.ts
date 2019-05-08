@@ -15,6 +15,7 @@ export class ProductsService {
   public GET_TYPES = environment.baseUrl + 'products/types';
   public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
   public GET_EXPORT_DATA = environment.baseUrl + 'products/exportcsv';
+  public GET_DELETED_DATA = environment.baseUrl + 'products/delete/collection';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -31,15 +32,23 @@ export class ProductsService {
       .catch(err => Promise.reject(err));
   }
 
-  getExportData(userId, bFlagProducts, bFlagCustomers, bFlagOrders) {
+  getExportData(userId) {
     const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
     return this.httpClient.get(this.GET_EXPORT_DATA, {
       headers: headers,
       params: {
+        userId: userId
+      }
+    }).toPromise().catch(err => Promise.reject(err));
+  }
+
+  retreiveDeleteData(userId, item) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_DELETED_DATA, {
+      headers: headers,
+      params: {
         userId: userId,
-        bFlagProducts: bFlagProducts,
-        bFlagCustomers: bFlagCustomers,
-        bFlagOrders: bFlagOrders
+        deleteCollection: item
       }
     }).toPromise().catch(err => Promise.reject(err));
   }
