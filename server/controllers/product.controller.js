@@ -206,9 +206,9 @@ exports.getExportData = async (req, res, next) => {
       const orders = await Order.find({}).exec();
       res.json({
         success: true,
-        products: products,
-        customers: customers,
-        orders: orders
+        products: bFlagProducts && products || null,
+        customers: bFlagCustomers && customers || null,
+        orders: bFlagOrders && orders || null
       });
     } else {
       // access denied
