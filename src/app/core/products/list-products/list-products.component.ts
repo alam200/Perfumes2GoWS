@@ -176,11 +176,13 @@ export class ListProductsComponent implements OnInit {
 
   selectType(value) {
     this.selectedType = value;
+    console.log(this.selectedType);
     $('#datTable').DataTable().column('Type').search(this.selectedType).draw();
   }
 
   selectBrand(value) {
     this.selectedBrand = value;
+    console.log(this.selectedBrand);
     $('#datTable').DataTable().column('brand').search(this.selectedBrand).draw();
   }
 
