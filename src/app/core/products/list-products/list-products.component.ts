@@ -315,7 +315,7 @@ export class ListProductsComponent implements OnInit {
 
   public openModal(image, event) {
     if (image.indexOf('/product_placeholder.png') !== -1) {
-      image = image.replace('product_placeholder.png', 'coming_soon.jpg');
+      image = image.replace('product_placeholder.png', 'coming_soon.png');
     }
     this.productImage = image;
     $('#productImage').attr('src', image);

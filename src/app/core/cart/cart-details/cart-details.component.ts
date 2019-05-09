@@ -57,7 +57,7 @@ export class CartDetailsComponent implements OnInit {
 
   public openModal(image) {
     if (image.indexOf('/product_placeholder.png') !== -1) {
-      image = image.replace('product_placeholder.png', 'coming_soon.jpg');
+      image = image.replace('product_placeholder.png', 'coming_soon.png');
     }
 
     this.productImage = image;
