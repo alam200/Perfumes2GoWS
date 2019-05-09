@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
         if (error.status === 0) {
           console.log('service down ', error);
         } else {
-          this.alertService.error(error.error.message);
+          this.alertService.error(error.message);
         }
       });
   }

@@ -44,8 +44,8 @@ export class ForgetPasswordComponent implements OnInit {
         error => {
           /** spinner ends */
           this.spinner.hide();
-          console.log('error', error);
-          this.alertService.error(error.error.message, true);
+          console.log(error);
+          this.alertService.error(error.message, true);
         });
     } else {
       this.usersService.resendVerificationMail(form.controls['email'].value).subscribe(
@@ -58,8 +58,8 @@ export class ForgetPasswordComponent implements OnInit {
         error => {
           /** spinner ends */
           this.spinner.hide();
-          console.log('error', error);
-          this.alertService.error(error.error.message, true);
+          console.log(error);
+          this.alertService.error(error.message, true);
         });
     }
   }

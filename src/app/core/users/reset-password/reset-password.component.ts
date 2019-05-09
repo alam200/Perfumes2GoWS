@@ -38,8 +38,8 @@ export class ResetPasswordComponent implements OnInit {
       error => {
         /** spinner ends */
         this.spinner.hide();
-        console.log(error.error.message);
-        this.alertService.error(error.error.message, true);
+        console.log(error);
+        this.alertService.error(error.message, true);
       });
   }
 
