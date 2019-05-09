@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../common/alert/alert.service';
 import { ProductsService } from '../../../services/products.service';
+// import { read } from 'fs';
 
 @Component({
   selector: 'app-add-product',
@@ -26,7 +27,8 @@ export class AddProductComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private location: Location) { }
+    private location: Location
+  ) { }
 
   ngOnInit() {
     this.productCode = this.route.snapshot.paramMap.get('sku');
@@ -73,8 +75,6 @@ export class AddProductComponent implements OnInit {
         console.log('service down ', error);
       });
   }
-
-
 
   onSubmit() {
     /** spinner starts */
@@ -127,7 +127,8 @@ export class AddProductComponent implements OnInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.model['imageBase64'] = reader.result.split(',')[1];
+        const base64: any = reader.result;
+        this.model['imageBase64'] = base64.split(',')[1];
       };
     }
   }

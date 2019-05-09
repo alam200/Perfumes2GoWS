@@ -5,14 +5,14 @@
   <div class="form-group row clearfix">
     <label class="col-md-2 col-sm-2 col-form-label-sm">Type: </label>
     <div class="col-md-4 col-sm-4">
-      <select class="form-control form-control-sm" #type (change)="selectType(type.value)">
+      <select class="form-control form-control-sm" #type (change)="selectType(type.value)" [(ngModel)]="selectedType">
         <option selected>ALL</option>
         <option *ngFor="let type of types" [value]="type">{{ type }}</option>
       </select>
     </div>
     <label class="col-md-2 col-sm-2 col-form-label-sm">Brand: </label>
     <div class="col-md-4 col-sm-4">
-      <select class="form-control form-control-sm select-brand" #brand (change)="selectBrand(brand.value)">
+      <select class="form-control form-control-sm select-brand" #brand (change)="selectBrand(brand.value)" [(ngModel)]="selectedBrand">
         <option selected>ALL</option>
         <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
       </select>
@@ -60,15 +60,14 @@
           </td>
           <td *ngIf="userCategory === 'Customer'">{{ product.subtotal | currency:'USD' }}</td>
           <td text-center *ngIf="userCategory === 'Admin'" class="text-center">
-            <div></div>
-            <a routerLink="/product-details/{{ product.SKU }}" class="d-inline-block">
+            <a class="d-inline-block tap-here" (click)="goEditProduct(product.SKU)">
               <span class="btn btn-success btn-sm place-order pull-right">
-                <i class="fa fa-edit"></i>&nbsp; Edit
+                <i class="fa fa-edit"></i>&nbsp;Edit
               </span>
             </a>
           </td>
         </tr>
-        <tr *ngIf="products.length == 0">
+        <tr *ngIf="products?.length == 0">
           <td colspan="9" class="no-data-available">No Product Found!</td>
         </tr>
       </tbody>
