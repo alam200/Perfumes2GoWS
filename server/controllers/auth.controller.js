@@ -5,17 +5,18 @@ const Token = require('../models/token.model');
 const moment = require('moment-timezone');
 const APIError = require('../utils/APIError');
 const { jwtExpirationInterval } = require('../config/vars');
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
-/*
-    Here we are configuring our SMTP Server details.
-    STMP is mail server which is responsible for sending and receiving email.
-*/
-var smtpTransport = nodemailer.createTransport({
+/**
+ * Here we are configuring our SMTP Server details.
+ * STMP is mail server which is responsible for sending and receiving email.
+ */
+const adminMailAddress = 'perfumes2gows@gmail.com';
+const smtpTransport = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "perfumes2gows@gmail.com",
+    user: adminMailAddress,
     pass: "Alhambra11"
   }
 });
@@ -71,7 +72,7 @@ exports.register = async (req, res, next) => {
           "<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a><br>" +
           '<br>Thank you,<br>' + 'Perfumes2Go';
         let mailOptions = {
-          from: '"Perfumes2Go" <perfumes2gows@gmail.com>',
+          from: `"Perfumes2Go" <${adminMailAddress}>`,
           to: user.email,
           subject: 'Account Verification',
           html: html
@@ -85,7 +86,7 @@ exports.register = async (req, res, next) => {
   } catch (error) {
     return next(User.checkDuplicateEmail(error));
   }
-}
+};
 
 /**
  * Returns jwt token if valid username and password is provided
@@ -163,7 +164,7 @@ exports.resendToken = async (req, res) => {
         + "<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>";
       '<br><br>Thank you,<br>' + 'Perfumes2Go'
       let mailOptions = {
-        from: '"Perfumes2Go" <perfumes2gows@gmail.com>',
+        from: `"Perfumes2Go" <${adminMailAddress}>`,
         to: user.email,
         subject: 'Account Verification',
         html: html
@@ -177,7 +178,7 @@ exports.resendToken = async (req, res) => {
   catch (error) {
     return next(error);
   }
-}
+};
 
 exports.forgotPassword = async (req, res, next) => {
   try {
@@ -197,7 +198,7 @@ exports.forgotPassword = async (req, res, next) => {
     let link = "http://" + req.headers.host + "/#/user/reset/" + token.token;
     const mailOptions = {
       to: user.email,
-      from: '"Perfumes2Go" <perfumes2gows@gmail.com>',
+      from: `"Perfumes2Go" <${adminMailAddress}>`,
       subject: 'Password Reset',
       html: "Hi " + user.firstName + "," +
         "<br>Use the link below to reset your password" +
@@ -216,7 +217,7 @@ exports.forgotPassword = async (req, res, next) => {
   catch (error) {
     return next(error);
   }
-}
+};
 
 exports.getResetPassword = async (req, res) => {
   try {
@@ -230,11 +231,10 @@ exports.getResetPassword = async (req, res) => {
   catch (error) {
     return next(error);
   }
-}
+};
 
 exports.postResetPassword = async (req, res, next) => {
   try {
-
     let user = await User.findOne({ resetPasswordToken: req.query.token, resetPasswordExpires: { $gt: Date.now() } });
     if (!user) return res.status(httpStatus.BAD_REQUEST).json({ message: 'No account with that email address exists.' });
 
@@ -246,7 +246,7 @@ exports.postResetPassword = async (req, res, next) => {
 
     var mailOptions = {
       to: user.email,
-      from: '"Perfumes2Go" <perfumes2gows@gmail.com>',
+      from: `"Perfumes2Go" <${adminMailAddress}>`,
       subject: 'Password changed',
       html: 'Hello ' + user.firstName + "," +
         'This is a confirmation that the password for your account ' + user.email + ' has been changed.<br>' +
@@ -261,5 +261,30 @@ exports.postResetPassword = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-}
+};
 
+/**
+ * Send ContactUs Email
+ * @public
+ */
+exports.sendContactMail = async (req, res, next) => {
+  try {
+    const contact = req.body;
+    let mailOptions = {
+      to: adminMailAddress,
+      from: contact.email,
+      subject: contact.subject || 'No Subject',
+      text: contact.comments,
+      html: contact.comments.replace('\n', '<br>')
+    };
+    smtpTransport.sendMail(mailOptions, (err) => {
+      if (err) {
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message });
+      } else {
+        res.status(httpStatus.OK).json({ message: 'Success! Your message has been delivered.' });
+      }
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
