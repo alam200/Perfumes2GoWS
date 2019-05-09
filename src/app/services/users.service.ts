@@ -20,6 +20,7 @@ export class UsersService {
   public SEND_FORGOT_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/forgot`;
   public RESET_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/reset`;
   public RESEND_TOKEN_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/resend`;
+  public SEND_CONTACT_MAIL_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/contactmail`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -110,5 +111,12 @@ export class UsersService {
     return this.httpClient.post(this.RESEND_TOKEN_URL, { email: email }, { headers }).pipe(
       map(response => response),
       catchError(err => Promise.reject(err)));
+  }
+
+  sendContactMail(data) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.post(this.SEND_CONTACT_MAIL_URL, data, { headers }).pipe(
+      map(response => response),
+      catchError((error: Response) => observableThrowError(error)));
   }
 }

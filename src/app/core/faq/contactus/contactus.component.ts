@@ -30,34 +30,27 @@ export class ContactusComponent implements OnInit {
         this.model.firstName = userdata.firstName;
         this.model.lastName = userdata.lastName;
         this.model.email = userdata.email;
+        this.model.userId = userdata._id;
       }
     }
   }
 
   onSubmit() {
-    console.log(this.model);
-    this.alertService.error('working...');
-    // /** spinner starts */
-    // this.spinner.show();
-    // this.usersService.updateUser(this.model, this.session.retrieveUserId()).subscribe(
-    //   (data: any) => {
-    //     /** spinner ends */
-    //     this.spinner.hide();
-    //     this.alertService.success('User updated successfully.', true);
-    //     data.password = undefined;
-    //     this.session.saveUserData(JSON.stringify(data));
-    //     this.alertService.success('User Updated successfully.', true);
-    //   },
-    //   error => {
-    //     /** spinner ends */
-    //     this.spinner.hide();
-    //     this.alertService.error(error.statusText);
-    //     if (error.status === 0) {
-    //       console.log('service down ', error);
-    //     } else {
-    //       this.alertService.error(error.statusText);
-    //     }
-    //   });
+    /** spinner starts */
+    this.spinner.show();
+    this.usersService.sendContactMail(this.model).subscribe(
+      (data: any) => {
+        /** spinner ends */
+        this.spinner.hide();
+        this.alertService.success(data.message, true);
+        this.router.navigate(['/aboutus']);
+      },
+      error => {
+        /** spinner ends */
+        this.spinner.hide();
+        console.log(error);
+        this.alertService.error(error.message, true);
+      });
   }
 
 }
