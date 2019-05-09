@@ -43,7 +43,7 @@ export class ContactusComponent implements OnInit {
         /** spinner ends */
         this.spinner.hide();
         this.alertService.success(data.message, true);
-        this.router.navigate(['/aboutus']);
+        this.router.navigate(['/products']);
       },
       error => {
         /** spinner ends */
