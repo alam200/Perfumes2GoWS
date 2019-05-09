@@ -43,11 +43,15 @@ export class ListProductsComponent implements OnInit {
   public brands = [];
   public types = [];
 
-  public selectedType = '';
-  public selectedBrand = '';
+  public selectedType = 'ALL';
+  public selectedBrand = 'ALL';
 
   public productSubTotal = '0.00';
   public productImage;
+
+  private selTypeKey = 'selected_type';
+  private selBrandKey = 'selected_brand';
+  private searchTextKey = 'search_text';
 
   public constructor(private http: HttpClient,
     private productsService: ProductsService,
@@ -87,10 +91,30 @@ export class ListProductsComponent implements OnInit {
           this.defaultOrder = [7, 'asc'];
         }
       }
-  
-      this.getProductsData(); // default
-      this.getTypes();
-      this.getBrands();
+
+      Promise.all([
+        this.getProductsData(), // default
+        this.getTypes(),
+        this.getBrands()
+      ]).then(() => {
+        // restore Saved Filters
+        const type: string = sessionStorage.getItem(this.selTypeKey);
+        const brand: string = sessionStorage.getItem(this.selBrandKey);
+        const search: string = sessionStorage.getItem(this.searchTextKey);
+        if (type || brand || search) {
+          this.selectedType = type || 'ALL';
+          this.selectedBrand = brand || 'ALL';
+          if (search) {
+            setTimeout(() => {
+              $('#datTable_filter input[type=search]').val(search).trigger('input');
+            }, 1500);
+          }
+        }
+        // clear Filters
+        sessionStorage.removeItem(this.selTypeKey);
+        sessionStorage.removeItem(this.selBrandKey);
+        sessionStorage.removeItem(this.searchTextKey);
+      });
     }
   }
 
@@ -309,5 +333,17 @@ export class ListProductsComponent implements OnInit {
         return b['quanity'] - a['quanity'];
       });
     }
+  }
+
+  goEditProduct(sku) {
+    const selectedType: string = this.selectedType;
+    const selectedBrand: string = this.selectedBrand;
+    const searchText: string = $('#datTable_filter input[type=search]').val();
+    // preserve Filters to SessionStorage
+    sessionStorage.setItem(this.selTypeKey, selectedType);
+    sessionStorage.setItem(this.selBrandKey, selectedBrand);
+    sessionStorage.setItem(this.searchTextKey, searchText);
+    // navigate
+    this.router.navigate(['product-details', sku]);
   }
 }
