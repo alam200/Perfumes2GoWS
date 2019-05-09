@@ -75,11 +75,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .modal-content {
-    background-color: rgba(0, 0, 0, .0001) !important;
+    background-color: rgba(0, 0, 0, .2) !important;
 }
 
 .modal-header {
-    padding: 0rem .5rem 0rem 0rem !important;
+    padding: 1rem 1rem 0rem 0rem !important;
     border-bottom: none !important;
 }
 
