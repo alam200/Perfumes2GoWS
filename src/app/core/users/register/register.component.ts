@@ -66,11 +66,11 @@ export class RegisterComponent implements OnInit {
         error => {
           /** spinner ends */
           this.spinner.hide();
-          this.alertService.error(error.statusText);
-          if (error.status === 0) {
-            console.log('service down ', error);
-          } else {
+          console.log('service down ', error);
+          try {
             this.alertService.error(error.statusText);
+          } catch (e) {
+            console.log(e);
           }
         });
     }

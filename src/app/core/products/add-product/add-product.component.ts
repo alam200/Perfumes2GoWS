@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../common/alert/alert.service';
 import { ProductsService } from '../../../services/products.service';
-// import { read } from 'fs';
 
 @Component({
   selector: 'app-add-product',
