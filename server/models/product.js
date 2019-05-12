@@ -87,7 +87,7 @@ productSchema.statics = {
       // if imageBase64 not passed but image exist but not default image, then just return that as it is
       return req.body.image;
     }
-    // otherwise return default image path
+    // other wise return default image path
     return '/products/product_placeholder.png';
   }
 };

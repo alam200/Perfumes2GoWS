@@ -93,12 +93,8 @@ export class AddProductComponent implements OnInit {
         error => {
           /** spinner ends */
           this.spinner.hide();
+          console.log('service down ', error);
           this.alertService.error(error.statusText);
-          if (error.status === 0) {
-            console.log('service down ', error);
-          } else {
-            this.alertService.error(error.statusText);
-          }
         });
     } else { // add product
       this.productService.addProduct(this.model).subscribe(
@@ -111,11 +107,8 @@ export class AddProductComponent implements OnInit {
         error => {
           /** spinner ends */
           this.spinner.hide();
-          if (error.status === 0) {
-            console.log('service down ', error);
-          } else {
-            this.alertService.error(error.statusText);
-          }
+          console.log('service down ', error);
+          this.alertService.error(error.statusText);
         });
     }
   }

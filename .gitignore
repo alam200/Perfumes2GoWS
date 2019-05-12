@@ -26,3 +26,7 @@ package-lock.json
 .idea
 .project
 .strong-pm
+
+# Image Upload
+images/products/
+*.xlsx

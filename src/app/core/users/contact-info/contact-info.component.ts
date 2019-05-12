@@ -47,11 +47,8 @@ export class ContactInfoComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
-        if (error.status === 0) {
-          console.log('service down ', error);
-        } else {
-          this.alertService.error(error.statusText);
-        }
+        console.log('service down ', error);
+        this.alertService.error(error.statusText);
       });
   }
 
@@ -64,11 +61,8 @@ export class ContactInfoComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
-        if (error.status === 0) {
-          console.log('service down ', error);
-        } else {
-          this.alertService.error(error.statusText);
-        }
+        console.log('service down ', error);
+        this.alertService.error(error.statusText);
       });
   }
 
