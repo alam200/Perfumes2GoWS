@@ -33,8 +33,8 @@ const productSchema = new Schema({
     default: '/products/product_placeholder.png'
   }
 }, {
-    timestamps: true,
-  });
+  timestamps: true
+});
 
 /**
  * Statics
@@ -73,7 +73,7 @@ productSchema.statics = {
       const productImageName = 'images/' + productImageUrl;
       fs.writeFileSync(productImageName, base64Image, { encoding: 'base64' });
 
-      //Delete already exist image for this product
+      // Delete already exist image for this product
       if (oldImage !== '/products/product_placeholder.png') {
         fs.unlink('images/' + oldImage, (err) => {
           if (err) {
@@ -88,9 +88,8 @@ productSchema.statics = {
       return req.body.image;
     }
     // other wise return default image path
-    return '/products/product_placeholder.png'; //default image
+    return '/products/product_placeholder.png';
   }
-}
-
+};
 
 module.exports = mongoose.model('product', productSchema);

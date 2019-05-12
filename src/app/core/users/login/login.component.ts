@@ -122,11 +122,12 @@ export class LoginComponent implements OnInit {
       error => {
         /** spinner ends */
         this.spinner.hide();
-        if (error.status === 0) {
           console.log('service down ', error);
-        } else {
-          this.alertService.error(error.message);
-        }
+          try {
+            this.alertService.error(error.name);
+          } catch (e) {
+            console.log(e);
+          }
       });
   }
 }

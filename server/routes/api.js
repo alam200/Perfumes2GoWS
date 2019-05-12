@@ -8,7 +8,7 @@ const addressesRoutes = require('./address.route');
 const ordersRoutes = require('./order.route');
 
 /** PRODUCTION */
-// const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+// const dbUri = "mongodb://akros:akros@142.93.252.227:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
 const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 
