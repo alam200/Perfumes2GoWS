@@ -54,7 +54,7 @@
           <td>{{ product.stock }}</td>
           <td *ngIf="userCategory === 'Customer'">
             <div class="form-group">
-              <input type="number" class="form-control form-control-sm quantity-input" min="0" max="{{product.stock}}" value="{{product.quantity}}"
+              <input type="number" class="form-control form-control-sm quantity-input" min="0" max="{{ product.stock }}" value="{{ product.quantity }}"
                 (input)="calculateProductSubTotal($event, product)">
             </div>
           </td>
