@@ -21,6 +21,7 @@ package-lock.json
 
 # Ng Dist config
 /dist
+dist/*.txt
 
 # Editor config
 .idea
