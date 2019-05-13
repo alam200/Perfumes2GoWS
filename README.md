@@ -4,7 +4,7 @@
 
 ---
 
-## Development with VS Code
+## Local Development with VS Code
 
 - Confirm that `master` branch is activated (Or, *create your own branch to add new features*)
 ```
@@ -51,7 +51,7 @@ $ ng build
 
 ---
 
-## Setting up Production Release
+## Setting up Production Release on Ubuntu Server
 
 - Confirm that `release` branch is activated
 ```
