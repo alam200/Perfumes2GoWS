@@ -6,20 +6,28 @@
 
 ## Development with VS Code
 
-- install `node_modules`
+- Confirm that `master` branch is activated (Or, *create your own branch to add new features*)
+```
+$ git pull origin master
+```
+- Install `node_modules`
 ```
 $ npm i
 ```
-- switch Mongo connection URI in `/server/routes/api.js` for **local DB**
+- Check MongoDB connection URI in `/server/routes/api.js` for **local Database**
 ```
 /** PRODUCTION */
-// const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+// const dbUri = "mongodb://akros:akros@142.93.252.227:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
 const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 ```
 - Run Mongo Daemon by `mongod`
 ```
 $ mongod
+```
+- Build angular app into `dist` folder in **development** mode
+```
+$ ng build
 ```
 - Press `F5` to launch **node.js** server with debug tool
 > launch.json
@@ -39,32 +47,39 @@ $ mongod
     ]
 }
 ```
-- launch Angular app with **hot-reload** mode
-```
-$ npm start
-```
-- Angular app runs on [http://localhost:4200/](http://localhost:4200/), on the other hand, API server listens to [http://localhost:3000/api/](http://localhost:3000/api/)
+- App runs on [http://localhost:3000/](http://localhost:3000/), at the same time, API server listens to [http://localhost:3000/api/](http://localhost:3000/api/)
 
 ---
 
 ## Setting up Production Release
 
-- switch Mongo connection URI in `/server/routes/api.js` for **remote DB**
+- Confirm that `release` branch is activated
+```
+$ git checkout release
+$ git pull origin release
+```
+- Check MongoDB connection URI in `/server/routes/api.js` for **remote Database**
 ```
 /** PRODUCTION */
-const dbUri = "mongodb://akros:akros@178.128.154.163:27017/fragrance-deals?authSource=admin";
+const dbUri = "mongodb://akros:akros@142.93.252.227:27017/fragrance-deals?authSource=admin";
 /** DEVELOPMENT */
 // const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 ```
-- build Angular app with production mode
+- Build Angular app in **production** mode
 ```
 $ npm run build
 ```
-- Press `F5` or execute `$ node server.js` to go [http://localhost:3000/](http://localhost:3000/)
+- Run node server in **background** mode
+```
+$ npm run server
+# it runs => $ node server.js &
+```
+- Access [http://www.perfumes2go.net](http://www.perfumes2go.net)
 
 ---
+---
 
-## Starting with nginx
+## Starting with nginx (!DEPRECATED)
 
 ### macOS and ubuntu
 
