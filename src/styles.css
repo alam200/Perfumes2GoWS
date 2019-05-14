@@ -116,6 +116,17 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 /* 
+ * remove footer
+ */
+.footer {
+    display: none;
+}
+
+body {
+    padding-bottom: 0;
+}
+
+/* 
  * Angular Image Slider with Lightbox
  */
 .ng-image-slider {
