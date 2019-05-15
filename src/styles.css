@@ -84,6 +84,9 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 @media screen and (max-width: 768px) {
+    div.dataTables_wrapper div.dataTables_filter {
+        text-align: center !important;
+    }
     .body-content-wrapper {
         padding-top: 30px;
     }
@@ -92,7 +95,7 @@ div.dataTables_wrapper div.dataTables_info {
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 884px) {
     .grid-table-wrapper > #datTable_wrapper > .row:first-child > .col-sm-12 {
         width: 50%;
         max-width: 50%;
@@ -145,4 +148,11 @@ body {
 
 .ng-image-slider .container .main .main-inner .img-div img {
     object-fit: contain;
+}
+
+/* 
+ * DataTables Customization
+ */
+#datTable_length {
+    overflow: hidden;
 }
