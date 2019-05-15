@@ -4,6 +4,9 @@ body {
     padding-top: 5vw;
     padding-bottom: 40px;
     font-size: 0.85rem;
+    /* background image */
+    background-image: url('assets/bg_lightblue.jpg');
+    background-position: center;
 }
 
 .dataTables_empty {
