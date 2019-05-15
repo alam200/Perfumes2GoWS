@@ -37,7 +37,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showUploadProducts = false;
   public showMenu = true;
   public isUserLoggedIn = false;
-  public showFaqItem = false;
+  public showAboutUs = true;
+  public showContactUs = true;
   public showMngData = false;
   public userName: string;
   private cartSubscription: Subscription;
@@ -69,7 +70,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.userName = JSON.parse(session.retrieveUserData()).firstName;
       }
       // RESET
-      this.showFaqItem = false;
+      this.showAboutUs = true;
+      this.showContactUs = true;
     });
   }
 
@@ -116,9 +118,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
       // FAQ item visibility
       const category = JSON.parse(this.session.retrieveUserData()).category;
       if (category === 'Customer') {
-        this.showFaqItem = true;
+        if (path === '/aboutus') {
+          this.showAboutUs = false;
+        } else {
+          this.showAboutUs = true;
+        }
+        if (path === '/contactus') {
+          this.showContactUs = false;
+        } else {
+          this.showContactUs = true;
+        }
+      } else {
+        this.showAboutUs = false;
+        this.showContactUs = false;
       }
     } else {
+      // GoBack is invisible when Logged Out
+      this.showBack = false;
       // this.showMenu = false;
       this.showLogin = true;
       this.showSignup = true;
@@ -127,6 +143,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMyAccount = false;
         this.showLogin = false;
         this.showAddCart = false;
+      }
+      if (path === '/user/register') {
+        this.showSignup = false;
+      }
+      // FAQ item visibility
+      if (path === '/aboutus') {
+        this.showAboutUs = false;
+      } else {
+        this.showAboutUs = true;
+      }
+      if (path === '/contactus') {
+        this.showContactUs = false;
+      } else {
+        this.showContactUs = true;
       }
     }
 

@@ -23,7 +23,7 @@ export class ContactusComponent implements OnInit {
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/user/login']);
+      // no preinput
     } else {
       if (this.session.retrieveUserData()) {
         const userdata = JSON.parse(this.session.retrieveUserData());

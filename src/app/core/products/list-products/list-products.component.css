@@ -155,3 +155,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 #datTable_filter {
     text-align: center;
 }
+
+.table-bordered,
+.table-bordered td,
+.table-bordered th {
+    border-color: #b0b0b0;
+}
