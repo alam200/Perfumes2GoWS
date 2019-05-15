@@ -204,6 +204,11 @@ export class ListProductsComponent implements OnInit {
         emptyTable: 'No data available in table',
         loadingRecords: 'Please wait...',
         zeroRecords: 'No matching records found'
+      },
+      drawCallback: (settings) => {
+        $('#datTable_length').parent().removeClass('col-md-6').addClass('col-md-4');
+        $('#datTable_filter').parent().removeClass('col-md-6').addClass('col-md-3');
+        $('#datTable_filter').css('text-align', 'right');
       }
     };
   }

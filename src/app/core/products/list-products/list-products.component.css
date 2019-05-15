@@ -1,8 +1,10 @@
 .form-element {
     position: absolute !important;
     padding-right: 1vw;
-    right: 20vw;
-    left: 35vw;
+    /* right: 20vw; */
+    right: 0;
+    /* left: 35vw; */
+    width: 33%;
     z-index: 1;
 }
 
@@ -16,9 +18,14 @@
     width: auto;
 }
 
-.form-element .select-brand{
-    width: 140px;
+.form-element .select-type,
+.form-element .select-brand {
+    width: 100%;
 }
+
+/* .form-element .select-brand{
+    width: 140px;
+} */
 
 .no-data-available {
     text-align: center;
@@ -118,17 +125,18 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     }
 }
 
-@media screen and (max-width: 1124px) and (min-width: 885px) {
+/* @media screen and (max-width: 1124px) and (min-width: 885px) {
     .form-element.product-filters {
         right: 28vw;
         left: 22vw;
     }
-}
+} */
 
 @media screen and (max-width: 884px) and (min-width: 577px) {
     .form-element.product-filters {
-      position: relative !important;
-      left: 0;
+        position: relative !important;
+        left: 0;
+        width: 100%;
     }
 }
 
@@ -142,4 +150,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 
 [class*=" col-"] {
   padding-left: 0 !important;
+}
+
+#datTable_filter {
+    text-align: center;
 }

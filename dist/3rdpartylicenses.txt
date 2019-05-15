@@ -219,7 +219,7 @@ ngx-spinner@6.1.2
 MIT
 MIT
 
-rxjs-compat@6.5.1
+rxjs-compat@6.5.2
 Apache-2.0
 Apache License
                          Version 2.0, January 2004
