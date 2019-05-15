@@ -153,6 +153,14 @@ body {
     object-fit: contain;
 }
 
+.ng-image-slider .container .main .main-inner .img-div .caption {
+    display: none;
+}
+
+.ng-image-slider-lightbox .lightbox-wrapper .lightbox-div .caption {
+    font-weight: bold;
+}
+
 /* 
  * DataTables Customization
  */
