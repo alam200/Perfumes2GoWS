@@ -33,12 +33,17 @@ export class ListProductsComponent implements OnInit {
   productListType = 'All';
   userCategory = 'Customer';
   columnDefsTarget = [0, 8];
-  defaultOrder = [1, 'asc'];
+  defaultOrder = [4, 'asc']; // order by 'description asc'
   tableColumns = [
-    { data: 'image' }, { data: 'brand' },
-    { data: 'type' }, { data: 'productCode' },
-    { data: 'description' }, { data: 'price' },
-    { data: 'stock' }, { data: 'quantity' }, { data: 'subtotal' }
+    { data: 'image' },
+    { data: 'brand' },
+    { data: 'type' },
+    { data: 'productCode' },
+    { data: 'description' },
+    { data: 'price' },
+    { data: 'stock' },
+    { data: 'quantity' },
+    { data: 'subtotal' }
   ];
   public brands = [];
   public types = [];
@@ -80,10 +85,15 @@ export class ListProductsComponent implements OnInit {
   
       if (this.userCategory === 'Admin') {
         this.tableColumns = [
-          { data: 'image' }, { data: 'brand' },
-          { data: 'type' }, { data: 'productCode' },
-          { data: 'description' }, { data: 'SKU' }, { data: 'price' },
-          { data: 'stock' }, { data: 'view' }
+          { data: 'image' },
+          { data: 'brand' },
+          { data: 'type' },
+          { data: 'productCode' },
+          { data: 'description' },
+          { data: 'SKU' },
+          { data: 'price' },
+          { data: 'stock' },
+          { data: 'view' }
         ];
       } else {
         // if user is customer
@@ -192,7 +202,7 @@ export class ListProductsComponent implements OnInit {
       ],
       language: {
         emptyTable: 'No data available in table',
-        loadingRecords: 'Please wait ...',
+        loadingRecords: 'Please wait...',
         zeroRecords: 'No matching records found'
       }
     };
