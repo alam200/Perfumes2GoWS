@@ -17,7 +17,10 @@ export class OrdersListComponent implements OnInit {
   orderStatus = 'Pending';
   selectedOrder: any;
 
-  constructor(private cartService: CartService, private spinner: NgxSpinnerService, ) { }
+  constructor(
+    private cartService: CartService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
     this.fromDate = new Date();
@@ -31,6 +34,7 @@ export class OrdersListComponent implements OnInit {
 
     this.getOrdersList();
   }
+
   getInTwoDigit(value) {
     if (value < 10) {
       return '0' + value;
@@ -46,17 +50,17 @@ export class OrdersListComponent implements OnInit {
         /** spinner ends */
         this.spinner.hide();
         this.orders = response;
-      },
-        (error) => {
-          /** spinner ends */
-          this.spinner.hide();
-        });
+      }, (error) => {
+        /** spinner ends */
+        this.spinner.hide();
+      });
   }
 
-  orderStatusChanged(order, status) {
+  orderStatusChanged(order, status, event) {
     this.selectedOrder = order;
     if (status.toLowerCase() === 'cancelled') {
       $('#orderConfirmationModal').modal('show');
+      event.stopPropagation(); // PREVENT multiple modals open
       return;
     }
     /** spinner starts */
@@ -103,4 +107,5 @@ export class OrdersListComponent implements OnInit {
       }
     );
   }
+
 }

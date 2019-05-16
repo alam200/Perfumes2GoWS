@@ -15,9 +15,9 @@ export class AboutusComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/user/login']);
-    }
+    // if (!this.session.isLoggedIn()) {
+    //   this.router.navigate(['/user/login']);
+    // }
   }
 
 }

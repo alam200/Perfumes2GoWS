@@ -18,8 +18,8 @@
         <tr *ngFor="let item of orderItems">
           <td class="text-center">
             <img *ngIf="!item.product.image" src="/assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
-            <img *ngIf="item.product.image" class="zoom" [src]="item.product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".bd-modal-sm"
-              (click)="openModal(item.product.image)" onError="this.src='/assets/product_placeholder.png';">
+            <img *ngIf="item.product.image" class="zoom" [src]="item.product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".modal-sm"
+              (click)="openModal(item.product.image, $event)" onError="this.src='/assets/product_placeholder.png';">
           </td>
           <td>{{ item.product.brand }}</td>
           <td>{{ item.product.type }}</td>
@@ -99,9 +99,7 @@
 
 <!-- modal template -->
 <div>
-  <!-- <app-item-image-modal modalId="imageDialogModal" blocking="true" [dialogData]="imageData" closebtn="true">
-  </app-item-image-modal> -->
-  <div class="modal fade bd-modal-sm" id="imageDialogModal" role="dialog" aria-hidden="true">
+  <div class="modal fade modal-sm" id="imageDialogModal" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">

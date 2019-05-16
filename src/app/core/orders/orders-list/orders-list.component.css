@@ -9,3 +9,9 @@
 .modal-content {
   overflow:hidden;
 }
+
+.table-bordered,
+.table-bordered td,
+.table-bordered th {
+    border-color: #b0b0b0;
+}
