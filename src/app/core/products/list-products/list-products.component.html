@@ -28,9 +28,8 @@
           <th>Image</th>
           <th>Brand</th>
           <th>Type</th>
-          <th>Product Code</th>
+          <th>SKU</th>
           <th>Description</th>
-          <th *ngIf="userCategory === 'Admin'">SKU</th>
           <th>Price</th>
           <th>Available</th>
           <th *ngIf="userCategory === 'Customer'">Quantity</th>
@@ -47,9 +46,8 @@
           </td>
           <td>{{ product.brand }}</td>
           <td>{{ product.type }}</td>
-          <td>{{ product.productCode }}</td>
+          <td>{{ product.SKU }}</td>
           <td>{{ product.description }}</td>
-          <td *ngIf="userCategory === 'Admin'">{{ product.SKU }}</td>
           <td>{{ product.price | currency:'USD' }}</td>
           <td>{{ product.stock }}</td>
           <td *ngIf="userCategory === 'Customer'">
