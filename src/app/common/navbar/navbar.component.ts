@@ -37,7 +37,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showUploadProducts = false;
   public showMenu = true;
   public isUserLoggedIn = false;
-  public showFaqItem = false;
+  public showAboutUs = true;
+  public showContactUs = true;
   public showMngData = false;
   public userName: string;
   private cartSubscription: Subscription;
@@ -69,7 +70,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.userName = JSON.parse(session.retrieveUserData()).firstName;
       }
       // RESET
-      this.showFaqItem = false;
+      this.showAboutUs = true;
+      this.showContactUs = true;
     });
   }
 
@@ -106,27 +108,61 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     if (this.isUserLoggedIn) {
-      // this.showMenu = true;
       this.showLogin = false;
       this.showSignup = false;
       this.showMyAccount = true;
+      // #navbarDropdown
+      this.showMenu = true;
       if (path === '/user/details') {
         this.showMyAccount = false;
       }
       // FAQ item visibility
       const category = JSON.parse(this.session.retrieveUserData()).category;
       if (category === 'Customer') {
-        this.showFaqItem = true;
+        if (path === '/aboutus') {
+          this.showAboutUs = false;
+        } else {
+          this.showAboutUs = true;
+        }
+        if (path === '/contactus') {
+          this.showContactUs = false;
+        } else {
+          this.showContactUs = true;
+        }
+      } else {
+        this.showAboutUs = false;
+        this.showContactUs = false;
       }
     } else {
-      // this.showMenu = false;
+      // GoBack is invisible when Logged Out
+      this.showBack = false;
       this.showLogin = true;
       this.showSignup = true;
       this.showMyAccount = false;
+      // #navbarDropdown
+      if (window.innerWidth > 960) {
+        this.showMenu = false;
+      } else {
+        this.showMenu = true;
+      }
       if (path === '/user/login') {
         this.showMyAccount = false;
         this.showLogin = false;
         this.showAddCart = false;
+      }
+      if (path === '/user/register') {
+        this.showSignup = false;
+      }
+      // FAQ item visibility
+      if (path === '/aboutus') {
+        this.showAboutUs = false;
+      } else {
+        this.showAboutUs = true;
+      }
+      if (path === '/contactus') {
+        this.showContactUs = false;
+      } else {
+        this.showContactUs = true;
       }
     }
 
@@ -152,6 +188,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showOrders = false;
       this.showUploadProducts = false;
       this.showMngData = false;
+    }
+  }
+
+  onResize(evt) {
+    // #navbarDropdown
+    if (!this.isUserLoggedIn) {
+      const w = evt.target.innerWidth;
+      if (w > 960) {
+        if (this.showMenu) {
+          this.showMenu = false;
+        }
+      } else {
+        if (!this.showMenu) {
+          this.showMenu = true;
+        }
+      }
     }
   }
 

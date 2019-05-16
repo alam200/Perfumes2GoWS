@@ -1,5 +1,6 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
 </ngx-spinner>
+
 <div class="row">
   <div class="col-md-10 mx-auto">
     <div class="form-group row">
@@ -11,7 +12,7 @@
       <div class="col-sm-2">
         <select class="form-control form-control-sm" [(ngModel)]="orderStatus" (change)="getOrdersList()">
           <option selected>ALL</option>
-          <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">{{orderStatus}}</option>
+          <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">{{ orderStatus }}</option>
         </select>
       </div>
   </div>
@@ -34,23 +35,23 @@
             </thead>
             <tbody>
               <tr *ngFor="let order of orders">
-                <td>{{order.orderNo}}</td>
-                <td>{{order.createdAt | date : 'dd MMM, yyyy'}}</td>
-                <td>{{order.orderAmount | currency:'USD'}}</td>
-                <td>{{order.customerId.firstName + ' ' +order.customerId.lastName }}</td>
-                <td>{{order.orderStatus}}</td>
-                <td>{{order.userRemarks}}</td>
+                <td>{{ order.orderNo }}</td>
+                <td>{{ order.createdAt | date: 'dd MMM, yyyy' }}</td>
+                <td>{{ order.orderAmount | currency: 'USD' }}</td>
+                <td>{{ order.customerId.firstName + ' ' + order.customerId.lastName }}</td>
+                <td>{{ order.orderStatus }}</td>
+                <td>{{ order.userRemarks }}</td>
                 <td>
-                  <select #status (change)="orderStatusChanged(order, status.value)" [disabled]="order.orderStatus === 'Cancelled'">
-                    <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus" [selected]="order.orderStatus === orderStatus">{{orderStatus}}</option>
+                  <select #status (change)="orderStatusChanged(order, status.value, $event)" [disabled]="order.orderStatus === 'Cancelled'">
+                    <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus" [selected]="order.orderStatus === orderStatus">{{ orderStatus }}</option>
                   </select>
                 </td>
                 <td class="text-center">
-                    <a routerLink="order-details/{{order._id}}" class="d-inline-block">
-                        <span class="btn btn-success btn-sm place-order pull-right">
-                          <i class="fa fa-eye"></i> Details View
-                        </span>
-                    </a>
+                  <a routerLink="order-details/{{order._id}}" class="d-inline-block">
+                    <span class="btn btn-success btn-sm place-order pull-right">
+                      <i class="fa fa-eye"></i> Details View
+                    </span>
+                  </a>
                 </td>
               </tr>
               <tr *ngIf="orders.length === 0">
@@ -62,6 +63,7 @@
           </table>
     </div>
 </section>
+
 <section>
   <div id="orderConfirmationModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">
@@ -77,4 +79,3 @@
     </div>
   </div>
 </section>
-

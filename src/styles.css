@@ -4,6 +4,9 @@ body {
     padding-top: 5vw;
     padding-bottom: 40px;
     font-size: 0.85rem;
+    /* background image */
+    background-image: url('assets/bg_lightblue.jpg');
+    background-position: center;
 }
 
 .dataTables_empty {
@@ -148,6 +151,14 @@ body {
 
 .ng-image-slider .container .main .main-inner .img-div img {
     object-fit: contain;
+}
+
+.ng-image-slider .container .main .main-inner .img-div .caption {
+    display: none;
+}
+
+.ng-image-slider-lightbox .lightbox-wrapper .lightbox-div .caption {
+    font-weight: bold;
 }
 
 /* 

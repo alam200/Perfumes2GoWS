@@ -41,7 +41,7 @@ export class OrderDetailsComponent implements OnInit {
         });
     }
 
-    public openModal(image) {
+    public openModal(image, event) {
         if (image.indexOf('/product_placeholder.png') !== -1) {
           image = image.replace('product_placeholder.png', 'coming_soon.png');
         }
@@ -49,5 +49,6 @@ export class OrderDetailsComponent implements OnInit {
         this.productImage = image;
         $('#productImage').attr('src', image);
         $('#imageDialogModal').modal('show');
+        event.stopPropagation(); // PREVENT multiple modals open
     }
 }
