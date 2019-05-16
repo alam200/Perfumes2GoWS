@@ -43,7 +43,12 @@ export class ContactusComponent implements OnInit {
         /** spinner ends */
         this.spinner.hide();
         this.alertService.success(data.message, true);
-        this.router.navigate(['/products']);
+        // where to go after sending mail
+        if (!this.session.isLoggedIn()) {
+          this.router.navigate(['/user/login']);
+        } else {
+          this.router.navigate(['/products']);
+        }
       },
       error => {
         /** spinner ends */

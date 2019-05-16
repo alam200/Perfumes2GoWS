@@ -108,10 +108,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     if (this.isUserLoggedIn) {
-      // this.showMenu = true;
       this.showLogin = false;
       this.showSignup = false;
       this.showMyAccount = true;
+      // #navbarDropdown
+      this.showMenu = true;
       if (path === '/user/details') {
         this.showMyAccount = false;
       }
@@ -135,10 +136,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } else {
       // GoBack is invisible when Logged Out
       this.showBack = false;
-      // this.showMenu = false;
       this.showLogin = true;
       this.showSignup = true;
       this.showMyAccount = false;
+      // #navbarDropdown
+      if (window.innerWidth > 960) {
+        this.showMenu = false;
+      } else {
+        this.showMenu = true;
+      }
       if (path === '/user/login') {
         this.showMyAccount = false;
         this.showLogin = false;
@@ -182,6 +188,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showOrders = false;
       this.showUploadProducts = false;
       this.showMngData = false;
+    }
+  }
+
+  onResize(evt) {
+    // #navbarDropdown
+    if (!this.isUserLoggedIn) {
+      const w = evt.target.innerWidth;
+      if (w > 960) {
+        if (this.showMenu) {
+          this.showMenu = false;
+        }
+      } else {
+        if (!this.showMenu) {
+          this.showMenu = true;
+        }
+      }
     }
   }
 
