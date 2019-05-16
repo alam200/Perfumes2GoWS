@@ -9,6 +9,7 @@ import { Product } from '../../../models/product.model';
 import { CartService } from '../../../services/cart.service';
 import { InterceptorSkipHeader } from '../../../services/http.request.interceptor';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from '../../../common/alert/alert.service';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 
@@ -61,6 +62,7 @@ export class ListProductsComponent implements OnInit {
   public constructor(private http: HttpClient,
     private productsService: ProductsService,
     private cartService: CartService,
+    private alertService: AlertService,
     private location: Location,
     private session: SessionService,
     private spinner: NgxSpinnerService,
@@ -77,6 +79,8 @@ export class ListProductsComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.session.isLoggedIn()) {
+      const errmsg = 'You should login or create account';
+      this.alertService.error(errmsg, true);
       this.router.navigate(['/user/login']);
     } else {
       if (this.session.retrieveUserCategory()) {

@@ -26,3 +26,7 @@
   font-size: 80px;
   color: #4eae49;
 }
+
+.card-body.order-placed {
+  background-color: aliceblue;
+}
