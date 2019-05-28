@@ -21,6 +21,7 @@ export class UsersService {
   public RESET_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/reset`;
   public RESEND_TOKEN_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/resend`;
   public SEND_CONTACT_MAIL_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/contactmail`;
+  public GET_USER_CODE = `${isDevMode() && env.baseUrl || envProd.baseUrl}users/id`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -57,13 +58,13 @@ export class UsersService {
   getUserDetails(userId) {
     let params = new HttpParams();
     params = params.append('userId', userId);
-    return this.httpClient.get(this.USERS_URL + '/' + userId).pipe(
+    return this.httpClient.get(this.USERS_URL + '/details/' + userId).pipe(
       map(response => response),
       catchError(err => Promise.reject(err)));
   }
 
   updateUser(data, userId) {
-    return this.httpClient.patch(this.USERS_URL + '/' + userId, data).pipe(
+    return this.httpClient.patch(this.USERS_URL + '/updateUser/' + userId, data).pipe(
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
   }
@@ -118,5 +119,17 @@ export class UsersService {
     return this.httpClient.post(this.SEND_CONTACT_MAIL_URL, data, { headers }).pipe(
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
+  }
+
+  getUserCodes() {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_USER_CODE, { headers: headers }).toPromise()
+      .catch(err => Promise.reject(err));
+  }
+
+  removeUser(userID) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.USERS_URL + '/removeUser/' + userID, { headers: headers }).toPromise()
+      .catch(err => Promise.reject(err));
   }
 }

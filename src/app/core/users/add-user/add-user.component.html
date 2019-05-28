@@ -1,0 +1,91 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+
+<div class="col-md-8 col-sm-12 mx-auto">
+  <div class="card">
+    <div class="card-header alert-primary">
+      Product
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <div class="row">
+            <label for="email" class="col-md-3 col-sm-12 text-right col-form-label">Email :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required>
+              <div [hidden]="email.valid || email.untouched">
+                <small *ngIf="email.errors && email.errors.required" class="form-text text-left error-msg">User email required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="firstName" class="col-md-3 col-sm-12 text-right col-form-label">first Name :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #name="ngModel"  >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label">lastName :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #name="ngModel" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="companyName" class="col-md-3 col-sm-12 text-right col-form-label">Company Name :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="company" name="company" [(ngModel)]="model.companyName" #company="ngModel" [ngClass]="{ 'is-invalid': f.submitted && company.invalid }" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="phoneNumber" class="col-md-3 col-sm-12 text-right col-form-label">Phone Number :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid }" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="mobileNumber" class="col-md-3 col-sm-12 text-right col-form-label">Mobile Number :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && mobileNumber.invalid }" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="city" class="col-md-3 col-sm-12 text-right col-form-label">City :</label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="city" name="city" [(ngModel)]="model.city" #city="ngModel" [ngClass]="{ 'is-invalid': f.submitted && city.invalid }" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="verify" class="col-md-3 col-sm-12 text-right col-form-label">Is Verified ? :</label>
+            <div class="col-1">
+              <input type="checkbox" class="form-control" id="verify" name="verify" [(ngModel)]="model.isVerified" #verify="ngModel" [ngClass]="{ 'is-invalid': f.submitted && verify.invalid }">
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order" [disabled]='!f.form.valid'>
+            <i class="fa fa-send-o"></i> {{ buttonLabel }}
+          </button>
+          &nbsp;
+          <button type="button" class="btn btn-danger btn-sm" (click)="cancel()">
+            <i class="fa fa-send-o"></i> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

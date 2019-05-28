@@ -163,6 +163,11 @@
                 <i class="fa fa-arrow-right"></i>&nbsp;Orders
               </span>
             </a>
+            <a class="dropdown-item" [routerLink]="['users']" *ngIf="showUsers">
+              <span class="btn-text">
+                <i class="fa fa-address-book-o"></i>&nbsp;Users
+              </span>
+            </a>
             <div class="dropdown-divider" *ngIf="showMngData"></div>
             <a class="dropdown-item tap-here" (click)="promptExportCsv($event)" *ngIf="showMngData">
               <span class="btn-text">

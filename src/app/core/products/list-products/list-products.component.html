@@ -63,6 +63,12 @@
                 <i class="fa fa-edit"></i>&nbsp;Edit
               </span>
             </a>
+            &nbsp;&nbsp;
+            <a class="d-inline-block tap-here" (click)="openConfirmationDialog(product.SKU,product.brand,product.description)">
+              <span class="btn btn-danger btn-sm place-order pull-right">
+                <i class="fa fa-trash"></i>&nbsp;Delete
+              </span>
+            </a>
           </td>
         </tr>
         <tr *ngIf="products?.length == 0">
@@ -90,3 +96,27 @@
     </div>
   </div>
 </div>
+
+<!-- modal templates -->
+<div class="modal fade bd-modal-sm" id="deleteProductDialogModal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-center text-danger">
+          <br><h4><b>Please confirm delete.</b></h4>
+        </p>
+        <br>
+        <div class="alert alert-success" role="alert">
+          It will delete data of <b>&nbsp;"{{ selProductBrand }}" &nbsp;<br>( {{ selProductDescription }} )</b> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteProduct()">
+          <i class="fa fa-trash">&nbsp;</i>DELETE
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+

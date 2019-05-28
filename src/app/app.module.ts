@@ -39,6 +39,14 @@ import { ContactusComponent } from './core/faq/contactus/contactus.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgImageSliderModule } from 'ng-image-slider';
 
+import { UsersService } from './services/users.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogService } from './common/confirm/confirmation-dialog.service';
+import { ConfirmationDialogComponent } from './common/confirm/confirmation-dialog.component';
+import { AddUserComponent } from './core/users/add-user/add-user.component';
+import { ListUsersComponent } from './core/users/list-users/list-users.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +71,11 @@ import { NgImageSliderModule } from 'ng-image-slider';
     MessageComponent,
     ResetPasswordComponent,
     AboutusComponent,
-    ContactusComponent
+    ContactusComponent,
+
+    ConfirmationDialogComponent,
+    AddUserComponent,
+    ListUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -76,19 +88,23 @@ import { NgImageSliderModule } from 'ng-image-slider';
     FileUploadModule,
     NgxSpinnerModule,
     NgSelectModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    NgbModule.forRoot(),
+    NgbModalModule
   ],
   providers: [
     AlertService,
     AuthGuardService,
     AdminGuardService,
     SessionService,
+    ConfirmationDialogService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpsRequestInterceptor,
       multi: true,
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],exports: [ ConfirmationDialogComponent ],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule { }

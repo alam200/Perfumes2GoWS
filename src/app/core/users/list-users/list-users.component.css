@@ -1,0 +1,164 @@
+.form-element {
+    position: absolute !important;
+    padding-right: 1vw;
+    /* right: 20vw; */
+    right: 0;
+    /* left: 35vw; */
+    width: 33%;
+    z-index: 1;
+}
+
+.form-element label {
+    display: inline-block;
+    width: 4vw;
+}
+
+.form-control {
+    display: inline-block !important;
+    width: auto;
+}
+
+.form-element .select-type,
+.form-element .select-brand {
+    width: 100%;
+}
+
+/* .form-element .select-brand{
+    width: 140px;
+} */
+
+.no-data-available {
+    text-align: center;
+}
+
+.quantity-input {
+    width: 6vw;
+}
+
+.dataTable td {
+  word-break: break-all;
+}
+
+/* 
+ * disable hover zoom
+ */
+
+/* .zoom {
+    transition: transform .2s;
+    margin: 0 auto;
+}
+.zoom:hover {
+    position: absolute;
+    transform: scale(5);
+    z-index: 1;
+} */
+
+#pdImg > img:hover {
+    cursor: pointer;
+    border: 1px solid #cccccc;
+}
+  
+input[type="date"]::-webkit-inner-spin-button {
+    opacity: 0
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/80% no-repeat;
+    color: rgba(0, 0, 0, 0);
+    opacity: 0.5
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-16.png) center/80% no-repeat;
+    opacity: 0.8
+}
+
+.deactive-user {
+    background-color: lightgrey;
+}
+
+.table-striped>tbody>tr.deactive-user {
+    background-color: lightgrey !important;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, .2) !important;
+}
+
+.modal-header {
+    padding: 1rem 1rem 0rem 0rem !important;
+    border-bottom: none !important;
+}
+
+.modal-dialog {
+    text-align: center;
+}
+
+.modal-content {
+    display: inline-block;
+}
+
+.col-form-label-sm {
+    text-align: right;
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: auto;
+        max-width: auto;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .form-element.user-filters {
+        position: relative !important;
+        left: 15px;
+        padding-bottom: 0;
+        margin-right: 15px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .form-element.user-filters .form-control {
+        display: block !important;
+        width: 100%;
+    }
+}
+
+/* @media screen and (max-width: 1124px) and (min-width: 885px) {
+    .form-element.user-filters {
+        right: 28vw;
+        left: 22vw;
+    }
+} */
+
+@media screen and (max-width: 884px) and (min-width: 577px) {
+    .form-element.user-filters {
+        position: relative !important;
+        left: 0;
+        width: 100%;
+    }
+}
+
+#productImage {
+    width: auto;
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto\9;
+    /* ie8 */
+}
+
+[class*=" col-"] {
+  padding-left: 0 !important;
+}
+
+#datTable_filter {
+    text-align: center;
+}
+
+.table-bordered,
+.table-bordered td,
+.table-bordered th {
+    border-color: #b0b0b0;
+}
+

@@ -86,4 +86,11 @@ router
    */
   .post(controller.uploadProducts);
 
+  router
+  .route('/removeProduct/:productCode')
+  /**
+   * @api {get} api/products/remove/:productCode 
+   */
+  .get(controller.removeProduct);
+
 module.exports = router;

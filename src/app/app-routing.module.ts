@@ -19,9 +19,13 @@ import { ResetPasswordComponent } from './core/users/reset-password/reset-passwo
 import { MessageComponent } from './core/users/core/users/message/message.component';
 import { AboutusComponent } from './core/faq/aboutus/aboutus.component';
 import { ContactusComponent } from './core/faq/contactus/contactus.component';
+import { AddUserComponent } from './core/users/add-user/add-user.component';
+import { ListUsersComponent } from './core/users/list-users/list-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },
+  { path: 'users', component: ListUsersComponent },
+  { path: 'user-details/:userCode', component: AddUserComponent },
   { path: 'products/special', component: ListProductsComponent },
   { path: 'products/new', component: ListProductsComponent },
   { path: 'products', component: ListProductsComponent },

@@ -83,4 +83,10 @@ export class ProductsService {
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
   }
+
+  removeProduct(productCode) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.PRODUCTS_URL + '/removeProduct/' + productCode, { headers: headers }).toPromise()
+      .catch(err => Promise.reject(err));
+  }
 }
