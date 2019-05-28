@@ -1,0 +1,53 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
+</ngx-spinner>
+
+<div class="form-element user-filters">
+  <div class="form-group row clearfix">
+  </div>
+</div>
+<div class="table-responsive">
+  <div class="grid-table-wrapper">
+    <table id='datTable' datatable [dtOptions]="dtOptions" class="table table-bordered table-striped responsive" cellspacing="0"
+      width="100%">
+      <thead>
+        <tr>
+          <th class="text-center">CompanyName</th>
+          <th class="text-center">PhoneNumber</th>
+          <th class="text-center">MobileNumber</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">City</th>
+          <th class="text-center">Email</th>
+          <th class="text-center">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index;" [ngClass]="deactive-user">
+          <td class="text-center">{{ user.companyName }}</td>
+          <td class="text-center">{{ user.phoneNumber }}</td>
+          <td class="text-center">{{ user.mobileNumber }}</td>
+          <td class="text-center">{{ user.firstName+"  "+user.lastName }}</td>
+          <td class="text-center">{{ user.city }}</td>
+          <td class="text-center">{{ user.email }}</td>
+          <td class="text-center">
+            <a class="d-inline-block tap-here" (click)="goEditUser(user._id)">
+              <span class="btn btn-success btn-sm place-order pull-right">
+                <i class="fa fa-edit"></i>&nbsp;Edit
+              </span>
+            </a>
+            &nbsp;&nbsp;
+            <a class="d-inline-block tap-here" (click)="openConfirmationDialog(user._id,user.email, user.firstName+' '+user.lastName)">
+              <span class="btn btn-danger btn-sm place-order pull-right">
+                <i class="fa fa-trash"></i>&nbsp;Delete
+              </span>
+            </a>
+          </td>
+        </tr>
+        <tr *ngIf="users?.length == 0">
+          <td colspan="7" class="no-data-available">No User Found!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

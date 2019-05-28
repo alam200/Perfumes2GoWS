@@ -328,6 +328,23 @@ exports.remove = async (req, res, next) => {
     .catch(e => next(e));
 };
 
+/**
+ * Delete Product
+ * @public
+ */
+exports.removeProduct = async (req, res, next) => {
+    try {
+      await Product.findOneAndRemove({SKU : req.params.productCode}, function (err,Product){
+        if(err) {
+          return next(new Error('Todo was not found!'));
+        }
+        res.json('Successfully removed');
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
 const storage = multer.diskStorage({ //multers disk storage settings
   destination: function (req, file, cb) {
     cb(null, './')

@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showBack = false;
   public showAddItem = false;
   public showOrders = false;
+  public showUsers = false;
   public showUploadProducts = false;
   public showMenu = true;
   public isUserLoggedIn = false;
@@ -174,18 +175,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showEditCart = false;
         this.showAddItem = true;
         this.showOrders = true;
+        this.showUsers = true;
         this.showUploadProducts = true;
         this.showMngData = true;
       } else {
         this.showCart = true;
         this.showAddItem = false;
         this.showOrders = false;
+        this.showUsers = false;
         this.showUploadProducts = false;
         this.showMngData = false;
       }
     } else {
       this.showAddItem = false;
       this.showOrders = false;
+      this.showUsers = false;
       this.showUploadProducts = false;
       this.showMngData = false;
     }

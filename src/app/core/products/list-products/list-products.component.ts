@@ -12,6 +12,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../common/alert/alert.service';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogService } from '../../../common/confirm/confirmation-dialog.service';
 
 declare var $: any;
 
@@ -66,7 +68,8 @@ export class ListProductsComponent implements OnInit {
     private location: Location,
     private session: SessionService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private confirmationDialogService: ConfirmationDialogService
   ) {
     if (location.path() === '/products/special') {
       this.productListType = 'special';
@@ -364,5 +367,29 @@ export class ListProductsComponent implements OnInit {
     sessionStorage.setItem(this.searchTextKey, searchText);
     // navigate
     this.router.navigate(['product-details', sku]);
+  }
+
+  openConfirmationDialog(sku,brand,description) {
+    
+    this.confirmationDialogService.confirm("Please confirm delete.", brand+" : "+sku, "("+description+")")
+    .then(
+      
+      (confirmed) => {
+          if (confirmed)
+          {
+            this.productsService.removeProduct(sku);
+            this.router.navigate(['/']);
+          }
+          else
+          {
+           
+          }
+      })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+    
+    // navigate
+    //this.router.navigate(['product-details', sku]);
+    //this.confirmService.success(sku, true);
+    
   }
 }
