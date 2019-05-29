@@ -2,19 +2,24 @@ const httpStatus = require('http-status');
 const passport = require('passport');
 const User = require('../models/user.model');
 const APIError = require('../utils/APIError');
+
 const {
   CREATE_USER,
+  GET_USER,
   LIST_PRODUCTS,
   GET_PRODUCT,
-  GET_USER,
   GET_ADDRESSES,
   GET_ADDRESS,
   LOGOUT,
   GET_ORDERS,
   GET_ORDER,
-  UPDATE_USER,
   GET_PRODUCT_DETAILS,
-  IS_PRODUCT_CODE_EXISTS
+  IS_PRODUCT_CODE_EXISTS,
+  USERS_LIST,
+  GET_USER_DETAILS,
+  USER_UPDATE,
+  USER_REMOVE,
+  USER_REGISTER,
 } = require('../routes/route.constants');
 
 const ADMIN = 'Admin';
@@ -35,6 +40,10 @@ function isUserAuthorized(req, user) {
         case GET_USER: // get user details
         case GET_PRODUCT_DETAILS: // get product details
         case IS_PRODUCT_CODE_EXISTS: // check whether product code already exists
+        case USERS_LIST:      //get users list
+        case GET_USER_DETAILS:
+        case USER_UPDATE:
+        case USER_REMOVE:
           return true;
         default:
           break;
@@ -58,6 +67,8 @@ function isUserAuthorized(req, user) {
     case 'DELETE':
       switch (apiUrl) {
         case GET_PRODUCT:// delete product
+        case GET_USER:
+        case USER_UPDATE:
           if (user.category === ADMIN) {
             return true;
           }
@@ -71,12 +82,11 @@ function isUserAuthorized(req, user) {
     case 'PATCH':
       switch (apiUrl) {
         case GET_USER:// update user
-            return true;
         case GET_ADDRESS:
-          return true;
         case GET_PRODUCT:// update product
-            return true;
-         case GET_ORDER: // update order
+        case GET_ORDER: // update order
+        case USER_UPDATE:
+        case USER_REGISTER:
             return true;
         default:
           break;

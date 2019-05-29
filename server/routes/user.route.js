@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/user.controller');
 const { authorize, ADMIN } = require('../middlewares/auth');
 
-router.param('userCode', controller.load)
+router.param('userID', controller.load)
 
 router
   .route('/')
@@ -12,30 +12,25 @@ router
    */
   .get(controller.list);
 
+router
+  .route('/removeUser/:userID')
+   /**
+   * @api {patch} api/users/:userID | Update Product
+   */
+  .delete(controller.removeUser);
 
 router
   .route('/details/:userID')
   /**
-   * @api {get} api/users/details/:userCode | Get User Details
+   * @api {get} api/users/:userID | Get Product Details
    */
-  .get(controller.getUser);
-
-router
-  .route('/removeUser/:userID')
-  /**
-   * @api {get} api/users/remove/:userCode 
-   */
-  .get(controller.removeUser);
+  .get(authorize(), controller.getUser);
 
 router
   .route('/updateUser/:userID')
- /**
- * @api {patch} api/users/:userCode Update User
- */
-  .get(controller.updateUser);
-/**
-* @api {delete} api/products/:productCode | Delete Product
-*/
-//.delete(authorize(), controller.remove);
+   /**
+   * @api {patch} api/users/updateUser/:userID | Update Product
+   */
+  .patch(controller.updateUser);
 
 module.exports = router;

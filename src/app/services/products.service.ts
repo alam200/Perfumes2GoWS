@@ -13,8 +13,10 @@ export class ProductsService {
   public PRODUCTS_URL = environment.baseUrl + 'products';
   public GET_BRAND = environment.baseUrl + 'products/brands';
   public GET_TYPES = environment.baseUrl + 'products/types';
-  public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
+  public GET_PRODUCT_CODE = environment.baseUrl + 'products';
   public GET_EXPORT_DATA = environment.baseUrl + 'products/exportcsv';
+  public GET_PDF = environment.baseUrl + 'products/getPDF';
+  public GET_EXCEL = environment.baseUrl + 'products/getExcel';
   public GET_DELETED_DATA = environment.baseUrl + 'products/delete/collection';
 
   constructor(private httpClient: HttpClient) { }
@@ -35,6 +37,26 @@ export class ProductsService {
   getExportData(userId) {
     const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
     return this.httpClient.get(this.GET_EXPORT_DATA, {
+      headers: headers,
+      params: {
+        userId: userId
+      }
+    }).toPromise().catch(err => Promise.reject(err));
+  }
+
+  getPDF(userId) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_PDF, {
+      headers: headers,
+      params: {
+        userId: userId
+      }
+    }).toPromise().catch(err => Promise.reject(err));
+  }
+
+  getExcel(userId) {
+    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_EXCEL, {
       headers: headers,
       params: {
         userId: userId
@@ -85,8 +107,7 @@ export class ProductsService {
   }
 
   removeProduct(productCode) {
-    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
-    return this.httpClient.get(this.PRODUCTS_URL + '/removeProduct/' + productCode, { headers: headers }).toPromise()
+    return this.httpClient.delete(this.PRODUCTS_URL + '/' + productCode).toPromise()
       .catch(err => Promise.reject(err));
   }
 }

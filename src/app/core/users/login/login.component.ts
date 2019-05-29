@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit {
         this.spinner.hide();
           console.log('service down ', error);
           try {
-            this.alertService.error(error.name);
+            this.alertService.error(error.name + " :  CODE " + error.status + " ( Email Does not exist or Incorrect Password )");
           } catch (e) {
             console.log(e);
           }

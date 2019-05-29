@@ -27,7 +27,7 @@ exports.update = (req, res, next) => {
 exports.get = async (req, res, next) => {
   try {
     const user = await User.get(req.params.userId);
-    user.password = undefined;
+    //user.password = undefined;
     res.json(user);
   } catch (error) {
     next(error);
@@ -57,7 +57,7 @@ exports.updateUser = (req, res, next) => {
   let user = Object.assign(req.locals.user, req.body);
   try {
     user.save()
-      .then(savedUser => res.json(savedProduct))
+      .then(savedUser => res.json(savedUser))
       .catch(e => next(e));
   } catch (e) {
     next(e);
@@ -84,7 +84,7 @@ exports.removeUser = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   try {
     const user = await User.get(req.params.userID);
-    user.password = undefined;
+    //user.password = undefined;
     res.json(user);
   } catch (error) {
     next(error);

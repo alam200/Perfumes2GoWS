@@ -35,7 +35,8 @@ const userSchema = new Schema({
   password: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  category: String
+  category: String,
+  city: String
 });
 
 /**

@@ -53,10 +53,10 @@ exports.register = async (req, res, next) => {
         category: req.body.category,
         password: req.body.password,
         phoneNumber: req.body.phoneNumber,
-        mobileNumber: req.body.mobileNumber
+        mobileNumber: req.body.mobileNumber,
+        city: req.body.city
       });
-
-    user.save(function (err) {
+      await user.save(function (err) {
       if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: err.message }); }
 
       // Create a verification token for this user

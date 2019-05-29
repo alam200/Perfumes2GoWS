@@ -21,15 +21,32 @@ export class UsersService {
   public RESET_PASSWORD_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/reset`;
   public RESEND_TOKEN_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/resend`;
   public SEND_CONTACT_MAIL_URL = `${isDevMode() && env.baseUrl || envProd.baseUrl}auth/contactmail`;
-  public GET_USER_CODE = `${isDevMode() && env.baseUrl || envProd.baseUrl}users/id`;
+  public GET_USER_CODE = `${isDevMode() && env.baseUrl || envProd.baseUrl}users`;
 
   constructor(private httpClient: HttpClient) { }
 
   register(data) {
-    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
-    return this.httpClient.post(this.REGISTER_URL, data, { headers }).pipe(
+    //const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.patch(this.REGISTER_URL, data).pipe(
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
+  }
+
+  updateUser(data, userId) {
+    data._id = undefined;
+    return this.httpClient.patch(this.USERS_URL + '/updateUser/' + userId, data).pipe(
+      map(response => response),
+      catchError((error: Response) => observableThrowError(error)));
+    /*
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.httpClient.get(this.USERS_URL + '/updateUser/' + userId).pipe(
+      map(response => response),
+      catchError(err => Promise.reject(err)));
+      /*
+    return this.httpClient.patch(this.USERS_URL + '/updateUser/' + userId, data).pipe(
+      map(response => response),
+      catchError((error: Response) => observableThrowError(error)));*/
   }
 
   login(data) {
@@ -51,20 +68,6 @@ export class UsersService {
     params = params.append('token', token);
     const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
     return this.httpClient.post(this.RESET_PASSWORD_URL, { password: model.password }, { headers: headers, params: params }).pipe(
-      map(response => response),
-      catchError((error: Response) => observableThrowError(error)));
-  }
-
-  getUserDetails(userId) {
-    let params = new HttpParams();
-    params = params.append('userId', userId);
-    return this.httpClient.get(this.USERS_URL + '/details/' + userId).pipe(
-      map(response => response),
-      catchError(err => Promise.reject(err)));
-  }
-
-  updateUser(data, userId) {
-    return this.httpClient.patch(this.USERS_URL + '/updateUser/' + userId, data).pipe(
       map(response => response),
       catchError((error: Response) => observableThrowError(error)));
   }
@@ -122,14 +125,20 @@ export class UsersService {
   }
 
   getUserCodes() {
-    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
-    return this.httpClient.get(this.GET_USER_CODE, { headers: headers }).toPromise()
+    //const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+    return this.httpClient.get(this.GET_USER_CODE).toPromise()
       .catch(err => Promise.reject(err));
   }
 
+  getUserDetails(userId) {
+    return this.httpClient.get(this.USERS_URL + '/details/' + userId).pipe(
+      map(response => response),
+      catchError(err => Promise.reject(err)));
+  }
+
   removeUser(userID) {
-    const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
-    return this.httpClient.get(this.USERS_URL + '/removeUser/' + userID, { headers: headers }).toPromise()
+
+      return this.httpClient.delete(this.USERS_URL + '/removeUser/' + userID).toPromise()
       .catch(err => Promise.reject(err));
   }
 }

@@ -10,7 +10,7 @@ const router = express.Router();
  * @api { post } api/auth/register | Register
  */
 router.route('/register')
-  .post(validate(register), controller.register);
+  .patch(validate(register), controller.register);
 
 /**
  * @api { get } api/auth/verify/:token | Verify
