@@ -35,7 +35,7 @@ class DataTablesResponse {
 export class ListProductsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   products: Product[];
-  Total_cnt: Number;
+  Total_cnt: number;
   orderItem: OrderItem;
   productListType = 'All';
   userCategory = 'Customer';
@@ -222,6 +222,7 @@ export class ListProductsComponent implements OnInit {
         $('#datTable_filter').css('text-align', 'right');
       }
     };
+    this.spinner.hide();
   }
 
   selectType(value) {
@@ -381,6 +382,9 @@ export class ListProductsComponent implements OnInit {
           if (confirmed)
           {
             this.productsService.removeProduct(sku);
+            this.getProductsData();
+            this.Total_cnt = this.Total_cnt - 1;
+            
             this.products.splice(i, 1);
             this.alertService.success('Product deleted successfully.', true);
             setTimeout(() => {

@@ -6,6 +6,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../common/alert/alert.service';
 import { ProductsService } from '../../../services/products.service';
 
+import {  FileUploader, FileSelectDirective, FileLikeObject } from 'ng2-file-upload/ng2-file-upload';
+import { concat } from  'rxjs';
+
+const URL = 'http://localhost:3000/api/upload';
+
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -20,6 +25,10 @@ export class AddProductComponent implements OnInit {
   public types = [];
   public productCodes = [];
   public isSKUEditable = true;
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'product'});
+  public hasBaseDropZoneOver: boolean = false;
+
 
   constructor(private productService: ProductsService,
     private alertService: AlertService,
@@ -38,11 +47,23 @@ export class AddProductComponent implements OnInit {
     }
     this.getBrands();
     this.getTypes();
-    this.getProductCode();
+    this.getProductCodes();
     this.model = {
       category: 'normal',
       productStatus: 'active'
     };
+
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      console.log('ImageUpload:uploaded:', item, status, response);
+      // let files = this.getFiles();
+      // files.forEach((file) => {
+      //  console.log(file.name) 
+      //  this.model.image = file.name;
+     
+
+     };
+     
   }
 
   getBrands() {
@@ -65,7 +86,7 @@ export class AddProductComponent implements OnInit {
       });
   }
 
-  getProductCode() {
+  getProductCodes() {
     this.productService.getProductCodes().then(
       (data: any) => {
         this.productCodes = data;
@@ -75,20 +96,40 @@ export class AddProductComponent implements OnInit {
       });
   }
 
+///get file name
+fileOverBase(event):  void {
+  this.hasBaseDropZoneOver  =  event;
+}
+
+
+getFiles(): FileLikeObject[] {
+  return this.uploader.queue.map((fileItem) => {
+    return fileItem.file;
+  });
+}
+//
+
   onSubmit() {
     /** spinner starts */
     this.spinner.show();
 
     if (this.productCode) { // update product
       this.model.stock = this.model.stock;
+      let files = this.getFiles();
+      files.forEach((file) => {
+
+        this.model.image = "/assets/upload_image/product_" + file.name;
+        
+      });
       this.productService.updateProduct(this.model, this.productCode).subscribe(
         (data: any) => {
           /** spinner ends */
           this.spinner.hide();
           this.alertService.success('Product updated successfully.', true);
+
           setTimeout(() => {
             this.location.back();
-          }, 1000);
+          }, 300);
         },
         error => {
           /** spinner ends */

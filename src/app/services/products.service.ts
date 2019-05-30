@@ -13,7 +13,7 @@ export class ProductsService {
   public PRODUCTS_URL = environment.baseUrl + 'products';
   public GET_BRAND = environment.baseUrl + 'products/brands';
   public GET_TYPES = environment.baseUrl + 'products/types';
-  public GET_PRODUCT_CODE = environment.baseUrl + 'products';
+  public GET_PRODUCT_CODE = environment.baseUrl + 'products/sku';
   public GET_EXPORT_DATA = environment.baseUrl + 'products/exportcsv';
   public GET_PDF = environment.baseUrl + 'products/getPDF';
   public GET_EXCEL = environment.baseUrl + 'products/getExcel';

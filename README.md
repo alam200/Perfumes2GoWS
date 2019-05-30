@@ -1,3 +1,62 @@
+# All Directories / files structure that needs to be backed up to restore 
+project/
+	.git/...
+	e2e/
+		app.e2e-spec.tsconfig
+		app.po/ts
+		tsconfig.exe.json
+	server/
+		config/...
+		controllers/...
+		middlewares/...
+		models/...
+		routes/...
+		utils/...
+		validations/...
+		.env
+	src/
+		app/
+			common/...
+			core/...
+			directives/...
+			modes/...
+			services/...
+			app.component.css
+			app.component.html
+			app.component.spec.ts
+			app.component.ts
+			app.module.ts
+			app-routing.module.ts
+			fragment-polyfill.module
+		assets/...
+		environments/...
+		products/...
+		index.html
+		main.ts
+		polyfills.ts
+		styles.css
+		tsconfig.app.json
+		tsconfig.spec.json
+		typings.d
+	.gitignore
+	angular.json
+	nginx.conf
+	package.json
+	package-lock.json
+	README.md
+	server.js
+	tsconfig.json
+	tslint.json
+	
+# Steps for change to mongo password
+
+	
+	
+
+/server
+/src
+
+
 # Perfumes2GoWS
 
 [Perfumes2GoWS](http://www.perfumes2go.net) - wholesale
@@ -23,6 +82,9 @@ const dbUri = "mongodb://localhost:27017/fragrance-deals?authSource=admin";
 ```
 - Run Mongo Daemon by `mongod`
 ```
+All directories / files that needs to be backed up to restore 
+
+
 $ mongod
 ```
 - Build angular app into `dist` folder in **development** mode
