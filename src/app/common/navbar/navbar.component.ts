@@ -13,6 +13,11 @@ import { ProductsService } from '../../services/products.service';
 import { saveAs } from 'file-saver';
 import { async } from 'q';
 
+//declare var jsPDF: any;
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
+
 declare var $: any;
 
 @Component({
@@ -23,8 +28,11 @@ declare var $: any;
 export class NavbarComponent implements OnInit, OnDestroy {
   orderItems: OrderItem[] = [];
   productsQuantity: number;
+  subtotalQuantity: number;
   count: number;
 
+  public showGetPDF = true;
+  public showGetExcel = true;
   public showLogin = true;
   public showSignup = true;
   public showMyAccount = false;
@@ -80,8 +88,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.cartSubscription = this.cartService.cartObservable.subscribe(action => {
       const orderItems: any[] = this.cartService.getCartItems();
       this.productsQuantity = 0;
+      this.subtotalQuantity = 0.00;
       for (let index = 0; index < orderItems.length; index++) {
         this.productsQuantity += Number.parseInt(orderItems[index].quantity);
+        this.subtotalQuantity += Number.parseFloat(orderItems[index].subtotal);
       }
     });
     this.orderItems = this.cartService.getCartItems();
@@ -97,9 +107,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (path === '/products' || path === '/products/new' || path === '/products/special') {
       this.showBack = false;
       this.showAddCart = true;
+      this.showGetPDF = true;
+      this.showGetExcel = true;
     } else {
       this.showBack = true;
       this.showAddCart = false;
+      this.showGetPDF = false;
+      this.showGetExcel = false;
     }
 
     if (path === '/order') {
@@ -178,8 +192,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showUsers = true;
         this.showUploadProducts = true;
         this.showMngData = true;
+        this.showGetPDF = false;
+        this.showGetExcel = false;
       } else {
         this.showCart = true;
+        this.showGetPDF = true;
+        this.showGetExcel = true;
         this.showAddItem = false;
         this.showOrders = false;
         this.showUsers = false;
@@ -187,6 +205,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMngData = false;
       }
     } else {
+      this.showGetPDF = true;
+      this.showGetExcel = true;
       this.showAddItem = false;
       this.showOrders = false;
       this.showUsers = false;
@@ -219,6 +239,123 @@ export class NavbarComponent implements OnInit, OnDestroy {
   promptExportCsv(event) {
     $('#exportDialogModal').modal('show');
     event.stopPropagation(); // PREVENT multiple modals open
+  }
+
+  promptGetPDF(event) {
+
+    const columns = [
+      {title: "Brand", dataKey: "brand"},
+      {title: "Type", dataKey: "type"},
+      {title: "SKU", dataKey: "SKU"},
+      {title: "Description", dataKey: "description"},
+      {title: "Price", dataKey: "price"},
+      {title: "Stock", dataKey: "stock"}
+      ];
+
+    // Only pt supported (not mm or in)
+    
+    this.spinner.show();
+    const userId = this.session.retrieveUserId();
+    this.productsService.getPDF(userId).then(
+      (data: any) => {
+        if (data.success) {
+          try {
+            const products = data.products && data.products || [];
+            
+            let blobArr: any = [];
+            blobArr.push(this.getCsvBlob(products));
+            
+            const timestamp: String = this.getTimestampStr();
+            const pdfPath = `export_products_${timestamp}.pdf`;
+            
+            this.spinner.hide();
+            var pdf = new jsPDF('l', 'pt', 'a4'); //('p', 'pt');
+            pdf.cellInitialize();
+            pdf.setFontSize(10);
+            pdf.autoTable(columns, products, { margin: {top: 30,left:15,right:15,bottom:20}});
+            /*
+            pdf.autoTable(columns, products, {
+                margin: {horizontal: 12},
+                bodyStyles: {valign: 'middle'},
+                //styles: {overflow: 'linebreak', columnWidth:'wrap'},
+                theme: 'plain',
+                columnStyles: {
+                  columnName1: {
+                        columnWidth: '45'
+                    },
+                    columnName2: {
+                        columnWidth: '70'
+                    },
+                    SKU: {
+                        columnWidth: '40'
+                    },
+                    columnName3: {
+                        columnWidth: '20'
+                    },
+                    columnName4: {
+                        columnWidth: '50'
+                    },
+                    columnName5: {
+                      columnWidth: '50'
+                    }
+                  }
+              });
+              */
+            pdf.save(pdfPath);
+
+          } catch (e) {
+            this.spinner.hide();
+            console.log(e);
+            this.alert.error('Failed to export CSV data');
+          }
+        } else {
+          // exception handler | access denied
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+        console.log('service down ', error);
+      });
+      
+  }
+
+  promptGetExcel(event) {
+    this.spinner.show();
+    const userId = this.session.retrieveUserId();
+    this.productsService.getExcel(userId).then(
+      (data: any) => {
+        if (data.success) {
+          try {
+            const products = data.products && data.products || [];
+            
+            let blobArr: any = [];
+            blobArr.push(this.getCsvBlob(products));
+            
+            const timestamp: String = this.getTimestampStr();
+            const pathArr: any = [
+              `export_products_${timestamp}.csv`
+            ];
+            this.spinner.hide();
+
+            blobArr.forEach(async (blob, index) => {
+              saveAs(blob, pathArr[index]);
+              await new Promise(r => setTimeout(r, 1000));
+            });
+          } catch (e) {
+            this.spinner.hide();
+            console.log(e);
+            this.alert.error('Failed to export CSV data');
+          }
+        } else {
+          // exception handler | access denied
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+        console.log('service down ', error);
+      });
   }
   
   downloadCsvFiles() {

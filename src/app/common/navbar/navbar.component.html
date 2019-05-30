@@ -49,7 +49,8 @@
       <span class="pull-right header-shopping-cart">
         <p *ngIf="showCart" class="total" id="shopping-cart-total">
           <i class="fa fa-shopping-cart fa-3x"></i>
-          <span class="cart-total">{{ (productsQuantity && productsQuantity !== 0) ? orderItems.length + "(" + productsQuantity + ")" : orderItems.length }}</span>
+          <span class="cart-total">{{ (productsQuantity && productsQuantity !== 0) ? "Products="+orderItems.length + ", Quantity=" + productsQuantity + ", Total=
+              " + (subtotalQuantity | currency:'USD') : orderItems.length }}</span>
         </p>
       </span>
     </div>
@@ -67,9 +68,24 @@
         <a [routerLink]="['/user/register']" *ngIf="showSignup" class="btn btn-sm btn-outline-light">
           <i class="fa fa-user"></i>&nbsp;Sign Up
         </a>
+        <button *ngIf="showGetPDF" (click)="promptGetPDF($event)" class="btn btn-sm btn-outline-light">
+          <i class="fa fa-sign-in"></i>&nbsp;Download PDF
+        </button>
+        <button *ngIf="showGetExcel" (click)="promptGetExcel($event)" class="btn btn-sm btn-outline-light">
+          <i class="fa fa-sign-in"></i>&nbsp;Download EXCEL
+        </button>
         <a *ngIf="showMyAccount" [routerLink]="['/user/details']" class="btn btn-sm btn-outline-light">
           <i class="fa fa-user"></i>&nbsp;Hi, {{ userName }}
         </a>
+        <a class="btn btn-sm btn-outline-light" [routerLink]="['add-product']" *ngIf="showAddItem">
+            <i class="fa fa-plus"></i>&nbsp;Add Item
+        </a>
+        <a class="btn btn-sm btn-outline-light" [routerLink]="['orders']" *ngIf="showOrders">
+            <i class="fa fa-arrow-right"></i>&nbsp;Orders
+        </a>
+        <a class="btn btn-sm btn-outline-light" [routerLink]="['users']" *ngIf="showUsers">
+            <i class="fa fa-address-book-o"></i>&nbsp;Users
+         </a>
         <button (click)="showCartDetails()" *ngIf="showAddCart" class="btn btn-sm btn-outline-light">
           <i id="sml-cart" class="fa fa-shopping-cart"></i>&nbsp;Checkout
         </button>
@@ -148,24 +164,9 @@
           </div>
           <!-- navbar buttons form mobile end -->
           <div class="dropdown-bottom-links clearfix">
-            <a class="dropdown-item" [routerLink]="['add-product']" *ngIf="showAddItem">
-              <span class="btn-text">
-                <i class="fa fa-plus"></i>&nbsp;Add Item
-              </span>
-            </a>
             <a class="dropdown-item" [routerLink]="['/upload-products']" *ngIf="showUploadProducts">
               <span class="btn-text">
                 <i class="fa fa-file-excel-o"></i>&nbsp;Upload Products
-              </span>
-            </a>
-            <a class="dropdown-item" [routerLink]="['orders']" *ngIf="showOrders">
-              <span class="btn-text">
-                <i class="fa fa-arrow-right"></i>&nbsp;Orders
-              </span>
-            </a>
-            <a class="dropdown-item" [routerLink]="['users']" *ngIf="showUsers">
-              <span class="btn-text">
-                <i class="fa fa-address-book-o"></i>&nbsp;Users
               </span>
             </a>
             <div class="dropdown-divider" *ngIf="showMngData"></div>

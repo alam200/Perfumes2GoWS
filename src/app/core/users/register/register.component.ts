@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
           console.log(error);
           this.alertService.error(error.message, true);
         });
+
     } else {
       /** spinner starts */
       this.spinner.show();

@@ -12,10 +12,13 @@ import { UsersService } from '../../../services/users.service';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
+
 export class AddUserComponent implements OnInit {
   form: FormGroup;
   model: any = {};
   userCode: string;
+  oldPass: string;
+  tmpPass: string;
   public buttonLabel = 'Add User';
   public brands = [];
   public types = [];
@@ -40,6 +43,8 @@ export class AddUserComponent implements OnInit {
       category: 'normal',
       userStatus: 'active'
     };
+    this.oldPass = "";
+    this.tmpPass = "1234567890";
   }
 
   getUserCodes() {
@@ -57,8 +62,13 @@ export class AddUserComponent implements OnInit {
     this.spinner.show();
 
     if (this.userCode) { // update user
+      var password = this.model.password;
+      if (password === undefined || password === this.tmpPass)
+        this.model.password = this.oldPass;
       this.userService.updateUser(this.model, this.userCode).subscribe(
         (data: any) => {
+          this.model.password = this.tmpPass;
+          this.model.confirmPassword = this.tmpPass;
           /** spinner ends */
           this.spinner.hide();
           this.alertService.success('User updated successfully.', true);
@@ -92,6 +102,9 @@ export class AddUserComponent implements OnInit {
     this.userService.getUserDetails(this.userCode).subscribe((resp) => {
       this.spinner.hide();
       this.model = resp;
+      this.oldPass = this.model.password;
+      this.model.password = this.tmpPass;
+      this.model.confirmPassword = this.tmpPass;
       this.buttonLabel = 'Update User';
     },
       (err) => {

@@ -208,17 +208,20 @@ export class ListUsersComponent implements OnInit {
     this.router.navigate(['user-details', userCode]);
   }
 
-  openConfirmationDialog(id,email, name) {
+  openConfirmationDialog(i,id,email, name) {
     
-    this.confirmationDialogService.confirm("Please confirm delete.", name, "("+email+")")
+    this.confirmationDialogService.confirm("Please confirm data.", name, "("+email+")")
     .then(
       
       (confirmed) => {
           if (confirmed)
           {
             this.usersService.removeUser(id);
-            //this.router.navigate(['/']);
-            window.location.reload();
+            this.users.splice(i, 1);
+            this.alertService.success('Product deleted successfully.', true);
+            setTimeout(() => {
+              //this.location.back();
+            }, 500);
           }
           else
           {

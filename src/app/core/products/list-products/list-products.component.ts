@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogService } from '../../../common/confirm/confirmation-dialog.service';
 
+import { Injectable } from '@angular/core';
+import { throwError as observableThrowError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 declare var $: any;
 
 class DataTablesResponse {
@@ -32,6 +35,7 @@ class DataTablesResponse {
 export class ListProductsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   products: Product[];
+  Total_cnt: Number;
   orderItem: OrderItem;
   productListType = 'All';
   userCategory = 'Customer';
@@ -165,7 +169,7 @@ export class ListProductsComponent implements OnInit {
           ).subscribe(resp => {
             this.spinner.hide();
             this.products = resp['productList'];
-
+            this.Total_cnt = resp['totalProducts'];
             // If user is a customer then don't show order with stock 0
             if (this.userCategory === 'Customer') {
               this.products = this.products.filter(product => {
@@ -369,16 +373,19 @@ export class ListProductsComponent implements OnInit {
     this.router.navigate(['product-details', sku]);
   }
 
-  openConfirmationDialog(sku,brand,description) {
-    
-    this.confirmationDialogService.confirm("Please confirm delete.", brand+" : "+sku, "("+description+")")
+  openConfirmationDialog(i,sku,brand,description) {
+    this.confirmationDialogService.confirm("Please confirm data.", brand+" : "+sku, "("+description+")")
     .then(
       
       (confirmed) => {
           if (confirmed)
           {
             this.productsService.removeProduct(sku);
-            this.router.navigate(['/']);
+            this.products.splice(i, 1);
+            this.alertService.success('Product deleted successfully.', true);
+            setTimeout(() => {
+              //this.location.back();
+            }, 500);
           }
           else
           {
@@ -386,10 +393,5 @@ export class ListProductsComponent implements OnInit {
           }
       })
     .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
-    
-    // navigate
-    //this.router.navigate(['product-details', sku]);
-    //this.confirmService.success(sku, true);
-    
   }
 }

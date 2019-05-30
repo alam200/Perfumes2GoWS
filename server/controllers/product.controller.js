@@ -41,27 +41,6 @@ exports.update = (req, res, next) => {
 };
 
 /**
- * Get product list | DEPRECATED ?
- * @public
- */
-exports.list = async (req, res, next) => {
-  try {
-    const recordsPerPage = 50;
-
-    const products = await Product.find({}).limit(recordsPerPage);
-    // res.json(products);
-
-    const count = await Product.find({}).count();
-    res.json({
-      productList: products,
-      totalProducts: count
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
  * Get Product details
  * @public
  */
@@ -160,6 +139,7 @@ exports.list = async (req, res, next) => {
         description: 'asc'
       };
     }
+
     let products;
     let count = 0;
     /**In case of 'New Products' request get products whilch are added within last 7 days*/
@@ -171,7 +151,7 @@ exports.list = async (req, res, next) => {
       products = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
         .exec();
-      count = await Product.find(filterOptions).find(searchOptions).count();
+      count = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).count();
     } else {
       products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
@@ -220,6 +200,32 @@ exports.getExportData = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getProductsForDownload = async (req, res, next) => {
+  try {
+    const userId = req.query.userId;
+
+    const user = await User.findById({ _id: userId }).exec();
+    if (user.isVerified && user.category === 'Admin') {
+      const sortObject = {
+        description: 'asc'
+      };
+      const products = await Product.find({ stock: { $gte: 3 } },{ "brand": 1,"type": 1,"SKU": 1,"description": 1,"price": 1,"stock": 1,"_id":0 }).sort(sortObject).exec();
+      res.json({
+        success: true,
+        products: products
+      });
+    } else {
+      // access denied
+      res.json({
+        success: false,
+        products: null
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+ }
 
 /**
  * Delete & Retreive Data
@@ -323,27 +329,20 @@ exports.load = async (req, res, next, productCode) => {
  * @public
  */
 exports.remove = async (req, res, next) => {
-  Product.findByIdAndRemove(req.params.productCode)
-    .then(() => res.status(httpStatus.NO_CONTENT).end(), res.json('Product removed successfully'))
-    .catch(e => next(e));
+  try {
+    await Product.findOneAndRemove({SKU : req.params.productCode}, function (err,Product){
+      if(err) {
+        return next(new Error('Todo was not found!'));
+      }
+      res.json('Successfully removed');
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  //Product.findByIdAndRemove(req.params.productCode)
+  //  .then(() => res.status(httpStatus.NO_CONTENT).end(), res.json('Product removed successfully'))
+  //  .catch(e => next(e));
 };
-
-/**
- * Delete Product
- * @public
- */
-exports.removeProduct = async (req, res, next) => {
-    try {
-      await Product.findOneAndRemove({SKU : req.params.productCode}, function (err,Product){
-        if(err) {
-          return next(new Error('Todo was not found!'));
-        }
-        res.json('Successfully removed');
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
 const storage = multer.diskStorage({ //multers disk storage settings
   destination: function (req, file, cb) {

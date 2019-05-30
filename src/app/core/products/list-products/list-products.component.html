@@ -3,14 +3,15 @@
 
 <div class="form-element product-filters">
   <div class="form-group row clearfix">
-    <label class="col-md-2 col-sm-2 col-form-label-sm">Type: </label>
+    <label class="col-md-2 col-sm-2 col-form-label-sm">Total: {{ ( Total_cnt && Total_cnt !=0 ) ? Total_cnt : 0 }}</label>
+    <label class="col-md col-sm col-form-label-sm">Type: </label>
     <div class="col-md-4 col-sm-4">
       <select class="form-control form-control-sm select-type" #type (change)="selectType(type.value)" [(ngModel)]="selectedType">
         <option selected>ALL</option>
         <option *ngFor="let type of types" [value]="type">{{ type }}</option>
       </select>
     </div>
-    <label class="col-md-2 col-sm-2 col-form-label-sm">Brand: </label>
+    <label class="col-md col-sm col-form-label-sm">Brand: </label>
     <div class="col-md-4 col-sm-4">
       <select class="form-control form-control-sm select-brand" #brand (change)="selectBrand(brand.value)" [(ngModel)]="selectedBrand">
         <option selected>ALL</option>
@@ -64,7 +65,7 @@
               </span>
             </a>
             &nbsp;&nbsp;
-            <a class="d-inline-block tap-here" (click)="openConfirmationDialog(product.SKU,product.brand,product.description)">
+            <a class="d-inline-block tap-here" (click)="openConfirmationDialog(i,product.SKU,product.brand,product.description)">
               <span class="btn btn-danger btn-sm place-order pull-right">
                 <i class="fa fa-trash"></i>&nbsp;Delete
               </span>
@@ -103,7 +104,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <p class="text-center text-danger">
-          <br><h4><b>Please confirm delete.</b></h4>
+          <br><h4><b>Please confirm data.</b></h4>
         </p>
         <br>
         <div class="alert alert-success" role="alert">

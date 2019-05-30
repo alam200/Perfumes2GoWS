@@ -86,11 +86,19 @@ router
    */
   .post(controller.uploadProducts);
 
-  router
-  .route('/removeProduct/:productCode')
+router
+  .route('/getPDF')
   /**
-   * @api {get} api/products/remove/:productCode 
+   * @api {post} api/products/upload
    */
-  .get(controller.removeProduct);
+  .get(controller.getProductsForDownload);
+
+router
+  .route('/getExcel')
+  /**
+   * @api {post} api/products/upload
+   */
+  .get(controller.getProductsForDownload);
+
 
 module.exports = router;
