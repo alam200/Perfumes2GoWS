@@ -41,7 +41,7 @@
       <tbody>
         <tr *ngFor="let product of products; let i = index;" [ngClass]="{'deactive-product':product.productStatus === 'deactive'}">
           <td id="pdImg" class="text-center">
-            <img *ngIf="!product.image" src="/assets/product_placeholder.png" alt="Perfumes2Go" height="42" width="42">
+            <img *ngIf="!product.image" src="product.image" alt="Perfumes2Go" height="42" width="42">
             <img *ngIf="product.image" class="zoom" [src]="product.image" alt="Perfumes2Go" height="42" width="42" data-toggle="modal" data-target=".modal-sm"
               (click)="openModal(product.image, $event)" onError="this.src='/assets/product_placeholder.png';">
           </td>
@@ -93,29 +93,6 @@
         <div class="modal-body">
           <img id="productImage" class="img-responsive" src="" onError="this.src='/assets/product_placeholder.png';">
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- modal templates -->
-<div class="modal fade bd-modal-sm" id="deleteProductDialogModal" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center text-danger">
-          <br><h4><b>Please confirm data.</b></h4>
-        </p>
-        <br>
-        <div class="alert alert-success" role="alert">
-          It will delete data of <b>&nbsp;"{{ selProductBrand }}" &nbsp;<br>( {{ selProductDescription }} )</b> 
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="deleteProduct()">
-          <i class="fa fa-trash">&nbsp;</i>DELETE
-        </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

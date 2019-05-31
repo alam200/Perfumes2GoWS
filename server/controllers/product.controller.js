@@ -28,9 +28,9 @@ exports.create = async (req, res, next) => {
 * @public
 */
 exports.update = (req, res, next) => {
-  const image = Product.saveProductImage(req);
+  //const image = Product.saveProductImage(req);
   let product = Object.assign(req.locals.product, req.body);
-  product.image = image;
+  //product.image = image;
   try {
     product.save()
       .then(savedProduct => res.json(savedProduct))
@@ -206,7 +206,7 @@ exports.getProductsForDownload = async (req, res, next) => {
     const userId = req.query.userId;
 
     const user = await User.findById({ _id: userId }).exec();
-    if (user.isVerified && user.category === 'Admin') {
+    if (user.isVerified && user.category === 'Customer') {
       const sortObject = {
         description: 'asc'
       };
@@ -363,6 +363,7 @@ const upload = multer({ //multer settings
   // }
 }).single('file');
 
+//For MS-DOS format CSV file
 exports.uploadProducts = async (req, res, next) => {
   try {
     upload(req, res, function (err) {
@@ -378,11 +379,100 @@ exports.uploadProducts = async (req, res, next) => {
       /** Check the extension of the incoming file and
        *  use the appropriate module
        */
+      var path = require("path");
+      var csv_path = path.resolve("./") + "\\" + req.file.filename;
+      const csv=require('csvtojson')
+      //add from csv file
+      csv()
+      .fromFile(csv_path)
+      .then((jsonObj)=>{
+          console.log(jsonObj);
+          let productList = [];          
+          async function DeleteFun(){
+            let del =  await Product.deleteMany({}).exec();
+          }
+          DeleteFun(); 
+          try {
+            for (let i = 0; i < jsonObj.length; i++) {
+              if(jsonObj[i]._id === '') {
+                var ObjectID = require('mongodb').ObjectID
+                var objectId = new ObjectID();
+                product_item = {
+                  category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                  productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
+                  _id : objectId,
+                  image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                  price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                  SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                  productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                  type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                  description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                  brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                  stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                  __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                  createdAt : (jsonObj[i].createdAt == '')? '0000-00-00 00:00:00' : jsonObj[i].createdAt,
+                  updatedAt : (jsonObj[i].updatedAt == '')? '0000-00-00 00:00:00' : jsonObj[i].updatedAt
+                 }
+              } else {
+                 product_item = {
+                  category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                  productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
+                  _id : jsonObj[i]._id,
+                  image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                  price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                  SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                  productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                  type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                  description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                  brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                  stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                  __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                  createdAt : (jsonObj[i].createdAt == '')? '2019-04-16T22:40:48.767Z' : jsonObj[i].createdAt,
+                  updatedAt : (jsonObj[i].updatedAt == '')? '2019-04-16T22:40:48.767Z' : jsonObj[i].updatedAt
+                 }
+              }
+              productList.push(product_item);
+            }
+            try {
+              Product.insertMany(productList, (err, res) => {
+                if (err) throw err;
+                  console.log("Number of documents inserted: " + res.insertedCount);
+                });
+            }catch(e) {
+                print(e);
+            }
+          } catch (e)
+          {
+            print(e)
+          }
+        })
+      });
+  } catch (e) {
+    next(e);
+  }
+}
+//For Excel File
+/*
+exports.uploadProducts = async (req, res, next) => {
+  try {
+    upload(req, res, function (err) {
+      if (err) {
+        res.json({ error_code: 1, err_desc: err });
+        return;
+      }
+      // Multer gives us file info in req.file object 
+      if (!req.file) {
+        res.json({ error_code: 1, err_desc: "No file passed" });
+        return;
+      }
+      // Check the extension of the incoming file and
+      //  use the appropriate module
       if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
         exceltojson = xlsxtojson;
       } else {
         exceltojson = xlstojson;
       }
+      
       try {
         exceltojson({
           input: req.file.path,
@@ -393,6 +483,16 @@ exports.uploadProducts = async (req, res, next) => {
             return res.json({ error_code: 1, err_desc: err, data: null });
           }
           //res.json({error_code:0,err_desc:null, data: result});
+          async function DeleteFun(){
+            let delte =  await Product.deleteMany({}).exec();
+          }
+          DeleteFun();
+          Product.insertMany(result, (err, data) => {
+            if (err) {
+              return res.json({ error_code: 1, err_desc: err, data: null });
+            }
+            res.json({ error_code: 0, err_desc: { code: 9200 }, data: "Data inserted into database successfully" });
+          })
           Product.insertMany(result, (err, data) => {
             if (err) {
               return res.json({ error_code: 1, err_desc: err, data: null });
@@ -408,3 +508,4 @@ exports.uploadProducts = async (req, res, next) => {
     next(e);
   }
 };
+*/

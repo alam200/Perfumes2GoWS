@@ -243,15 +243,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   promptGetPDF(event) {
 
-    const columns = [
-      {title: "Brand", dataKey: "brand"},
-      {title: "Type", dataKey: "type"},
-      {title: "SKU", dataKey: "SKU"},
-      {title: "Description", dataKey: "description"},
-      {title: "Price", dataKey: "price"},
-      {title: "Stock", dataKey: "stock"}
-      ];
-
     // Only pt supported (not mm or in)
     
     this.spinner.show();
@@ -260,6 +251,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data.success) {
           try {
+            const columns = [
+              {title: "Brand", dataKey: "brand", width: 30},
+              {title: "Type", dataKey: "type", width: 30},
+              {title: "SKU", dataKey: "SKU", width: 30},
+              {title: "Description", dataKey: "description", width: 30},
+              {title: "Price", dataKey: "price", width: 230},
+              {title: "Stock", dataKey: "stock", width: 330}
+              ];
+
             const products = data.products && data.products || [];
             
             let blobArr: any = [];
@@ -272,33 +272,47 @@ export class NavbarComponent implements OnInit, OnDestroy {
             var pdf = new jsPDF('l', 'pt', 'a4'); //('p', 'pt');
             pdf.cellInitialize();
             pdf.setFontSize(10);
-            pdf.autoTable(columns, products, { margin: {top: 30,left:15,right:15,bottom:20}});
+            pdf.autoTable(columns, products, { 
+              columnStyles: {
+                brand: {columnWidth: 80},
+                type: {columnWidth: 80},
+                SKU: {columnWidth: 40},
+                description: {columnWidth: 200},
+                price: {columnWidth: 20},
+                stock: {columnWidth: 20},
+              },
+              margin: {top: 30,left:15,right:15,bottom:20}});
             /*
             pdf.autoTable(columns, products, {
                 margin: {horizontal: 12},
-                bodyStyles: {valign: 'middle'},
+                bodyStyles: {halign: 'middle', valign: 'middle'},
                 //styles: {overflow: 'linebreak', columnWidth:'wrap'},
-                theme: 'plain',
                 columnStyles: {
-                  columnName1: {
-                        columnWidth: '45'
+                    "Brand": {
+                        columnWidth: '4'
                     },
-                    columnName2: {
-                        columnWidth: '70'
+                    "Type": {
+                        columnWidth: '7'
                     },
-                    SKU: {
-                        columnWidth: '40'
+                    "SKU": {
+                        columnWidth: '4'
                     },
-                    columnName3: {
-                        columnWidth: '20'
+                    "Description": {
+                        columnWidth: '5'
                     },
-                    columnName4: {
-                        columnWidth: '50'
+                    "Price": {
+                      columnWidth: '5'
                     },
-                    columnName5: {
-                      columnWidth: '50'
+                    "Stock": {
+                      columnWidth: '5'
                     }
-                  }
+                  },
+                  styles: {
+                    fontSize: 10,
+                    overflow: 'linebreak',
+                    columnWidth: 'wrap',
+                  },
+                  theme: 'grid'
               });
               */
             pdf.save(pdfPath);
