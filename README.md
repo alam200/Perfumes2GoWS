@@ -49,12 +49,60 @@ project/
 	tslint.json
 	
 # Steps for change to mongo password
+-- On Windows System
+1. run "c:/mongod" in cmd window
+2. "c:/mongo"
+3. To reating user name and password in mongodb
+	> use admin
+	switched to db admin
+	> db.createUser(
+...   {
+...     user: "akros",
+...     pwd: "akros",
+...     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+...   }
+... )
+	>exit
+4. to change user password in mongodb
+5. use admin
+6. db.auth(user's name, user's password)					ex:db.auth("akros","akros")
+7. db.changeUserPassword(user's name, new user's password)	ex:db.changeUserPassword("akros","123456");
+8. restart mongod
+	"c:/mongod -auth"
+9. open 'project folder / server / rutes / api.js' file
+	-const dbUri = "mongodb://akros:akros@142.93.252.227:27017/fragrance-deals?authSource=admin";
+	-change 'akros:123456' instead 'akros:akros'
 
-	
-	
-
-/server
-/src
+-- On Ubuntu System
+-- On Windows System
+1. run "$sudo service mongod start" in terminal window
+2. "$mongo"
+3. To reating user name and password in mongodb
+	> use admin
+	switched to db admin
+	> db.createUser(
+...   {
+...     user: "akros",
+...     pwd: "akros",
+...     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+...   }
+... )
+	>exit
+4. to change user password in mongodb
+5. use admin
+6. db.auth(user's name, user's password)					ex:db.auth("akros","akros")
+7. db.changeUserPassword(user's name, new user's password)	ex:db.changeUserPassword("akros","123456");
+8. open the configuration file '/etc/mongod.conf'
+9. In the #security section 
+. . .
+	security:
+	  authorization: "enabled"
+...
+10. restart mongod
+	"sudo service mongod restart"/** PRODUCTION */
+11. open 'project folder / server / rutes / api.js' file
+	-const dbUri = "mongodb://akros:akros@142.93.252.227:27017/fragrance-deals?authSource=admin";
+	-change 'akros:123456' instead 'akros:akros'
 
 
 # Perfumes2GoWS
