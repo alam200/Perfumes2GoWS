@@ -220,6 +220,7 @@ export class ListUsersComponent implements OnInit {
             this.users.splice(i, 1);
             this.alertService.success('Product deleted successfully.', true);
             setTimeout(() => {
+                $("#datTable").DataTable().ajax.reload();
               //this.location.back();
             }, 500);
           }

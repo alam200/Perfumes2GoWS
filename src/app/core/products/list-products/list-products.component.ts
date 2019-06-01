@@ -382,14 +382,13 @@ export class ListProductsComponent implements OnInit {
           if (confirmed)
           {
             this.productsService.removeProduct(sku);
-            this.getProductsData();
-            this.Total_cnt = this.Total_cnt - 1;
             
+            this.Total_cnt = this.Total_cnt - 1;
             this.products.splice(i, 1);
             this.alertService.success('Product deleted successfully.', true);
             setTimeout(() => {
-              //this.location.back();
-            }, 500);
+              $("#datTable").DataTable().ajax.reload();
+            }, 300);
           }
           else
           {

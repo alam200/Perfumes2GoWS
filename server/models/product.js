@@ -66,23 +66,25 @@ productSchema.statics = {
     if (req.body.imageBase64) {
       // If imageBase64 is passed mean create/update image
       let oldImage = req.body.image;
-
+      var path = require("path");
       const base64Image = req.body.imageBase64.split(';base64,').pop();
       const timeInMillis = new Date().getTime();
-      const productImageUrl = '/products/' + timeInMillis + '.png';
-      const productImageName = 'images/' + productImageUrl;
+      const productImageUrl_dist = path.resolve("./") + '\\dist/assets/' + timeInMillis + '.png';
+      const productImageUrl = './src/assets/' + timeInMillis + '.png';
+      const database_inserturl = '/assets/' + timeInMillis + '.png';
+      const productImageName = productImageUrl;
       fs.writeFileSync(productImageName, base64Image, { encoding: 'base64' });
+      fs.writeFileSync(productImageUrl_dist, base64Image, { encoding: 'base64' });
 
       // Delete already exist image for this product
       if (oldImage !== '/products/product_placeholder.png') {
-        fs.unlink('images/' + oldImage, (err) => {
+        fs.unlink(oldImage, (err) => {
           if (err) {
-            console.log(oldImage + ' is not deleted');
           }
         });
       }
 
-      return productImageUrl;
+      return database_inserturl;
     } else if (req.body.image && req.body.image !== '/products/product_placeholder.png') {
       // if imageBase64 not passed but image exist but not default image, then just return that as it is
       return req.body.image;

@@ -37,7 +37,7 @@ export class UploadProductsComponent implements OnInit, AfterViewInit {
           this.message = 'Same SKU cannot be used in multiple records';
           break;
         case 9300:
-          this.message = 'Either you uploaded wrong file type or excel is corrupted';
+          this.message = 'Either you uploaded wrong csv file type';
           break;
         default:
           this.message = 'Something went wrong, plese try later';
