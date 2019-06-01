@@ -3,7 +3,6 @@
 
 <div class="form-element product-filters">
   <div class="form-group row clearfix">
-    <label class="col-md-2 col-sm-2 col-form-label-sm">Total: {{ ( Total_cnt && Total_cnt !=0 ) ? Total_cnt : 0 }}</label>
     <label class="col-md col-sm col-form-label-sm">Type: </label>
     <div class="col-md-4 col-sm-4">
       <select class="form-control form-control-sm select-type" #type (change)="selectType(type.value)" [(ngModel)]="selectedType">
@@ -19,6 +18,9 @@
       </select>
     </div>
   </div>
+</div>
+<div class="form-left">
+  <label>Total: {{ ( Total_cnt && Total_cnt !=0 ) ? Total_cnt : 0 }}</label>
 </div>
 <div class="table-responsive">
   <div class="grid-table-wrapper">

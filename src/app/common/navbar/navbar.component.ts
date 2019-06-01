@@ -265,8 +265,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
             
-            const timestamp: String = this.getTimestampStr();
-            const pdfPath = `export_products_${timestamp}.pdf`;
+//            const timestamp: String = this.getTimestampStr();
+            const current_date : String = this.getDateStr();
+            const pdfPath = `PriceList_${current_date}.pdf`;
             
             this.spinner.hide();
             var pdf = new jsPDF('l', 'pt', 'a4'); //('p', 'pt');
@@ -282,39 +283,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 stock: {columnWidth: 20},
               },
               margin: {top: 30,left:15,right:15,bottom:20}});
-            /*
-            pdf.autoTable(columns, products, {
-                margin: {horizontal: 12},
-                bodyStyles: {halign: 'middle', valign: 'middle'},
-                //styles: {overflow: 'linebreak', columnWidth:'wrap'},
-                columnStyles: {
-                    "Brand": {
-                        columnWidth: '4'
-                    },
-                    "Type": {
-                        columnWidth: '7'
-                    },
-                    "SKU": {
-                        columnWidth: '4'
-                    },
-                    "Description": {
-                        columnWidth: '5'
-                    },
-                    "Price": {
-                      columnWidth: '5'
-                    },
-                    "Stock": {
-                      columnWidth: '5'
-                    }
-                  },
-                  styles: {
-                    fontSize: 10,
-                    overflow: 'linebreak',
-                    columnWidth: 'wrap',
-                  },
-                  theme: 'grid'
-              });
-              */
             pdf.save(pdfPath);
 
           } catch (e) {
@@ -346,9 +314,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
             
-            const timestamp: String = this.getTimestampStr();
+            //const timestamp: String = this.getTimestampStr();
+            const current_date : String = this.getDateStr();
             const pathArr: any = [
-              `export_products_${timestamp}.csv`
+              `PriceList__${current_date}.csv`
             ];
             this.spinner.hide();
 
@@ -419,6 +388,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private getTimestampStr() {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
     return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5).replace(/-|:|T/g, '');
+  }
+
+  private getDateStr(){
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -13).replace(/-|:|T/g, '');
   }
 
   private getCsvBlob(params) {

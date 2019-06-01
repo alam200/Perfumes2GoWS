@@ -18,6 +18,7 @@ const parseConfig = {
     useNewUrlParser: true
 };
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(dbUri, parseConfig, (err) => {
     if (err) {

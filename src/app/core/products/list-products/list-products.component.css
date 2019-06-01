@@ -1,3 +1,13 @@
+.form-left {
+    position: absolute !important;
+    padding-left: 1vw;
+    /* right: 20vw; */
+    left: 12%;
+    /* left: 35vw; */
+    width: 33%;
+    z-index: 1;
+}
+
 .form-element {
     position: absolute !important;
     padding-right: 1vw;
