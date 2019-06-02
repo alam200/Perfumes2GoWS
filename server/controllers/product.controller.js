@@ -350,7 +350,6 @@ const storage = multer.diskStorage({ //multers disk storage settings
     cb(null, './')
   },
   filename: function (req, file, cb) {
-    var datetimestamp = Date.now();
     cb(null, 'ProductList.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
   }
 });
@@ -378,11 +377,6 @@ exports.uploadProducts = async (req, res, next) => {
         return;
       }
 
-      if (req.file.originalname.split('.')[req.file.originalname.split('.').length - 1] === 'xlsx') {
-        exceltojson = xlsxtojson;
-      } else {
-        exceltojson = xlstojson;
-      }
       /** Check the extension of the incoming file and
        *  use the appropriate module
        */
@@ -397,8 +391,6 @@ exports.uploadProducts = async (req, res, next) => {
           async function DeleteFun(){
             let del =  await Product.deleteMany({}).exec();
           }
-          console.log();
-          console.log(jsonObj);
           if(jsonObj.length == 0 ) {
           let isCsvFormat = true;
           } else {
@@ -424,8 +416,8 @@ exports.uploadProducts = async (req, res, next) => {
                       brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
                       stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
                       __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                      createdAt : (jsonObj[i].createdAt == '')? '0000-00-00 00:00:00' : jsonObj[i].createdAt,
-                      updatedAt : (jsonObj[i].updatedAt == '')? '0000-00-00 00:00:00' : jsonObj[i].updatedAt
+                      createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                      updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
                      }
                   } else {
                      product_item = {
@@ -441,8 +433,8 @@ exports.uploadProducts = async (req, res, next) => {
                       brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
                       stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
                       __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                      createdAt : (jsonObj[i].createdAt == '')? '2019-04-16T22:40:48.767Z' : jsonObj[i].createdAt,
-                      updatedAt : (jsonObj[i].updatedAt == '')? '2019-04-16T22:40:48.767Z' : jsonObj[i].updatedAt
+                      createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                      updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
                      }
                   }
                   productList.push(product_item);
