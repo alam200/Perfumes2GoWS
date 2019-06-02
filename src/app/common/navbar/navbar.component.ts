@@ -11,12 +11,17 @@ import { Subscription } from 'rxjs/Subscription';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from '../../services/products.service';
 import { saveAs } from 'file-saver';
+import { Workbook } from 'exceljs/dist/exceljs.min.js'; 
+import * as fs from 'file-saver';
 import { async } from 'q';
 
 //declare var jsPDF: any;
 declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');
+
+const EXCEL_TYPE = 'application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 declare var $: any;
 
@@ -205,8 +210,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMngData = false;
       }
     } else {
-      this.showGetPDF = true;
-      this.showGetExcel = true;
+      this.showGetPDF = false;
+      this.showGetExcel = false;
       this.showAddItem = false;
       this.showOrders = false;
       this.showUsers = false;
@@ -275,12 +280,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
             pdf.setFontSize(10);
             pdf.autoTable(columns, products, { 
               columnStyles: {
-                brand: {columnWidth: 80},
-                type: {columnWidth: 80},
-                SKU: {columnWidth: 40},
-                description: {columnWidth: 200},
-                price: {columnWidth: 20},
-                stock: {columnWidth: 20},
+                brand: {cellWidth: 80},
+                type: {cellWidth: 80},
+                SKU: {cellWidth: 40},
+                description: {cellWidth: 200},
+                price: {cellWidth: 20},
+                stock: {cellWidth: 20},
               },
               margin: {top: 30,left:15,right:15,bottom:20}});
             pdf.save(pdfPath);
@@ -302,6 +307,64 @@ export class NavbarComponent implements OnInit, OnDestroy {
       
   }
 
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
+    //Excel Title, Header, Data
+    const headersArray = ["Brand","Type","SKU","Description","Price","Stock"];
+    const header = headersArray;
+    const data = json;
+    //Create workbook and worksheet
+    let workbook = new Workbook();
+    let worksheet = workbook.addWorksheet(excelFileName);
+    //Add Header Row
+    let headerRow = worksheet.addRow(header);
+    // Cell Style : Fill and Border
+    headerRow.eachCell((cell, number) => {
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FF2980BA' }
+        //bgColor: { argb: 'FF0000FF' }
+      }
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
+    })
+    // Add Data and Conditional Formatting
+    
+    data.forEach((element) => {
+      let eachRow = [];
+      eachRow.push(element["brand"]);
+      eachRow.push(element["type"]);
+      eachRow.push(element["SKU"]);
+      eachRow.push(element["description"]);
+      eachRow.push(element["price"]);
+      eachRow.push(element["stock"]);
+      worksheet.addRow(eachRow);
+      /*
+      if (element.isDeleted === "Y") {
+        let deletedRow = worksheet.addRow(eachRow);
+        deletedRow.eachCell((cell, number) => {
+          cell.font = { name: 'Calibri', family: 4, size: 11, bold: false, strike: true };
+        })
+      } else {
+        worksheet.addRow(eachRow);
+      }*/
+    })
+    worksheet.properties.defaultRowHeight = 150;
+    
+    worksheet.getColumn(1).width = 32;
+    worksheet.getColumn(2).width = 32;
+    worksheet.getColumn(3).width = 16;
+    worksheet.getColumn(4).width = 80;
+    worksheet.getColumn(5).width = 10;
+    worksheet.getColumn(6).width = 10;
+    
+    //Generate Excel File with given name
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], { type: EXCEL_TYPE });
+      fs.saveAs(blob, excelFileName + EXCEL_EXTENSION);
+    })
+    
+  }
+  
   promptGetExcel(event) {
     this.spinner.show();
     const userId = this.session.retrieveUserId();
@@ -310,7 +373,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (data.success) {
           try {
             const products = data.products && data.products || [];
-            
+            const current_date : String = this.getDateStr();
+            this.exportAsExcelFile(products,`PriceList__${current_date}`);
+            /*
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
             
@@ -319,12 +384,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
             const pathArr: any = [
               `PriceList__${current_date}.csv`
             ];
-            this.spinner.hide();
-
             blobArr.forEach(async (blob, index) => {
               saveAs(blob, pathArr[index]);
               await new Promise(r => setTimeout(r, 1000));
             });
+            */
+            this.spinner.hide();
           } catch (e) {
             this.spinner.hide();
             console.log(e);
@@ -339,6 +404,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         console.log('service down ', error);
       });
+      
   }
   
   downloadCsvFiles() {

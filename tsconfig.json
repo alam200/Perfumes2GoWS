@@ -14,6 +14,12 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "exceljs": [
+          "node_modules/exceljs/dist/es5/exceljs.browser",
+          "node_modules/exceljs/dist/exceljs.min"
+      ]
+    }
   }
 }

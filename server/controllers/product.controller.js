@@ -387,7 +387,7 @@ exports.uploadProducts = async (req, res, next) => {
        *  use the appropriate module
        */
       var path = require("path");
-      var csv_path = path.resolve("./") + "\\" + req.file.filename;
+      var csv_path = path.resolve("./") + "/" + req.file.filename;
       const csv=require('csvtojson')
       //add from csv file
       csv()
