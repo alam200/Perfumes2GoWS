@@ -324,7 +324,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         pattern: 'solid',
         fgColor: { argb: 'FF2980BA' }
         //bgColor: { argb: 'FF0000FF' }
-      }
+      },
+      //cell.font = {
+      //  name: 'Calibri', family: 4, size: 11, bold: false, strike: true 
+      //},
       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
     })
     // Add Data and Conditional Formatting
@@ -338,17 +341,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       eachRow.push(element["price"]);
       eachRow.push(element["stock"]);
       worksheet.addRow(eachRow);
-      /*
-      if (element.isDeleted === "Y") {
-        let deletedRow = worksheet.addRow(eachRow);
-        deletedRow.eachCell((cell, number) => {
-          cell.font = { name: 'Calibri', family: 4, size: 11, bold: false, strike: true };
-        })
-      } else {
-        worksheet.addRow(eachRow);
-      }*/
     })
-    worksheet.properties.defaultRowHeight = 150;
+    //worksheet.properties.defaultRowHeight = 150;
     
     worksheet.getColumn(1).width = 32;
     worksheet.getColumn(2).width = 32;

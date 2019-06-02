@@ -52,7 +52,7 @@ project/
 -- On Windows System
 1. run "c:/mongod" in cmd window
 2. "c:/mongo"
-3. To reating user name and password in mongodb
+3. To creating user name and password in mongodb
 	> use admin
 	switched to db admin
 	> db.createUser(
@@ -74,10 +74,9 @@ project/
 	-change 'akros:123456' instead 'akros:akros'
 
 -- On Ubuntu System
--- On Windows System
 1. run "$sudo service mongod start" in terminal window
 2. "$mongo"
-3. To reating user name and password in mongodb
+3. To creating user name and password in mongodb
 	> use admin
 	switched to db admin
 	> db.createUser(
@@ -88,7 +87,7 @@ project/
 ...   }
 ... )
 	>exit
-4. to change user password in mongodb
+4. To change user password in mongodb
 5. use admin
 6. db.auth(user's name, user's password)					ex:db.auth("akros","akros")
 7. db.changeUserPassword(user's name, new user's password)	ex:db.changeUserPassword("akros","123456");
