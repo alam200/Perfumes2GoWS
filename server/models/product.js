@@ -69,9 +69,9 @@ productSchema.statics = {
       var path = require("path");
       const base64Image = req.body.imageBase64.split(';base64,').pop();
       const timeInMillis = new Date().getTime();
-      const productImageUrl_dist = path.resolve("./") + '/dist/assets/' + timeInMillis + '.png';
-      const productImageUrl = './src/assets/' + timeInMillis + '.png';
-      const database_inserturl = '/assets/' + timeInMillis + '.png';
+      const productImageUrl_dist = path.resolve("./") + '/dist/products/' + timeInMillis + '.png';
+      const productImageUrl = './src/products/' + timeInMillis + '.png';
+      const database_inserturl = '/products/' + timeInMillis + '.png';
       const productImageName = productImageUrl;
       fs.writeFileSync(productImageName, base64Image, { encoding: 'base64' });
       fs.writeFileSync(productImageUrl_dist, base64Image, { encoding: 'base64' });
