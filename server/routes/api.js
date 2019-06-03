@@ -20,7 +20,8 @@ const parseConfig = {
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
-mongoose.connect(dbUri, parseConfig, (err) => {
+// mongoose.connect(dbUri, parseConfig, (err) => {
+mongoose.connect(dbUri, (err) => {
     if (err) {
         console.log("error", err);
     } else {
