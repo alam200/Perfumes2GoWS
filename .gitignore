@@ -30,5 +30,7 @@ dist/index.html
 .strong-pm
 
 # Image Upload
-images/products/
+# images/products/
 *.xlsx
+*.csv
+src/products/

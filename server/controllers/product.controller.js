@@ -383,38 +383,12 @@ exports.uploadProducts = async (req, res, next) => {
       var path = require("path");
       var csv_path = path.resolve("./") + "/" + req.file.filename;
       const csv=require('csvtojson')
-      let products;
-      let jsondata  = []
-      async function LoadProduct() {
-        products = await Product.find({}).exec();
-        for(let i = 0 ; i < products.length ; i++) {
-          product_item = {
-            category : products[i].category ,
-            productStatus : products[i].productStatus,
-            _id : products[i]._id,
-            image : products[i].image,
-            price : products[i].price,
-            SKU : products[i].SKU,
-            productCode : products[i].productCode,
-            type : products[i].type,
-            description : products[i].description,
-            brand : products[i].brand,
-            stock : products[i].stock,
-            __v : products[i].__v,
-            createdAt : products[i].createdAt,
-            updatedAt : products[i].updatedAt
-           }
-           jsondata.push(product_item)
-        }
-      }
-      LoadProduct(); 
-      
+      let one_product = [];
       //add from csv file
       csv()
       .fromFile(csv_path)
       .then((jsonObj)=>{
           let productList2 = [];
-
           if(jsonObj.length == 0 ) {
 
           } else {
@@ -423,7 +397,7 @@ exports.uploadProducts = async (req, res, next) => {
             } else {
               try {
                 for (let i = 0; i < jsonObj.length; i++) {
-                  if(jsonObj[i]._id === '') {
+                  if(jsonObj[i]._id == '') {
                     var ObjectID = require('mongodb').ObjectID
                     var objectId = new ObjectID();
                     product_item1 = {
@@ -447,6 +421,8 @@ exports.uploadProducts = async (req, res, next) => {
                         const product = new Product(product_item1);
                         try {
                           const savedProduct = await product.save();
+                          res.status(httpStatus.OK);
+                          res.json(savedProduct);
                         } catch (e) {
                         next(e);
                         }
@@ -454,9 +430,15 @@ exports.uploadProducts = async (req, res, next) => {
                     // call new produdct 
                     create_product(); // 1
                   } else {
-                     
-                     for(let j = 0 ; j < jsondata.length; j++) {
-                       if(jsonObj[i]._id == jsondata[j]._id) {
+                     async function getCount() {
+                       try {
+                        one_product =  await Product.find({_id : jsonObj[i]._id}).exec();
+                       }catch(e) {
+
+                       }
+                     }
+                     getCount()
+                     if(one_product) {
                         product_item2 = {
                           category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
                           productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
@@ -472,41 +454,40 @@ exports.uploadProducts = async (req, res, next) => {
                           __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
                           createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
                           updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
-                         }
-                         productList2.push(product_item2);
-                       } else {
-                        var ObjectID = require('mongodb').ObjectID
-                        var objectId = new ObjectID();
+                        }
+                        productList2.push(product_item2);
+                     } else {
+                      var ObjectID = require('mongodb').ObjectID
+                      var objectId = new ObjectID();
                         product_item3 = {
-                          category : (jsondata[j].category == '')? 'normal' : jsondata[j].category ,
-                          productStatus : (jsondata[j].productStatus == '')? 'deactive' : jsondata[j].productStatus,
+                          category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                          productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
                           _id : objectId,
-                          image : (jsondata[j].image == '')? '/assets/product_placeholder.png' : jsondata[j].image,
-                          price : (jsondata[j].price == '')? '0' : jsondata[j].price,
-                          SKU : (jsondata[j].SKU == '')? '0' : jsondata[j].SKU,
-                          productCode : (jsondata[j].productCode == '')? jsondata[j].SKU : jsondata[j].productCode,
-                          type : (jsondata[j].type == '')? null : jsonObj[j].type,
-                          description : (jsondata[j].description == '')? null : jsondata[j].description,
-                          brand : (jsondata[j].brand == '')? null : jsondata[j].brand,
-                          stock : (jsondata[j].stock == '')? '0' : jsondata[j].stock,
-                          __v : (jsondata[j].__v == '')? '0' : jsondata[j].__v,
-                          createdAt : (jsondata[j].createdAt == '')? null : jsondata[j].createdAt,
-                          updatedAt : (jsondata[j].updatedAt == '')? null : jsondata[j].updatedAt
-                         }
-                         //add new product item
-                         async function create_product1() {
-                            const product = new Product(product_item3);
-                            try {
+                          image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                          price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                          SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                          productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                          type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                          description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                          brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                          stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                          __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                          createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                          updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
+                        }
+                        async function create_product1() {
+                          const product = new Product(product_item3);
+                          try {
                             const savedProduct = await product.save();
-                            } catch (e) {
-                            next(e);
-                            }
+                            res.status(httpStatus.OK);
+                            res.json(savedProduct);
+                          } catch (e) {
+                          next(e);
                           }
-                        // call new produdct 
+                        }
+                       // call new produdct 
                         create_product1(); // 1
-                       }
                      }
-                     
                   }
                 }
                 try {
