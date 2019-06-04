@@ -31,6 +31,6 @@ dist/index.html
 
 # Image Upload
 # images/products/
+src/products/
 *.xlsx
 *.csv
-src/products/
