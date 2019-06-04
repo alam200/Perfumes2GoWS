@@ -439,41 +439,43 @@ exports.uploadProducts = async (req, res, next) => {
                      }
                      getCount()
                      if(one_product) {
-                      product_item2 = {
-                        category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
-                        productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
-                        _id : jsonObj[i]._id,
-                        image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
-                        price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
-                        SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
-                        productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
-                        type : (jsonObj[i].type == '')? null : jsonObj[i].type,
-                        description : (jsonObj[i].description == '')? null : jsonObj[i].description,
-                        brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
-                        stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
-                        __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                        createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
-                        updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
-                      }
-                      productList2.push(product_item2);
+                        product_item2 = {
+                          category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                          productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
+                          _id : jsonObj[i]._id,
+                          image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                          price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                          SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                          productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                          type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                          description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                          brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                          stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                          __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                          createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                          updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
+                        }
+                        productList2.push(product_item2);
                      } else {
-                      product_item3 = {
-                        category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
-                        productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
-                        _id : jsonObj[i]._id,
-                        image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
-                        price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
-                        SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
-                        productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
-                        type : (jsonObj[i].type == '')? null : jsonObj[i].type,
-                        description : (jsonObj[i].description == '')? null : jsonObj[i].description,
-                        brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
-                        stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
-                        __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                        createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
-                        updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
-                      }
-                        async function create_product() {
+                      var ObjectID = require('mongodb').ObjectID
+                      var objectId = new ObjectID();
+                        product_item3 = {
+                          category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                          productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
+                          _id : objectId,
+                          image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                          price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                          SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                          productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                          type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                          description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                          brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                          stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                          __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                          createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                          updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
+                        }
+                        async function create_product1() {
                           const product = new Product(product_item3);
                           try {
                             const savedProduct = await product.save();
@@ -484,7 +486,7 @@ exports.uploadProducts = async (req, res, next) => {
                           }
                         }
                        // call new produdct 
-                        create_product(); // 1
+                        create_product1(); // 1
                      }
                   }
                 }
