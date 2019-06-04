@@ -262,7 +262,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
               {title: "SKU", dataKey: "SKU", width: 30},
               {title: "Description", dataKey: "description", width: 30},
               {title: "Price", dataKey: "price", width: 230},
-              {title: "Stock", dataKey: "stock", width: 330}
+              {title: "Avaiable", dataKey: "stock", width: 330}
               ];
 
             const products = data.products && data.products || [];
@@ -309,7 +309,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
     //Excel Title, Header, Data
-    const headersArray = ["Brand","Type","SKU","Description","Price","Stock"];
+    const headersArray = ["Brand","Type","SKU","Description","Price","Avaiable"];
     const header = headersArray;
     const data = json;
     //Create workbook and worksheet
@@ -356,7 +356,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       let blob = new Blob([data], { type: EXCEL_TYPE });
       fs.saveAs(blob, excelFileName + EXCEL_EXTENSION);
     })
-    
   }
   
   promptGetExcel(event) {
