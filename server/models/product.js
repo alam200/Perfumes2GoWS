@@ -77,13 +77,14 @@ productSchema.statics = {
       fs.writeFileSync(productImageUrl_dist, base64Image, { encoding: 'base64' });
 
       // Delete already exist image for this product
-      if (oldImage !== '/products/product_placeholder.png') {
-        fs.unlink(oldImage, (err) => {
-          if (err) {
-          }
-        });
+      if(oldImage == undefined) {} else {
+        if (oldImage !== '/products/product_placeholder.png') {
+          fs.unlink(oldImage, (err) => {
+            if (err) {
+            }
+          });
+        }  
       }
-
       return database_inserturl;
     } else if (req.body.image && req.body.image !== '/products/product_placeholder.png') {
       // if imageBase64 not passed but image exist but not default image, then just return that as it is

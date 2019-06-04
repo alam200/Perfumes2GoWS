@@ -383,27 +383,50 @@ exports.uploadProducts = async (req, res, next) => {
       var path = require("path");
       var csv_path = path.resolve("./") + "/" + req.file.filename;
       const csv=require('csvtojson')
+      let products;
+      let jsondata  = []
+      async function LoadProduct() {
+        products = await Product.find({}).exec();
+        for(let i = 0 ; i < products.length ; i++) {
+          product_item = {
+            category : products[i].category ,
+            productStatus : products[i].productStatus,
+            _id : products[i]._id,
+            image : products[i].image,
+            price : products[i].price,
+            SKU : products[i].SKU,
+            productCode : products[i].productCode,
+            type : products[i].type,
+            description : products[i].description,
+            brand : products[i].brand,
+            stock : products[i].stock,
+            __v : products[i].__v,
+            createdAt : products[i].createdAt,
+            updatedAt : products[i].updatedAt
+           }
+           jsondata.push(product_item)
+        }
+      }
+      LoadProduct(); 
+      
       //add from csv file
       csv()
       .fromFile(csv_path)
       .then((jsonObj)=>{
-          let productList = [];          
-          async function DeleteFun(){
-            let del =  await Product.deleteMany({}).exec();
-          }
+          let productList2 = [];
+
           if(jsonObj.length == 0 ) {
-          let isCsvFormat = true;
+
           } else {
             if (jsonObj[0].SKU == undefined || jsonObj[0].createdAt == undefined) {
               res.json({ error_code: 1, err_desc: { code: 9300 } });
             } else {
-              DeleteFun(); 
               try {
                 for (let i = 0; i < jsonObj.length; i++) {
                   if(jsonObj[i]._id === '') {
                     var ObjectID = require('mongodb').ObjectID
                     var objectId = new ObjectID();
-                    product_item = {
+                    product_item1 = {
                       category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
                       productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
                       _id : objectId,
@@ -419,28 +442,75 @@ exports.uploadProducts = async (req, res, next) => {
                       createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
                       updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
                      }
+                     //add new product item
+                     async function create_product() {
+                        const product = new Product(product_item1);
+                        try {
+                          const savedProduct = await product.save();
+                        } catch (e) {
+                        next(e);
+                        }
+                      }
+                    // call new produdct 
+                    create_product(); // 1
                   } else {
-                     product_item = {
-                      category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
-                      productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
-                      _id : jsonObj[i]._id,
-                      image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
-                      price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
-                      SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
-                      productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
-                      type : (jsonObj[i].type == '')? null : jsonObj[i].type,
-                      description : (jsonObj[i].description == '')? null : jsonObj[i].description,
-                      brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
-                      stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
-                      __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                      createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
-                      updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
+                     
+                     for(let j = 0 ; j < jsondata.length; j++) {
+                       if(jsonObj[i]._id == jsondata[j]._id) {
+                        product_item2 = {
+                          category : (jsonObj[i].category == '')? 'normal' : jsonObj[i].category ,
+                          productStatus : (jsonObj[i].productStatus == '')? 'deactive' : jsonObj[i].productStatus,
+                          _id : jsonObj[i]._id,
+                          image : (jsonObj[i].image == '')? '/assets/product_placeholder.png' : jsonObj[i].image,
+                          price : (jsonObj[i].price == '')? '0' : jsonObj[i].price,
+                          SKU : (jsonObj[i].SKU == '')? '0' : jsonObj[i].SKU,
+                          productCode : (jsonObj[i].productCode == '')? jsonObj[i].SKU : jsonObj[i].productCode,
+                          type : (jsonObj[i].type == '')? null : jsonObj[i].type,
+                          description : (jsonObj[i].description == '')? null : jsonObj[i].description,
+                          brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
+                          stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
+                          __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
+                          createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                          updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
+                         }
+                         productList2.push(product_item2);
+                       } else {
+                        var ObjectID = require('mongodb').ObjectID
+                        var objectId = new ObjectID();
+                        product_item3 = {
+                          category : (jsondata[j].category == '')? 'normal' : jsondata[j].category ,
+                          productStatus : (jsondata[j].productStatus == '')? 'deactive' : jsondata[j].productStatus,
+                          _id : objectId,
+                          image : (jsondata[j].image == '')? '/assets/product_placeholder.png' : jsondata[j].image,
+                          price : (jsondata[j].price == '')? '0' : jsondata[j].price,
+                          SKU : (jsondata[j].SKU == '')? '0' : jsondata[j].SKU,
+                          productCode : (jsondata[j].productCode == '')? jsondata[j].SKU : jsondata[j].productCode,
+                          type : (jsondata[j].type == '')? null : jsonObj[j].type,
+                          description : (jsondata[j].description == '')? null : jsondata[j].description,
+                          brand : (jsondata[j].brand == '')? null : jsondata[j].brand,
+                          stock : (jsondata[j].stock == '')? '0' : jsondata[j].stock,
+                          __v : (jsondata[j].__v == '')? '0' : jsondata[j].__v,
+                          createdAt : (jsondata[j].createdAt == '')? null : jsondata[j].createdAt,
+                          updatedAt : (jsondata[j].updatedAt == '')? null : jsondata[j].updatedAt
+                         }
+                         //add new product item
+                         async function create_product1() {
+                            const product = new Product(product_item3);
+                            try {
+                            const savedProduct = await product.save();
+                            } catch (e) {
+                            next(e);
+                            }
+                          }
+                        // call new produdct 
+                        create_product1(); // 1
+                       }
                      }
+                     
                   }
-                  productList.push(product_item);
                 }
                 try {
-                  Product.insertMany(productList, (err, res) => {
+                  Product.updateMany(productList2, (err, res) => {
                     if (err) throw err;
                     });
                     res.json({ error_code: 0, err_desc: { code: 9200 }, data: "Data inserted into database successfully" });
