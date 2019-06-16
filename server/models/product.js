@@ -91,7 +91,7 @@ productSchema.statics = {
       return req.body.image;
     }
     // other wise return default image path
-    return '/products/product_placeholder.png';
+    return '/assets/product_placeholder.png';
   }
 };
 

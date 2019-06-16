@@ -146,12 +146,15 @@ exports.list = async (req, res, next) => {
     if (listType && listType.toUpperCase() === 'NEW') {
       let fromDate = new Date();
       const toDate = new Date();
-      fromDate = new Date(fromDate.setDate(fromDate.getDate() - 7));
-
+      fromDate = new Date(fromDate.setDate(fromDate.getDate() - 365));
+      sortObject = {};
+      sortObject["createdAt"] = -1;
+      sortObject["stock"] = -1;
+      recordsPerPage = 50;
       products = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
         .exec();
-      count = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).countDocuments();
+      count = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).countDocuments().limit(recordsPerPage);
     } else {
       products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
@@ -365,6 +368,7 @@ const upload = multer({ //multer settings
 
 //For MS-DOS format CSV file
 exports.uploadProducts = async (req, res, next) => {
+  let someError = false
   try {
     upload(req, res, function (err) {
       if (err) {
@@ -387,7 +391,7 @@ exports.uploadProducts = async (req, res, next) => {
       //add from csv file
       csv()
       .fromFile(csv_path)
-      .then((jsonObj)=>{
+      .then(async (jsonObj)=>{
           let productList2 = [];
           if(jsonObj.length == 0 ) {
 
@@ -413,22 +417,23 @@ exports.uploadProducts = async (req, res, next) => {
                       brand : (jsonObj[i].brand == '')? null : jsonObj[i].brand,
                       stock : (jsonObj[i].stock == '')? '0' : jsonObj[i].stock,
                       __v : (jsonObj[i].__v == '')? '0' : jsonObj[i].__v,
-                      createdAt : (jsonObj[i].createdAt == '')? null : jsonObj[i].createdAt,
+                      createdAt : (jsonObj[i].createdAt == '')? new Date().toISOString() : jsonObj[i].createdAt,
                       updatedAt : (jsonObj[i].updatedAt == '')? null : jsonObj[i].updatedAt
                      }
                      //add new product item
                      async function create_product() {
                         const product = new Product(product_item1);
                         try {
-                          const savedProduct = await product.save();
-                          res.status(httpStatus.OK);
-                          res.json(savedProduct);
+                          await product.save();
+                          return;
                         } catch (e) {
-                        next(e);
+                          if(e.code == 11000){                            
+                            someError = true;
+                          }
                         }
                       }
                     // call new produdct 
-                    create_product(); // 1
+                    await create_product(); // 1
                   } else {
                      async function getCount() {
                        try {
@@ -478,23 +483,29 @@ exports.uploadProducts = async (req, res, next) => {
                         async function create_product1() {
                           const product = new Product(product_item3);
                           try {
-                            const savedProduct = await product.save();
-                            res.status(httpStatus.OK);
-                            res.json(savedProduct);
+                            await product.save();
+                            return
                           } catch (e) {
-                          next(e);
+                            if(e.code == 11000){                            
+                              someError = true;
+                            }
                           }
                         }
                        // call new produdct 
-                        create_product1(); // 1
+                        await create_product1(); // 1
                      }
+                     res.status(httpStatus.OK).json(true);
                   }
                 }
                 try {
                   Product.updateMany(productList2, (err, res) => {
                     if (err) throw err;
                     });
-                    res.json({ error_code: 0, err_desc: { code: 9200 }, data: "Data inserted into database successfully" });
+                    if (!someError) {
+                      res.json({ error_code: 0, err_desc: { code: 9200 }, data: "Data inserted into database successfully" });
+                    }else {
+                      res.json({ error_code: 1, err_desc: { code: 9200 }, data: "Fail inserting into database" });
+                    }
                 }catch(e) {
                     print(e);
                 }

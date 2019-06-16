@@ -153,7 +153,7 @@ exports.create = async (req, res, next) => {
     sendOrderEmail(user.email, html, orderNo)
 
     // email to admin
-    mail.mailToAdmin(user, orderNo, address, productList)
+    //mail.mailToAdmin(user, orderNo, address, productList);
     res.status(httpStatus.CREATED);
     res.json(savedOrder);
   } catch (error) {
@@ -224,41 +224,44 @@ function createHtmlTemplate(user, address, orderItems) {
   let grandTotal = 0;
   orderItems.forEach(item => {
     html = html.concat('<tr>'
-      + '<td align="center" width="100"> ' + item.quantity + '</td>'
-      + '<td align="center" width="100"> ' + item.product.productCode + '</td>'
-      + '<td align="center" width="100"> ' + item.product.type + '</td>'
-      + '<td align="center" width="400"> ' + item.product.description + '</td>'
-      + '<td align="center" width="100">' + item.product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</td>'
-      + '<td align="center" width="260">' + item.subTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</td></tr>')
+      + '<td align="center"> ' + item.quantity + '</td>'
+      + '<td align="center"> ' + item.product.productCode + '</td>'
+      + '<td>' + item.product.type + '</td>'
+      + '<td>' + item.product.description + '</td>'
+      + '<td align="right">' + item.product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</td>'
+      + '<td align="right">' + item.subTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</td></tr>')
     grandTotal = grandTotal + item.subTotal;
   });
   html = html.concat('<tr>'
-    + '<td align="center" width="100"></td>'
-    + '<td align="center" width="200"></td>'
-    + '<td align="center" width="200"></td>'
-    + '<td align="center" width="300"></td>'
-    + '<td align="center" width="100"></td>'
-    + '<td align="center" width="200"><b><span style="font-weight:bold">Total: ' + grandTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</span></td></tr>')
+    + '<td align="center"></td>'
+    + '<td align="center"></td>'
+    + '<td align="center"></td>'
+    + '<td align="center"></td>'
+    + '<td align="center"></td>'
+    + '<td align="center"><b><span style="font-weight:bold">Total: ' + grandTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</span></td></tr>')
 
   const htmlTable = '<html><body style="margin:0; padding:5px 0 0 0;" bgcolor="#F8F8F8"><span>Hello ' + user.firstName + ' ' + user.lastName + ',</span><br>' +
     '<span>Thank you for your order, we will process your order as soon as possible.</span>' +
-    '<div><h2>Customer</h2>' +
-    '<div><span style="font-weight:bold">Name: </span>' + user.firstName + ' ' + user.lastName + '</div>' +
-    '<div><span style="font-weight:bold">Company: </span>' + user.companyName + '</div>' +
-    '<div><span style="font-weight:bold">Email: </span>' + user.email + '</div></div> &nbsp;' +
-    '<div><span style="font-weight:bold">Shipping Address:</span>' +
-    '<div><span style="font-weight:bold">Street: </span>' + address.addressLine2 + '</div>' +
-    '<div><span style="font-weight:bold">City: </span>' + address.city + '</div>' +
-    '<div><span style="font-weight:bold">Country: </span>' + address.country + '</div></div>&nbsp;' +
+    '<div style="display: flex"><div style="width: 50%;"><div style="margin: 20px 0px;font-size: 1.5rem;"><b>Customer</b></div>'+
+      '<div><span style="font-weight:bold">Name: </span>' + user.firstName + ' ' + user.lastName + '</div>'+
+      '<div><span style="font-weight:bold">Company: </span>' + user.companyName + '</div>' +
+      '<div><span style="font-weight:bold">Email: </span>' + user.email + '</div>' +
+      '<div><span style="font-weight:bold">Phone: </span>' + user.phoneNumber + '</div>' +
+      '<div><span style="font-weight:bold">Mobile: </span>' + user.mobileNumber + '</div></div>' +
+    '<div style="top: 68px; position: relative; left: 20%;"><br /><br /><br /><br />' +
+      '<span style="font-weight:bold">Shipping Address:</span>' +
+      '<div><span style="font-weight:bold">Street: </span>' + address.addressLine2 + '</div>' +
+      '<div><span style="font-weight:bold">City: </span>' + address.city + '</div>' +
+      '<div><span style="font-weight:bold">Country: </span>' + address.country + '</div></div></div><br />' +
     '<div><span style="font-weight:bold">Order Details: </span>' +
-    '<table align="center" border="1" cellpadding="0" cellspacing="0" width="95%">' +
+    '<table align="center" border="1" cellpadding="0" cellspacing="0" width="90%" style="position: relative; left: -5%;">' +
     '<thead><tr>'
-    + '<th align="center" width="100">Quantity</th>'
-    + '<th align="center" width="200">Product Code</th>'
-    + '<th align="center" width="200">Product Type</th>'
-    + '<th align="center" width="300">Product</th>'
-    + '<th align="center" width="100">Price</th>'
-    + '<th align="center" width="200">Subtotal</th>'
+    + '<th align="center" width="50">Q</th>'
+    + '<th align="center" width="70">PC</th>'
+    + '<th align="center" width="130">PT</th>'
+    + '<th align="center" width="400">Product</th>'
+    + '<th align="center" width="60">Price</th>'
+    + '<th align="center" width="100">Subtotal</th>'
     + '</tr></thead>'
     + '<tbody>' + html + '</tbody></table></div><br>'
     + 'Thank you for choosing,<br> Perfumes2Go</body></html>'

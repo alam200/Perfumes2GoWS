@@ -3,14 +3,14 @@
 
 <div class="form-element product-filters">
   <div class="form-group row clearfix">
-    <label class="col-md col-sm col-form-label-sm">Type: </label>
-    <div class="col-md-4 col-sm-4">
+    <label class="col-md col-sm col-form-label-sm type-left">Type: </label>
+    <div class="col-md-5 col-sm-5">
       <select class="form-control form-control-sm select-type" #type (change)="selectType(type.value)" [(ngModel)]="selectedType">
         <option selected>ALL</option>
         <option *ngFor="let type of types" [value]="type">{{ type }}</option>
       </select>
     </div>
-    <label class="col-md col-sm col-form-label-sm">Brand: </label>
+    <label class="col-md col-sm col-form-label-sm brand-left">Brand: </label>
     <div class="col-md-4 col-sm-4">
       <select class="form-control form-control-sm select-brand" #brand (change)="selectBrand(brand.value)" [(ngModel)]="selectedBrand">
         <option selected>ALL</option>
@@ -20,7 +20,7 @@
   </div>
 </div>
 <div class="form-left">
-  <label>Total: {{ ( Total_cnt && Total_cnt !=0 ) ? Total_cnt : 0 }}</label>
+  <label class="quantity-left">{{ ( Total_cnt && Total_cnt !=0 ) ? Total_cnt : 0 }}</label>
 </div>
 <div class="table-responsive">
   <div class="grid-table-wrapper">

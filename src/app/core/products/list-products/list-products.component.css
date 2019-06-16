@@ -2,17 +2,36 @@
     position: absolute !important;
     padding-left: 1vw;
     /* right: 20vw; */
-    left: 12%;
+    left: 10%;
     /* left: 35vw; */
-    width: 33%;
+    width: 10%;
     z-index: 1;
 }
+
+.quantity-left{
+    position: relative;
+    top: 4px;
+    left: 42%;
+}
+
+.type-left, 
+.brand-left {
+    font-weight: bold;
+}
+
+.select-brand {
+    width: 154% !important;
+}
+
+/*.select-type {
+    width: 138% !important;
+}*/
 
 .form-element {
     position: absolute !important;
     padding-right: 1vw;
     /* right: 20vw; */
-    right: 0;
+    right: 22%;
     /* left: 35vw; */
     width: 33%;
     z-index: 1;

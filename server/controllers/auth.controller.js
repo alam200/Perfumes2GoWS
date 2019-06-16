@@ -54,7 +54,8 @@ exports.register = async (req, res, next) => {
         password: req.body.password,
         phoneNumber: req.body.phoneNumber,
         mobileNumber: req.body.mobileNumber,
-        city: req.body.city
+        city: req.body.city,
+        created: new Date().getTime()
       });
       await user.save(function (err) {
       if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: err.message }); }
@@ -65,6 +66,21 @@ exports.register = async (req, res, next) => {
       // Save the verification token
       token.save(function (err) {
         if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message }); }
+
+        // Send email to admin
+        let adminHtml = "Company name: " + req.body.companyName + "<br/>" + 
+        "Phone Number: " + req.body.phoneNumber + "<br/>" + 
+        "Email: " + req.body.email + "<br/>" + 
+        "City: " + req.body.city + "<br/>";
+        let adminMailOptions = {
+          from: `"Perfumes2Go" <${adminMailAddress}>`,
+          to: "fragrancedeals@yahoo.com",
+          subject: 'New Customer Account Created',
+          html: adminHtml
+        }
+        smtpTransport.sendMail(adminMailOptions, function (err) {
+          console.log(err);
+        });
 
         // Send the email
         let link = "http://" + req.get('host') + "/#/user/verify/" + token.token;
@@ -97,6 +113,7 @@ exports.login = async (req, res, next) => {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
     const token = generateTokenResponse(user, accessToken);
     user.password = undefined;
+    await User.updateOne({email: user.email}, {$set: {lastLoging: new Date().getTime()}}, function (err, res) {});
     return res.json({ token, user: user });
   } catch (error) {
     return next(error);

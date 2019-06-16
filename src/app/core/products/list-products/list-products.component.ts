@@ -214,7 +214,8 @@ export class ListProductsComponent implements OnInit {
       language: {
         emptyTable: 'No data available in table',
         loadingRecords: 'Please wait...',
-        zeroRecords: 'No matching records found'
+        zeroRecords: 'No matching records found',
+        lengthMenu: "Show _MENU_ entries of: "
       },
       drawCallback: (settings) => {
         $('#datTable_length').parent().removeClass('col-md-6').addClass('col-md-4');

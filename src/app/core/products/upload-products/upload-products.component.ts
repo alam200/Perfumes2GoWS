@@ -58,7 +58,7 @@ export class UploadProductsComponent implements OnInit, AfterViewInit {
         this.message = 'Same SKU cannot be used in multiple records';
         break;
       default:
-        this.message = 'Something went wrong, plese try later';
+        this.message = 'Something went wrong, please verify the data and try later';
     }
     this.isFailed = true;
   }

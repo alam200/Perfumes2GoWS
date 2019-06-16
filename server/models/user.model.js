@@ -36,7 +36,9 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   category: String,
-  city: String
+  city: String,
+  created: Number,
+  lastLoging: { type: Number, default: 0 }
 });
 
 /**

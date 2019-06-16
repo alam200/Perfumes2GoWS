@@ -88,7 +88,7 @@ export class AddProductComponent implements OnInit {
           this.alertService.success('Product updated successfully.', true);
           setTimeout(() => {
             this.location.back();
-          }, 1000);
+          }, 200);
         },
         error => {
           /** spinner ends */

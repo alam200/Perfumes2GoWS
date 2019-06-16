@@ -116,6 +116,28 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
+  dateFormater(time:number) {
+    if(!time || time == 0){
+      return "No data"
+    }
+    var date = new Date(time);
+    var day = date.getDate();
+    var month: Number | String = date.getMonth() + 1;
+    if (month < 10) {
+      month = "0" + month;
+    }
+    var year = date.getFullYear();
+    var hour: Number | String = date.getHours();
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    var minute: Number | String = date.getMinutes();
+    if (minute < 10) {
+      minute = "0" + minute;
+    }
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  }
+
   getUsersData() {
     this.spinner.show();
     const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
@@ -145,6 +167,12 @@ export class ListUsersComponent implements OnInit {
             this.spinner.hide();
             this.users = resp['userList'];
 
+            this.users = this.users.map((user,index, User) => {
+              user["lastLoging"] = this.dateFormater(user["lastLoging"]);
+              user["created"] = this.dateFormater(user["created"]);
+              return user;
+            });
+
             // If user is a customer then don't show order with stock 0
             if (this.userCategory === 'Customer') {
             }
@@ -171,14 +199,8 @@ export class ListUsersComponent implements OnInit {
           searchable: false,
           orderable: false,
           visible: true,
-          width: '15%'
-        },
-        { width: '10%', targets: 1 },
-        { width: '10%', targets: 2 },
-        { width: '20%', targets: 3 },
-        { width: '15%', targets: 4 },
-        { width: '15%', targets: 5 },
-        { width: '15%', targets: 6 }
+          width: '10%'
+        }
       ],
       language: {
         emptyTable: 'No data available in table',
