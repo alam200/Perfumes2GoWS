@@ -153,7 +153,7 @@ exports.create = async (req, res, next) => {
     sendOrderEmail(user.email, html, orderNo)
 
     // email to admin
-    //mail.mailToAdmin(user, orderNo, address, productList);
+    mail.mailToAdmin(user, orderNo, address, productList);
     res.status(httpStatus.CREATED);
     res.json(savedOrder);
   } catch (error) {
@@ -238,7 +238,7 @@ function createHtmlTemplate(user, address, orderItems) {
     + '<td align="center"></td>'
     + '<td align="center"></td>'
     + '<td align="center"></td>'
-    + '<td align="center"><b><span style="font-weight:bold">Total: ' + grandTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</span></td></tr>')
+    + '<td align="right"><b><span style="font-weight:bold">Total: ' + grandTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + '</span></td></tr>')
 
   const htmlTable = '<html><body style="margin:0; padding:5px 0 0 0;" bgcolor="#F8F8F8"><span>Hello ' + user.firstName + ' ' + user.lastName + ',</span><br>' +
     '<span>Thank you for your order, we will process your order as soon as possible.</span>' +
