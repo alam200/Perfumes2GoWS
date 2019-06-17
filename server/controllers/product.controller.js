@@ -144,17 +144,15 @@ exports.list = async (req, res, next) => {
     let count = 0;
     /**In case of 'New Products' request get products whilch are added within last 7 days*/
     if (listType && listType.toUpperCase() === 'NEW') {
-      let fromDate = new Date();
-      const toDate = new Date();
-      fromDate = new Date(fromDate.setDate(fromDate.getDate() - 365));
-      sortObject = {};
-      sortObject["createdAt"] = -1;
-      sortObject["stock"] = -1;
-      recordsPerPage = 50;
-      products = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).skip(index).limit(recordsPerPage)
+      if (req.query.count == 0){ 
+        sortObject = { createdAt: "desc" };
+      }else {
+        sortObject["createdAt"] = "desc";
+      };
+      products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
         .exec();
-      count = await Product.find({ $and: [{ 'createdAt': { $gte: fromDate, $lte: toDate } }, filterOptions] }).find(searchOptions).countDocuments().limit(recordsPerPage);
+      count = await Product.find(filterOptions).find(searchOptions).countDocuments().limit(recordsPerPage);
     } else {
       products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)

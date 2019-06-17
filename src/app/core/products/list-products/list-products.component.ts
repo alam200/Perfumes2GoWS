@@ -35,7 +35,7 @@ class DataTablesResponse {
 export class ListProductsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   products: Product[];
-  Total_cnt: number;
+  Total_cnt: number = 0;
   orderItem: OrderItem;
   productListType = 'All';
   userCategory = 'Customer';
@@ -163,7 +163,8 @@ export class ListProductsComponent implements OnInit {
                 pageNo: dataTablesParameters.start + 1,
                 recordsPerPage: dataTablesParameters.length,
                 sdir: dataTablesParameters.order[0]['dir'],
-                column: dataTablesParameters.columns[dataTablesParameters.order[0]['column']]['data']
+                column: dataTablesParameters.columns[dataTablesParameters.order[0]['column']]['data'],
+                count: this.Total_cnt.toString()
               }
             }
           ).subscribe(resp => {
