@@ -44,16 +44,6 @@
         <a class="nav-link" [routerLink]="['/products/special']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Specials</a>
       </li>
     </ul>
-
-    <div class="mx-auto order-0 position-relative">
-      <span class="pull-right header-shopping-cart">
-        <p *ngIf="showCart" class="total" id="shopping-cart-total">
-          <i class="fa fa-shopping-cart fa-3x"></i>
-          <span class="cart-total">{{ (productsQuantity && productsQuantity !== 0) ? "Products="+orderItems.length + ", Quantity=" + productsQuantity + ", Total=
-              " + (subtotalQuantity | currency:'USD') : orderItems.length }}</span>
-        </p>
-      </span>
-    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -193,6 +183,16 @@
     </div>
   </div>
 </nav>
+
+<div class="mx-auto order-0 position-relative shopping-cart-div">
+  <span class="header-shopping-cart">
+    <p *ngIf="showCart" class="total" id="shopping-cart-total">
+      <i class="fa fa-shopping-cart fa-3x"></i>
+      <span class="cart-total">{{ (productsQuantity && productsQuantity !== 0) ? "Products="+orderItems.length + ", Quantity=" + productsQuantity + ", Total=
+          " + (subtotalQuantity | currency:'USD') : orderItems.length }}</span>
+    </p>
+  </span>
+</div>
 
 <!-- modal templates -->
 <div class="modal fade bd-modal-sm" id="exportDialogModal" tabindex="-1" role="dialog" aria-hidden="true">

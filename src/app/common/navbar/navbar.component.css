@@ -58,9 +58,6 @@
 }
 
 .header-shopping-cart {
-          position: relative;
-          top: 14px;
-          left: 50px;
 }
 
 .logo-image {
@@ -80,13 +77,14 @@
 }
 
 .total {
-          display: inline-block;
+          /*display: inline-block;
           font-size: 1.2rem;
           font-weight: bold;
           bottom: 6px;
-          position: relative;
+          position: relative;*/
           color: rgb(255, 255, 255);
-          left: 8px;
+          text-align: center;
+          /*left: 8px;*/
 }
 
 .navbar .nav-item {
@@ -96,6 +94,14 @@
 .fa-shopping-cart {
           /* color: rgb(255, 255, 255); */
           font-size: 1.7rem;
+}
+
+#shopping-cart-total .fa-shopping-cart {
+    color: black;
+}
+
+.shopping-cart-div {
+    background-color: white;
 }
 
 .fa-shopping-cart.sml,

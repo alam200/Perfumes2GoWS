@@ -6,6 +6,7 @@
     /* left: 35vw; */
     width: 10%;
     z-index: 1;
+    top: 17.9%
 }
 
 .quantity-left{
@@ -35,6 +36,7 @@
     /* left: 35vw; */
     width: 33%;
     z-index: 1;
+    top: 18%
 }
 
 .form-element label {
