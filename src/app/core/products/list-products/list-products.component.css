@@ -1,18 +1,13 @@
 .form-left {
     position: absolute !important;
-    padding-left: 1vw;
-    /* right: 20vw; */
-    left: 10%;
-    /* left: 35vw; */
-    width: 10%;
+    left: 15%;
     z-index: 1;
-    top: 17.9%
+    width: fit-content;
+    padding-top: 4px;
 }
 
 .quantity-left{
-    position: relative;
-    top: 4px;
-    left: 42%;
+    margin-bottom: 0 !important;
 }
 
 .type-left, 
@@ -36,7 +31,6 @@
     /* left: 35vw; */
     width: 33%;
     z-index: 1;
-    top: 18%
 }
 
 .form-element label {
