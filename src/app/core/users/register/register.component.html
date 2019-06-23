@@ -9,7 +9,7 @@
       <form name="form" class="form-horizontal" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
           <div class="row">
-            <label for="firstName" class="col-md-3 col-sm-12 text-right col-form-label">First Name:</label>
+            <label for="firstName" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">First Name:</b></label>
             <div class="col-md-9 col-sm-12">
               <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
               <small *ngIf="f.submitted && firstName.invalid" class="form-text text-left error-msg">First name is required</small>
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
           <div class="row">
-            <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label">Last Name:</label>
+            <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">Last Name:</b></label>
             <div class="col-md-9 col-sm-12">
               <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
               <small *ngIf="f.submitted && lastName.invalid" class="form-text text-left error-msg">Last name is required</small>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
           <div class="row">
-            <label for="companyName" class="col-md-3 col-sm-12 text-right col-form-label">Company Name:</label>
+            <label for="companyName" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">Company Name:</b></label>
             <div class="col-md-9 col-sm-12">
               <input type="text" class="form-control" id="companyName" name="companyName" [(ngModel)]="model.companyName" #companyName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && companyName.invalid }" required />
               <small *ngIf="f.submitted && companyName.invalid" class="form-text text-left error-msg">Company name is required</small>
@@ -44,25 +44,25 @@
         </div>
         <div class="form-group">
           <div class="row">
-            <label for="phoneNumber" class="col-md-3 col-sm-12 text-right col-form-label">Phone Number:</label>
+            <label for="phoneNumber" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">Phone Number:</b></label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" pattern="[0-9]{10}" [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid && phoneNumber.errors.pattern }" required />
-              <small *ngIf="f.submitted && phoneNumber.invalid && phoneNumber.errors.pattern" class="form-text text-left error-msg">Phone number is invalid</small>
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.phoneNumber" minlength="10" maxlength="10" #phoneNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid }" required />
+              <small *ngIf="f.submitted && phoneNumber.invalid" class="form-text text-left error-msg">Phone number is invalid</small>
             </div>
           </div>
         </div>
         <div class="form-group">
           <div class="row">
-            <label for="mobileNumber" class="col-md-3 col-sm-12 text-right col-form-label">Mobile Number:</label>
+            <label for="mobileNumber" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">Mobile Number:</b></label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel" pattern="[0-9]{10}" [ngClass]="{ 'is-invalid': f.submitted && mobileNumber.invalid && mobileNumber.errors.pattern }" required />
-              <small *ngIf="f.submitted && mobileNumber.invalid && mobileNumber.errors.pattern" class="form-text text-left error-msg">Mobile number is invalid</small>
+              <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" [(ngModel)]="model.mobileNumber" minlength="10" maxlength="10" #mobileNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && mobileNumber.invalid }" required />
+              <small *ngIf="f.submitted && mobileNumber.invalid" class="form-text text-left error-msg">Mobile number is invalid</small>
             </div>
           </div>
         </div>
         <div class="form-group">
           <div class="row">
-            <label for="email" class="col-md-3 col-sm-12 text-right col-form-label">E-mail:</label>
+            <label for="email" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">E-mail:</b></label>
             <div class="col-md-9 col-sm-12">
               <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
               <small *ngIf="f.submitted && email.invalid && email.errors.required" class="form-text text-left error-msg">Email is required</small>
@@ -93,6 +93,15 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="SalesTaxID" class="col-md-3 col-sm-12 text-right col-form-label"><b style="color: red">Sales Tax Id</b></label>
+            <div class="col-md-9 col-sm-12">
+              <input type="text" class="form-control" id="SalesTaxID" name="SalesTaxID" [(ngModel)]="model.SalesTaxID" #SalesTaxID="ngModel" [ngClass]="{ 'is-invalid': f.submitted && SalesTaxID.invalid }" pattern="[A-Za-z0-9]{7}-[A-Za-z0-9]{3}-[A-Za-z0-9]{4}" required />
+              <small *ngIf="f.submitted && SalesTaxID.invalid" class="form-text text-left error-msg">Sales Tax Id Tax is invalid</small>
+            </div>
+          </div>
+        </div>        
         <div class="form-group text-center">
           <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order"><i class="fa fa-send-o"></i> {{ buttonLabel }}</button>
         </div>
