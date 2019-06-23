@@ -1,5 +1,4 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
-</ngx-spinner>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple"> </ngx-spinner>
 
 <div class="col-md-8 col-sm-12 mx-auto">
   <div class="card">
@@ -12,9 +11,8 @@
           <div class="row">
             <label for="firstName" class="col-md-3 col-sm-12 text-right col-form-label">First Name:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required>
-              <small *ngIf="f.submitted && firstName.invalid" id="emailHelp" class="form-text text-left error-msg">First name is required</small>
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+              <small *ngIf="f.submitted && firstName.invalid" class="form-text text-left error-msg">First name is required</small>
             </div>
           </div>
         </div>
@@ -22,7 +20,8 @@
           <div class="row">
             <label for="lastName" class="col-md-3 col-sm-12 text-right col-form-label">Last Name:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel">
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+              <small *ngIf="f.submitted && lastName.invalid" class="form-text text-left error-msg">Last name is required</small>
             </div>
           </div>
         </div>
@@ -30,7 +29,8 @@
           <div class="row">
             <label for="companyName" class="col-md-3 col-sm-12 text-right col-form-label">Company Name:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="companyName" name="companyName" [(ngModel)]="model.companyName" #companyName="ngModel">
+              <input type="text" class="form-control" id="companyName" name="companyName" [(ngModel)]="model.companyName" #companyName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && companyName.invalid }" required />
+              <small *ngIf="f.submitted && companyName.invalid" class="form-text text-left error-msg">Company name is required</small>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <div class="row">
             <label for="city" class="col-md-3 col-sm-12 text-right col-form-label">City Name:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="city" name="city" [(ngModel)]="model.city" #city="ngModel">
+              <input type="text" class="form-control" id="city" name="city" [(ngModel)]="model.city" #city="ngModel" />
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
           <div class="row">
             <label for="phoneNumber" class="col-md-3 col-sm-12 text-right col-form-label">Phone Number:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" pattern="[0-9]{10}">
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" pattern="[0-9]{10}" [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid && phoneNumber.errors.pattern }" required />
               <small *ngIf="f.submitted && phoneNumber.invalid && phoneNumber.errors.pattern" class="form-text text-left error-msg">Phone number is invalid</small>
             </div>
           </div>
@@ -55,7 +55,7 @@
           <div class="row">
             <label for="mobileNumber" class="col-md-3 col-sm-12 text-right col-form-label">Mobile Number:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel" pattern="[0-9]{10}">
+              <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel" pattern="[0-9]{10}" [ngClass]="{ 'is-invalid': f.submitted && mobileNumber.invalid && mobileNumber.errors.pattern }" required />
               <small *ngIf="f.submitted && mobileNumber.invalid && mobileNumber.errors.pattern" class="form-text text-left error-msg">Mobile number is invalid</small>
             </div>
           </div>
@@ -64,8 +64,7 @@
           <div class="row">
             <label for="email" class="col-md-3 col-sm-12 text-right col-form-label">E-mail:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-                [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
               <small *ngIf="f.submitted && email.invalid && email.errors.required" class="form-text text-left error-msg">Email is required</small>
               <small *ngIf="f.submitted && email.invalid && email.errors.pattern" class="form-text text-left error-msg">Email is invalid</small>
             </div>
@@ -75,9 +74,7 @@
           <div class="row">
             <label for="password" class="col-md-3 col-sm-12 text-right col-form-label">Password:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="password" class="form-control" id="password" minlength="6" maxlength="15" name="password" [(ngModel)]="model.password" #password="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" [required]="!isUserExists" validateEqual="confirmPassword"
-                reverse="true">
+              <input type="password" class="form-control" id="password" minlength="6" maxlength="15" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" [required]="!isUserExists" validateEqual="confirmPassword" reverse="true" />
               <small *ngIf="password.errors?.minlength" class="form-text text-left error-msg">
                 Password must be at least 6 characters long.
               </small>
@@ -89,8 +86,7 @@
           <div class="row">
             <label for="confirmPassword" class="col-md-3 col-sm-12 text-right col-form-label">Re-type Password:</label>
             <div class="col-md-9 col-sm-12">
-              <input type="password" class="form-control" id="confirmPassword" name='confirmPassword' minlength="6" maxlength="15" [(ngModel)]="model.confirmPassword"
-                #confirmPassword="ngModel" validateEqual="password" [required]="!isUserExists">
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="6" maxlength="15" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" validateEqual="password" [required]="!isUserExists" />
               <div [hidden]="confirmPassword.untouched">
                 <small *ngIf="f.submitted && !confirmPassword.valid" class="form-text text-left error-msg">Password mismatch</small>
               </div>
@@ -98,9 +94,7 @@
           </div>
         </div>
         <div class="form-group text-center">
-          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order">
-            <i class="fa fa-send-o"></i> {{ buttonLabel }}
-          </button>
+          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order"><i class="fa fa-send-o"></i> {{ buttonLabel }}</button>
         </div>
       </form>
     </div>
