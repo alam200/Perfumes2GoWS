@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'products/special', component: ListProductsComponent },
   { path: 'products/new', component: ListProductsComponent },
   { path: 'products', component: ListProductsComponent },
+  { path: 'list-product', component: ListProductsComponent, canActivate: [AuthGuard] },
   { path: 'user/register', component: RegisterComponent },
   { path: 'user/login', component: LoginComponent },
   { path: 'user/forgot', component: ForgetPasswordComponent },

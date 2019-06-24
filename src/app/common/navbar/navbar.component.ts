@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showEditCart = false;
   public showBack = false;
   public showAddItem = false;
+  public showListItem = false;
   public showOrders = false;
   public showUsers = false;
   public showUploadProducts = false;
@@ -193,6 +194,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showAddCart = false;
         this.showEditCart = false;
         this.showAddItem = true;
+        this.showListItem = true;
         this.showOrders = true;
         this.showUsers = true;
         this.showUploadProducts = true;

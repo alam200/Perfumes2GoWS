@@ -174,7 +174,12 @@ export class ListProductsComponent implements OnInit {
             // If user is a customer then don't show order with stock 0
             if (this.userCategory === 'Customer') {
               this.products = this.products.filter(product => {
-                return +product.stock > 0;
+                return product.stock > 0;
+              });
+            }
+            if (this.location.path() === '/list-product') {
+              this.products = this.products.filter(product => {
+                return product.image.search("product_placeholder") > 0;
               });
             }
             this.products = this.products.map(function (o) {
