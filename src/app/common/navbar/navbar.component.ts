@@ -20,7 +20,7 @@ declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');
 
-const EXCEL_TYPE = 'application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
 declare var $: any;
