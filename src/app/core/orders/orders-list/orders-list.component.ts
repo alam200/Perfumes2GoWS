@@ -14,7 +14,7 @@ export class OrdersListComponent implements OnInit {
   orderStatuses = ['Pending', 'In Progress', 'Dispatched', 'Delivered', 'Cancelled'];
   fromDate: any;
   toDate: any;
-  orderStatus = 'Pending';
+  orderStatus = 'ALL';
   selectedOrder: any;
 
   constructor(

@@ -55,6 +55,8 @@ exports.register = async (req, res, next) => {
         phoneNumber: req.body.phoneNumber,
         mobileNumber: req.body.mobileNumber,
         city: req.body.city,
+        salesTaxID: req.body.salesTaxID,
+        priceLevel: req.body.priceLevel,
         created: new Date().getTime()
       });
       await user.save(function (err) {
@@ -74,7 +76,7 @@ exports.register = async (req, res, next) => {
         "City: " + req.body.city + "<br/>";
         let adminMailOptions = {
           from: `"Perfumes2Go" <${adminMailAddress}>`,
-          to: "fragrancedeals@yahoo.com",
+          to: "ivandario1998@gmail.com",
           subject: 'New Customer Account Created',
           html: adminHtml
         }
@@ -84,9 +86,7 @@ exports.register = async (req, res, next) => {
 
         // Send the email
         let link = "http://" + req.get('host') + "/#/user/verify/" + token.token;
-        let html = "Hi " + user.firstName + "," +
-          "<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a><br>" +
-          '<br>Thank you,<br>' + 'Perfumes2Go';
+        let html = `Thank you for registering. <br /> Your registration is pending account verification. <br />  You will be notified when account verification is complete.  For immediate verification, please contact 817 456 0055.`;
         let mailOptions = {
           from: `"Perfumes2Go" <${adminMailAddress}>`,
           to: user.email,
@@ -95,7 +95,7 @@ exports.register = async (req, res, next) => {
         }
         smtpTransport.sendMail(mailOptions, function (err) {
           if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message }); }
-          res.status(httpStatus.OK).json({ message: 'A verification email has been sent to ' + user.email + '.' });
+          res.status(httpStatus.OK).json({ message: 'Please wait for admin verification.' });
         });
       });
     });

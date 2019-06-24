@@ -38,7 +38,9 @@ const userSchema = new Schema({
   category: String,
   city: String,
   created: Number,
-  lastLoging: { type: Number, default: 0 }
+  lastLoging: { type: Number, default: 0 },
+  salesTaxID: String,
+  priceLevel: Number
 });
 
 /**

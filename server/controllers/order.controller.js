@@ -153,7 +153,7 @@ exports.create = async (req, res, next) => {
     sendOrderEmail(user.email, html, orderNo)
 
     // email to admin
-    mail.mailToAdmin(user, orderNo, address, productList);
+    //mail.mailToAdmin(user, orderNo, address, productList);
     res.status(httpStatus.CREATED);
     res.json(savedOrder);
   } catch (error) {
@@ -201,6 +201,7 @@ exports.list = async (req, res, next) => {
       .find({ $and: [{ 'createdAt': { $gte: fromDate, $lt: toDate } }, filterOptions] })
       .populate('customerId', 'firstName lastName')
       .populate('orderItems.productId', 'brand type price')
+      .sort({"createdAt": -1})
       .exec();
     res.json(orders);
   } catch (error) {

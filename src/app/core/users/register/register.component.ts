@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
       /** spinner starts */
       this.spinner.show();
       this.model['category'] = 'Customer';
+      this.model['priceLevel'] = 1;
       this.usersService.register(this.model).subscribe(
         (data: any) => {
           /** spinner ends */

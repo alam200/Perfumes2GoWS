@@ -35,7 +35,7 @@ export class ListUsersComponent implements OnInit {
   users: User[];
   orderItem: OrderItem;
   userCategory = 'Customer';
-  columnDefsTarget = [0, 5];
+  columnDefsTarget = [9];
   defaultOrder = [3, 'asc']; // order by 'description asc'
   tableColumns = [
     { data: 'companyName' },
@@ -44,6 +44,9 @@ export class ListUsersComponent implements OnInit {
     { data: 'name' },
     { data: 'city' },
     { data: 'email' },
+    { data: 'category' },
+    { data: 'created' },
+    { data: 'lastLoging' },
     { data: 'view' }
   ];
   public types = [];
@@ -88,6 +91,9 @@ export class ListUsersComponent implements OnInit {
           { data: 'name' },
           { data: 'city' },
           { data: 'email' },
+          { data: 'category' },
+          { data: 'created' },
+          { data: 'lastLoging' },
           { data: 'view' }
         ];
       } else {
@@ -198,8 +204,7 @@ export class ListUsersComponent implements OnInit {
           targets: this.columnDefsTarget,
           searchable: false,
           orderable: false,
-          visible: true,
-          width: '10%'
+          visible: true
         }
       ],
       language: {

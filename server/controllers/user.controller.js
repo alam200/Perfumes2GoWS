@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const User = require('../models/user.model');
 const { handler: errorHandler } = require('../middlewares/error');
+const nodemailer = require('nodemailer');
 
 
 
@@ -49,12 +50,35 @@ exports.load = async (req, res, next, id) => {
     }
   };
 
+const adminMailAddress = 'perfumes2gows@gmail.com';
+const smtpTransport = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: adminMailAddress,
+    pass: "Alhambra11"
+  }
+});
   /**
  * Update existing user
  * @public
  */
-exports.updateUser = (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
   let user = Object.assign(req.locals.user, req.body);
+  if(user.isVerified){
+    let link = "http://" + req.get('host') + "/";
+    let html = `Your account have been already verified<br/>
+    <a hreef="${link}" target="_blank">${link}</a>`;
+    let adminMailOptions = {
+      from: `"Perfumes2Go" <${adminMailAddress}>`,
+      to: user.email,
+      subject: 'Account Verified',
+      html: html
+    }
+    smtpTransport.sendMail(adminMailOptions, function (err) {
+      res.status(httpStatus.OK).json({ message: 'Please wait for admin verification.' });
+      console.log(err);
+    });    
+  }
   try {
     user.save()
       .then(savedUser => res.json(savedUser))

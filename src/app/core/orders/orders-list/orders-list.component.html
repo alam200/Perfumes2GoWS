@@ -11,7 +11,7 @@
       <label class="col-sm-2 text-right col-form-label pt-sm-0">Order Status: </label>
       <div class="col-sm-2">
         <select class="form-control form-control-sm" [(ngModel)]="orderStatus" (change)="getOrdersList()">
-          <option selected>ALL</option>
+          <option value="ALL"selected>ALL</option>
           <option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">{{ orderStatus }}</option>
         </select>
       </div>
