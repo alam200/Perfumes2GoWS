@@ -17,8 +17,11 @@
           <th class="text-center">City</th>
           <th class="text-center">Email</th>
           <th class="text-center">Category</th>
-          <th class="text-center">Date Created</th>
-          <th class="text-center">Last Loggedin Date</th>
+          <th class="text-center">Sales Tax Id</th>
+          <th class="text-center">Price Level</th>
+          <th class="text-center">Is Verified</th>
+          <th class="text-center">Created</th>
+          <th class="text-center">Last Loggedin</th>
           <th class="text-center">View</th>
         </tr>
       </thead>
@@ -31,6 +34,9 @@
           <td class="text-center">{{ user.city }}</td>
           <td class="text-center">{{ user.email }}</td>
           <td class="text-center">{{ user.category }}</td>
+          <td class="text-center">{{ user.salesTaxID }}</td>
+          <td class="text-center">{{ user.priceLevel }}</td>
+          <td class="text-center">{{ user.isVerified }}</td>
           <td class="text-center">{{ user.created }}</td>
           <td class="text-center">{{ user.lastLoging }}</td>
           <td class="text-center">

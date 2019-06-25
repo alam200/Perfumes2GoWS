@@ -3,7 +3,7 @@
 <div class="col-md-8 col-sm-12 mx-auto">
   <div class="card">
     <div class="card-header alert-primary">
-      Contact Information
+      Account Registration From
     </div>
     <div class="card-body">
       <form name="form" class="form-horizontal" autocomplete="off" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -97,7 +97,7 @@
           <div class="row">
             <label for="SalesTaxID" class="col-md-3 col-sm-12 text-right col-form-label">Sales Tax Id <b style="color: red">*</b></label>
             <div class="col-md-9 col-sm-12">
-              <input type="text" class="form-control" id="SalesTaxID" name="SalesTaxID" [(ngModel)]="model.salesTaxID" #SalesTaxID="ngModel" [ngClass]="{ 'is-invalid': f.submitted && SalesTaxID.invalid }" pattern="[A-Za-z0-9]{7}-[A-Za-z0-9]{3}-[A-Za-z0-9]{4}" required />
+              <input type="text" class="form-control" id="SalesTaxID" name="SalesTaxID" [(ngModel)]="model.salesTaxID" #SalesTaxID="ngModel" [ngClass]="{ 'is-invalid': f.submitted && SalesTaxID.invalid }" pattern="[A-Za-z0-9\-\_]{8,16}" required />
               <small *ngIf="f.submitted && SalesTaxID.invalid" class="form-text text-left error-msg">Sales Tax Id Tax is invalid</small>
             </div>
           </div>

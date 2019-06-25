@@ -45,12 +45,13 @@ export class ListProductsComponent implements OnInit {
     { data: 'image' },
     { data: 'brand' },
     { data: 'type' },
-    { data: 'productCode' },
+    { data: 'SKU' },
     { data: 'description' },
     { data: 'price' },
     { data: 'stock' },
     { data: 'quantity' },
-    { data: 'subtotal' }
+    { data: 'subtotal' },
+    { data: 'view'}
   ];
   public brands = [];
   public types = [];
@@ -99,13 +100,13 @@ export class ListProductsComponent implements OnInit {
           { data: 'image' },
           { data: 'brand' },
           { data: 'type' },
-          { data: 'productCode' },
-          { data: 'description' },
           { data: 'SKU' },
+          { data: 'description' },
           { data: 'price' },
           { data: 'stock' },
           { data: 'view' }
         ];
+        this.columnDefsTarget = [0, 7];
       } else {
         // if user is customer
         if (this.cartService.getCartItems().length > 0) {
@@ -167,7 +168,7 @@ export class ListProductsComponent implements OnInit {
                 count: this.Total_cnt.toString()
               }
             }
-          ).subscribe(resp => {
+          ).subscribe(async resp => {
             this.spinner.hide();
             this.products = resp['productList'];
             this.Total_cnt = resp['totalProducts'];
@@ -178,9 +179,13 @@ export class ListProductsComponent implements OnInit {
               });
             }
             if (this.location.path() === '/list-product') {
-              this.products = this.products.filter(product => {
-                return product.image.search("product_placeholder") > 0;
-              });
+              var temp = await Promise.all(this.products.map(async product => {
+                var response = await fetch(product.image);
+                if (product.image.search("product_placeholder") >= 0 || response.status != 200) {
+                  return product;
+                }
+              }));
+              this.products = temp;
             }
             this.products = this.products.map(function (o) {
               o['subtotal'] = 0;

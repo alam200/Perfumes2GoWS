@@ -206,6 +206,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showGetPDF = true;
         this.showGetExcel = true;
         this.showAddItem = false;
+        this.showListItem = false;
         this.showOrders = false;
         this.showUsers = false;
         this.showUploadProducts = false;
@@ -215,6 +216,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showGetPDF = false;
       this.showGetExcel = false;
       this.showAddItem = false;
+      this.showListItem = false;
       this.showOrders = false;
       this.showUsers = false;
       this.showUploadProducts = false;

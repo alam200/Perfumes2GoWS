@@ -35,16 +35,19 @@ export class ListUsersComponent implements OnInit {
   users: User[];
   orderItem: OrderItem;
   userCategory = 'Customer';
-  columnDefsTarget = [9];
+  columnDefsTarget = [10];
   defaultOrder = [3, 'asc']; // order by 'description asc'
   tableColumns = [
     { data: 'companyName' },
     { data: 'phoneNumber' },
     { data: 'mobileNumber' },
-    { data: 'name' },
+    { data: 'firstName' },
     { data: 'city' },
     { data: 'email' },
     { data: 'category' },
+    { data: 'salesTaxID' },
+    { data: 'priceLevel' },
+    { data: 'isVerified' },
     { data: 'created' },
     { data: 'lastLoging' },
     { data: 'view' }
@@ -88,10 +91,13 @@ export class ListUsersComponent implements OnInit {
           { data: 'companyName' },
           { data: 'phoneNumber' },
           { data: 'mobileNumber' },
-          { data: 'name' },
+          { data: 'firstName' },
           { data: 'city' },
           { data: 'email' },
           { data: 'category' },
+          { data: 'salesTaxID' },
+          { data: 'priceLevel' },
+          { data: 'isVerified' },
           { data: 'created' },
           { data: 'lastLoging' },
           { data: 'view' }
@@ -176,6 +182,8 @@ export class ListUsersComponent implements OnInit {
             this.users = this.users.map((user,index, User) => {
               user["lastLoging"] = this.dateFormater(user["lastLoging"]);
               user["created"] = this.dateFormater(user["created"]);
+              user["salesTaxID"] = user["salesTaxID"] ? user["salesTaxID"] : "No data";
+              user["priceLevel"] = user["priceLevel"] ? user["priceLevel"] : "No data";
               return user;
             });
 
@@ -204,7 +212,8 @@ export class ListUsersComponent implements OnInit {
           targets: this.columnDefsTarget,
           searchable: false,
           orderable: false,
-          visible: true
+          visible: true,
+          width: "15%"
         }
       ],
       language: {

@@ -76,7 +76,7 @@ exports.register = async (req, res, next) => {
         "City: " + req.body.city + "<br/>";
         let adminMailOptions = {
           from: `"Perfumes2Go" <${adminMailAddress}>`,
-          to: "ivandario1998@gmail.com",
+          to: "fragrancedeals@yahoo.com",
           subject: 'New Customer Account Created',
           html: adminHtml
         }
