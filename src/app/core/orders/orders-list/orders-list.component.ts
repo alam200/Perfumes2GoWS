@@ -30,7 +30,7 @@ export class OrdersListComponent implements OnInit {
     this.fromDate = this.fromDate.getFullYear() + '-' + this.getInTwoDigit(this.fromDate.getMonth() + 1) + '-' +
       this.getInTwoDigit(this.fromDate.getDate());
     this.toDate = this.toDate.getFullYear() + '-' + this.getInTwoDigit(this.toDate.getMonth() + 1) + '-' +
-      this.getInTwoDigit(this.toDate.getDate());
+      this.getInTwoDigit(this.toDate.getDate() + 1);
 
     this.getOrdersList();
   }
