@@ -86,7 +86,7 @@ exports.register = async (req, res, next) => {
 
         // Send the email
         let link = "http://" + req.get('host') + "/#/user/verify/" + token.token;
-        let html = `Thakyou for submitting the account registarion request for WholeSale orders. <br />
+        let html = `Thank you for submitting the account registarion request for WholeSale orders. <br />
         We are in the processes of verifying the account information.<br />
         You will be notified by email when verification is complete.<br />
         If you need immediate access, please contact at 8174560055.<br /><br />

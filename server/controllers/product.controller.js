@@ -153,7 +153,12 @@ exports.list = async (req, res, next) => {
         .sort(sortObject)
         .exec();
       count = await Product.find(filterOptions).find(searchOptions).countDocuments().limit(recordsPerPage);
-    } else {
+    } else if (listType && listType.toUpperCase() === 'IMAGES') {
+      products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
+        .sort(sortObject).find({"image": {'$regex': '.*product_placeholder.*'}})
+        .exec();
+      count = await Product.find(filterOptions).find(searchOptions).find({"image": {'$regex': '.*product_placeholder.*'}}).countDocuments();
+    }else {
       products = await Product.find(filterOptions).find(searchOptions).skip(index).limit(recordsPerPage)
         .sort(sortObject)
         .exec();

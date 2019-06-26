@@ -66,7 +66,7 @@ exports.updateUser = async (req, res, next) => {
   let user = Object.assign(req.locals.user, req.body);
   if(user.isVerified){
     let link = "http://" + req.get('host') + "/";
-    let html = `You account has been verified and you can login using the ${user.email} at <a hreef="www.perfumes2go.net" target="_blank">www.perfumes2go.net</a>`;
+    let html = `You account has been verified and you can login using the ${user.email} at <a href="www.perfumes2go.net" target="_blank">www.perfumes2go.net</a>`;
     let adminMailOptions = {
       from: `"Perfumes2Go" <${adminMailAddress}>`,
       to: user.email,

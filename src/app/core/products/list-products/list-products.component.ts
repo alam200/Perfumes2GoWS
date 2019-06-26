@@ -45,12 +45,13 @@ export class ListProductsComponent implements OnInit {
     { data: 'image' },
     { data: 'brand' },
     { data: 'type' },
-    { data: 'productCode' },
+    { data: 'SKU' },
     { data: 'description' },
     { data: 'price' },
     { data: 'stock' },
     { data: 'quantity' },
-    { data: 'subtotal' }
+    { data: 'subtotal' },
+    { data: 'view'}
   ];
   public brands = [];
   public types = [];
@@ -79,7 +80,9 @@ export class ListProductsComponent implements OnInit {
       this.productListType = 'special';
     } else if (location.path() === '/products/new') {
       this.productListType = 'new';
-    } else {
+    } else if (this.location.path() === '/list-product') {
+      this.productListType = 'images';
+    }else {
       this.productListType = 'all';
     }
   }
@@ -99,13 +102,13 @@ export class ListProductsComponent implements OnInit {
           { data: 'image' },
           { data: 'brand' },
           { data: 'type' },
-          { data: 'productCode' },
-          { data: 'description' },
           { data: 'SKU' },
+          { data: 'description' },
           { data: 'price' },
           { data: 'stock' },
           { data: 'view' }
         ];
+        this.columnDefsTarget = [0, 7];
       } else {
         // if user is customer
         if (this.cartService.getCartItems().length > 0) {
@@ -175,11 +178,6 @@ export class ListProductsComponent implements OnInit {
             if (this.userCategory === 'Customer') {
               this.products = this.products.filter(product => {
                 return product.stock > 0;
-              });
-            }
-            if (this.location.path() === '/list-product') {
-              this.products = this.products.filter(product => {
-                return product.image.search("product_placeholder") > 0;
               });
             }
             this.products = this.products.map(function (o) {

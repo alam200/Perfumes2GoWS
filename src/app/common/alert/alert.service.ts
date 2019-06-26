@@ -22,12 +22,12 @@ export class AlertService {
     });
   }
 
-  success(message: string, keepAfterNavigationChange = false) {
+  success(message: string, keepAfterNavigationChange = false, time = 1000) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
     this.subject.next({ type: 'success', text: message });
     setTimeout(function () {
       this.closeMessage();
-    }.bind(this), 1000);
+    }.bind(this), time);
   }
 
   error(message: string, keepAfterNavigationChange = false) {

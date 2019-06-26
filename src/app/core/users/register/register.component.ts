@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
         (data: any) => {
           /** spinner ends */
           this.spinner.hide();
-          this.alertService.success(data.message, true);
+          this.alertService.success(data.message, true, 5000);
           this.router.navigate(['/user/login']);
         },
         error => {

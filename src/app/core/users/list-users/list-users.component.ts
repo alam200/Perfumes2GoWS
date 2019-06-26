@@ -35,7 +35,7 @@ export class ListUsersComponent implements OnInit {
   users: User[];
   orderItem: OrderItem;
   userCategory = 'Customer';
-  columnDefsTarget = [10];
+  columnDefsTarget = [12];
   defaultOrder = [3, 'asc']; // order by 'description asc'
   tableColumns = [
     { data: 'companyName' },
@@ -254,7 +254,7 @@ export class ListUsersComponent implements OnInit {
           {
             this.usersService.removeUser(id);
             this.users.splice(i, 1);
-            this.alertService.success('Product deleted successfully.', true);
+            this.alertService.success('User deleted successfully.', true);
             setTimeout(() => {
                 $("#datTable").DataTable().ajax.reload();
               //this.location.back();
