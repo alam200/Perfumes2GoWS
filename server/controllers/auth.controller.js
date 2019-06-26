@@ -70,14 +70,14 @@ exports.register = async (req, res, next) => {
         if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message }); }
 
         // Send email to admin
-        let adminHtml = "Company name: " + req.body.companyName + "<br/>" + 
+        let adminHtml = "New Account Created by: " + req.body.firstName + " " + req.body.lastName  + "<br/>" + 
+        "Company name: " + req.body.companyName + "<br/>" +
         "Phone Number: " + req.body.phoneNumber + "<br/>" + 
-        "Email: " + req.body.email + "<br/>" + 
-        "City: " + req.body.city + "<br/>";
+        "Admin Verification Required....";
         let adminMailOptions = {
           from: `"Perfumes2Go" <${adminMailAddress}>`,
           to: "fragrancedeals@yahoo.com",
-          subject: 'New Customer Account Created',
+          subject: 'Pending Verification -  New WholeSale Account ',
           html: adminHtml
         }
         smtpTransport.sendMail(adminMailOptions, function (err) {
@@ -86,11 +86,16 @@ exports.register = async (req, res, next) => {
 
         // Send the email
         let link = "http://" + req.get('host') + "/#/user/verify/" + token.token;
-        let html = `Thank you for registering. <br /> Your registration is pending account verification. <br />  You will be notified when account verification is complete.  For immediate verification, please contact 817 456 0055.`;
+        let html = `Thakyou for submitting the account registarion request for WholeSale orders. <br />
+        We are in the processes of verifying the account information.<br />
+        You will be notified by email when verification is complete.<br />
+        If you need immediate access, please contact at 8174560055.<br /><br />
+        
+        ThankYou`;
         let mailOptions = {
           from: `"Perfumes2Go" <${adminMailAddress}>`,
           to: user.email,
-          subject: 'Account Verification',
+          subject: 'Pending Verification - WholeSale Account ',
           html: html
         }
         smtpTransport.sendMail(mailOptions, function (err) {
