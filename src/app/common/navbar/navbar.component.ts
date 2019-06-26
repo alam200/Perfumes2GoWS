@@ -417,15 +417,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
             const orders = data.orders && data.orders || [];
 
             let blobArr: any = [];
-            blobArr.push(this.getCsvBlob(products));
-            blobArr.push(this.getCsvBlob(customers));
-            blobArr.push(this.getCsvBlob(orders));
+            if (products.length) blobArr.push(this.getCsvBlob(products));
+            if (customers.length) blobArr.push(this.getCsvBlob(customers));
+            if (orders.length) blobArr.push(this.getCsvBlob(orders));
             const timestamp: String = this.getTimestampStr();
-            const pathArr: any = [
-              `export_products_${timestamp}.csv`,
-              `export_customers_${timestamp}.csv`,
-              `export_orders_${timestamp}.csv`
-            ];
+            const pathArr: any = []
+            if (products.length) pathArr.push(`export_products_${timestamp}.csv`);
+            if (customers.length) pathArr.push(`export_customers_${timestamp}.csv`);
+            if (orders.length) pathArr.push(`export_orders_${timestamp}.csv`);
             this.spinner.hide();
 
             blobArr.forEach(async (blob, index) => {
