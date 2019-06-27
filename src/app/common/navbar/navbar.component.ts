@@ -370,8 +370,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (data.success) {
           try {
             const products = data.products && data.products || [];
-            const current_date : String = this.getDateStr();
-            this.exportAsExcelFile(products,`PriceList__${current_date}`);
+            var blob = this.getCsvBlob(products)
+            const timestamp: String = this.getTimestampStr();
+            var path = `PriceList__${timestamp}.csv`;
+            saveAs(blob, path);
+            //const current_date : String = this.getDateStr();
+            //this.exportAsExcelFile(products,`PriceList__${current_date}`);
             /*
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
