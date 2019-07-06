@@ -153,7 +153,7 @@ exports.create = async (req, res, next) => {
     sendOrderEmail(user.email, html, orderNo)
 
     // email to admin
-    //mail.mailToAdmin(user, orderNo, address, productList);
+    mail.mailToAdmin(user, orderNo, address, productList);
     res.status(httpStatus.CREATED);
     res.json(savedOrder);
   } catch (error) {
