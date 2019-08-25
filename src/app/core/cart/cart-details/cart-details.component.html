@@ -1,5 +1,5 @@
 <!-- <app-list-products></app-list-products> -->
-<section *ngIf="orderItems.length !== 0">
+<section *ngIf="orderItems.length !== 0" id="to-print">
   <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead>
@@ -44,6 +44,10 @@
     <br>
   </div>
 </section>
+
+<div style="margin: 1rem; display: flex; justify-content: center; flex-direction: row">
+  <button class="btn btn-info btn-sm" (click)="printOrder()">Print</button>
+</div>
 
 <!--This section would be shown if cart is empty-->
 <section class="summary-table clear" *ngIf="orderItems.length === 0">

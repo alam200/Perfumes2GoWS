@@ -66,4 +66,19 @@ export class CartDetailsComponent implements OnInit {
     event.stopPropagation(); // PREVENT multiple modals open
   }
 
+  public printOrder() {
+    var mywindow = window.open("", "PRINT", "height=792,width=612");
+    mywindow.document.write('<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"><title>' + document.title + "</title>");
+    mywindow.document.write("</head><body style='margin: 3%;'>");
+    mywindow.document.write(document.getElementById("to-print").innerHTML);
+    mywindow.document.write("</body></html>");
+    mywindow.document.close();
+    mywindow.focus();
+    setInterval(function() {
+      mywindow.print();
+      mywindow.close();
+    }, 100);
+    return true;
+  }
+
 }
