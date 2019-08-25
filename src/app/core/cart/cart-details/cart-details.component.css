@@ -12,6 +12,10 @@
     z-index: 1;
 } */
 
+.img-responsive {
+    width: 100%;
+}
+
 img.zoom:hover {
     cursor: pointer;
     border: 1px solid #cccccc;
