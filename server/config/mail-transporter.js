@@ -19,7 +19,7 @@ let mailOptions = {
 exports.mailToAdmin = function sendMailToAdmin(user, orderNo, address, orderItems) {
 
   const html = adminEmailTemplate(user, address, orderItems);
-  mailOptions.to = '"Perfumes2Go"<fragrancedeals@yahoo.com>'
+  mailOptions.to = 'Perfumes2Go <fragrancedeals@yahoo.com>, Perfumes2Go <alam200@gmail.com.com>, Perfumes2Go <perfumes2gollc@gmail.com>'
   mailOptions.subject = "New Order #" + orderNo
   mailOptions.html = html;
 
