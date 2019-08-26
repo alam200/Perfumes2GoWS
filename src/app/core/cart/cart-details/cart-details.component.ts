@@ -67,9 +67,9 @@ export class CartDetailsComponent implements OnInit {
   }
 
   public printOrder() {
-    var mywindow = window.open("", "PRINT");
+    var mywindow = window.open("", "PRINT", "height=500,width=1000");
     mywindow.document.write('<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"><title>' + document.title + "</title>");
-    mywindow.document.write('<style type="text/css" media="print"> @page { size: landscape; } </style></head><body style="margin: 3%;">');
+    mywindow.document.write('<style type="text/css" media="print"> @page { size: landscape; } </style></head><body>');
     mywindow.document.write(document.getElementById("to-print").innerHTML);
     mywindow.document.write("</body></html>");
     mywindow.document.close();

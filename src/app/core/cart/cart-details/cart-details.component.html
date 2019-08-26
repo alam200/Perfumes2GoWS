@@ -45,7 +45,7 @@
   </div>
 </section>
 
-<div style="margin: 1rem; display: flex; justify-content: center; flex-direction: row">
+<div style="margin: 1rem; display: flex; justify-content: center; flex-direction: row" *ngIf="orderItems.length !== 0">
   <button class="btn btn-info btn-sm" (click)="printOrder()">Print</button>
 </div>
 
