@@ -38,7 +38,7 @@ export class AddProductComponent implements OnInit {
     }
     this.getBrands();
     this.getTypes();
-    this.getProductCode();
+    this.getProductCode(this.productCode);
     this.model = {
       category: 'normal',
       productStatus: 'active'
@@ -65,10 +65,27 @@ export class AddProductComponent implements OnInit {
       });
   }
 
-  getProductCode() {
+  getProductCode(productCode) {
     this.productService.getProductCodes().then(
       (data: any) => {
-        this.productCodes = data;
+        const temp = data.filter(a => {
+          return a.match(/M[\d -]{5}/) && a.length === 6;
+        });
+        function nextSKU(sku: String) {
+          if (!sku.match(/M[\d -]{5}/) && sku.length !== 6) {
+            return "";
+          }
+          let _sku: String = (parseInt(sku.split("-")[1]) + 1).toString();
+          while (_sku.length < 4) {
+            _sku = "0" + _sku;
+          }
+          return "M-" + _sku;
+        }
+        const last = nextSKU(temp[temp.length -1]);
+        if (!productCode) {
+          this.model.SKU = last;
+        }
+        this.productCodes = [...temp, last];
       },
       error => {
         console.log('service down ', error);
