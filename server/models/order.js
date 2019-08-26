@@ -99,7 +99,7 @@ orderSchema.statics = {
     const lastOrder = await Order.find().limit(1).sort({ orderNo: -1 }).exec();
     let orderId = 100001;
     if (!(lastOrder && lastOrder.length === 0)) {
-      orderId = lastOrder[0].orderNo + 1;
+      orderId = lastOrder[0].orderNo + 5;
     }
     return orderId;
   },
