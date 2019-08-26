@@ -68,9 +68,12 @@ export class AddProductComponent implements OnInit {
   getProductCode(productCode) {
     this.productService.getProductCodes().then(
       (data: any) => {
-        const temp = data.filter(a => {
+        let temp = data.filter(a => {
           return a.match(/M[\d -]{5}/) && a.length === 6;
         });
+        if (!temp.length) {
+          temp = ["M-0000"];
+        }
         function nextSKU(sku: String) {
           if (!sku.match(/M[\d -]{5}/) && sku.length !== 6) {
             return "";
@@ -81,7 +84,8 @@ export class AddProductComponent implements OnInit {
           }
           return "M-" + _sku;
         }
-        const last = nextSKU(temp[temp.length -1]);
+        const last = nextSKU(temp[temp.length - 1]);
+        if (temp[0] === "M-0000") temp = [];
         if (!productCode) {
           this.model.SKU = last;
         }
