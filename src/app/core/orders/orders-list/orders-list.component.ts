@@ -11,7 +11,9 @@ declare var $: any;
 })
 export class OrdersListComponent implements OnInit {
   orders: any = [];
-  orderStatuses = ['Pending', 'In Progress', 'Dispatched', 'Delivered', 'Cancelled'];
+  orderToDelete: String;
+  onDelete: any;
+  orderStatuses = ["Pending", "In Progress", "Dispatched", "Delivered"];
   fromDate: any;
   toDate: any;
   orderStatus = 'ALL';
@@ -58,11 +60,6 @@ export class OrdersListComponent implements OnInit {
 
   orderStatusChanged(order, status, event) {
     this.selectedOrder = order;
-    if (status.toLowerCase() === 'cancelled') {
-      $('#orderConfirmationModal').modal('show');
-      event.stopPropagation(); // PREVENT multiple modals open
-      return;
-    }
     /** spinner starts */
     this.spinner.show();
     if (status !== 'none') {
@@ -92,7 +89,6 @@ export class OrdersListComponent implements OnInit {
   }
 
   deleteOrder() {
-    const status = 'Cancelled';
     const data = {
       'orderStatus': status,
       'orderItems': this.selectedOrder.orderItems
@@ -106,6 +102,24 @@ export class OrdersListComponent implements OnInit {
         console.log('order update error', err);
       }
     );
+  }
+
+  deleteTrue() {
+    console.log(this.orderToDelete);
+    this.cartService.removeOrder(this.orderToDelete).subscribe(
+      response => {
+        console.log(response);
+        this.onDelete = response;
+      },
+      error => {
+        console.log(error);
+      },
+      () => this.closeModal()
+    );
+  }
+  delete(id) {
+    $("#orderConfirmationModal").modal("show");
+    this.orderToDelete = id;
   }
 
 }

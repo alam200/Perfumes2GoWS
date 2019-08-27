@@ -31,6 +31,7 @@
                 <th>Customer Remark</th>
                 <th>Action</th>
                 <th class="text-center">View</th>
+                <th>Delete</th> 
              </tr>
             </thead>
             <tbody>
@@ -53,6 +54,13 @@
                     </span>
                   </a>
                 </td>
+                <td class="text-center">
+                    <a (click)="delete(order._id)">
+                      <span class="btn btn-danger">
+                          <i class="fa fa-trash"></i>
+                      </span>
+                    </a>
+                  </td>
               </tr>
               <tr *ngIf="orders.length === 0">
                 <td colspan="8" >
@@ -70,7 +78,7 @@
       <div class="modal-content">
         <div class="modal-body">Are you sure you want to cancel this order? This can not be undone.</div>
         <div class="modal-footer" align="right">
-          <button type="button" id="btnOK" class="btn btn-primary btn-sm" (click)="deleteOrder()">
+          <button type="button" id="btnOK" class="btn btn-primary btn-sm" (click)="deleteTrue()">
             Yes, Cancel it</button>
           <button type="button" id="btnClose" class="btn btn-danger btn-sm" (click)=" closeModal() ">
             No, Keep it</button>

@@ -99,6 +99,14 @@ export class CartService {
     );
   }
 
+  removeOrder(orderId){
+    console.log(orderId)
+    return this.httpClient.delete(this.ORDERS_URL + '/' + orderId).pipe(
+      map(response => response),
+      catchError(err => Promise.reject(err))
+    );
+  }
+
   getOrderDetails(orderId) {
     return this.httpClient.get(this.ORDERS_URL + '/' + orderId).pipe(
       map(response => response),

@@ -215,8 +215,11 @@ exports.list = async (req, res, next) => {
  */
 exports.remove = (req, res, next) => {
   const { order } = req.locals;
-  order.remove()
-    .then(() => res.status(httpStatus.NO_CONTENT).end())
+  Order.deleteOne({ _id: order.id })
+    .then(() => {
+      console.log(`${order.id} deleted`);
+      res.json({ done: "done" });
+    })
     .catch(e => next(e));
 };
 

@@ -20,6 +20,7 @@ const {
   USER_UPDATE,
   USER_REMOVE,
   USER_REGISTER,
+  REMOVE_ORDER
 } = require('../routes/route.constants');
 
 const ADMIN = 'Admin';
@@ -68,6 +69,7 @@ function isUserAuthorized(req, user) {
       switch (apiUrl) {
         case GET_PRODUCT:// delete product
         case GET_USER:
+        case REMOVE_ORDER:
         case USER_UPDATE:
           if (user.category === ADMIN) {
             return true;
