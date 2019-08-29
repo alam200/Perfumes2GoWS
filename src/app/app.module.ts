@@ -47,6 +47,7 @@ import { ConfirmationDialogComponent } from './common/confirm/confirmation-dialo
 import { AddUserComponent } from './core/users/add-user/add-user.component';
 import { ListUsersComponent } from './core/users/list-users/list-users.component';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
 
     ConfirmationDialogComponent,
     AddUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    AddVendorComponent
   ],
   imports: [
     BrowserModule,

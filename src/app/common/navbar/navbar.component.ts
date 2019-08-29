@@ -1,34 +1,34 @@
-import { Location } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from "@angular/common";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { AuthenticationService } from '../../services/authentication.service';
-import { SessionService } from '../../services/session.service';
-import { AlertService } from '../alert/alert.service';
-import { OrderItem } from '../../models/orderItem.model';
-import { CartService } from '../../services/cart.service';
-import { Subscription } from 'rxjs/Subscription';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ProductsService } from '../../services/products.service';
-import { saveAs } from 'file-saver';
-import { Workbook } from 'exceljs/dist/exceljs.min.js'; 
-import * as fs from 'file-saver';
-import { async } from 'q';
+import { AuthenticationService } from "../../services/authentication.service";
+import { SessionService } from "../../services/session.service";
+import { AlertService } from "../alert/alert.service";
+import { OrderItem } from "../../models/orderItem.model";
+import { CartService } from "../../services/cart.service";
+import { Subscription } from "rxjs/Subscription";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ProductsService } from "../../services/products.service";
+import { saveAs } from "file-saver";
+import { Workbook } from "exceljs/dist/exceljs.min.js";
+import * as fs from "file-saver";
+import { async } from "q";
 
 //declare var jsPDF: any;
 declare const require: any;
-const jsPDF = require('jspdf');
-require('jspdf-autotable');
+const jsPDF = require("jspdf");
+require("jspdf-autotable");
 
-const EXCEL_TYPE = 'application/vnd.ms-excel;charset=utf-8';
-const EXCEL_EXTENSION = '.xlsx';
+const EXCEL_TYPE = "application/vnd.ms-excel;charset=utf-8";
+const EXCEL_EXTENSION = ".xlsx";
 
 declare var $: any;
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   orderItems: OrderItem[] = [];
@@ -62,7 +62,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   radioSelectedStr: String;
   deleteItemList: any = [];
 
-  constructor(private cartService: CartService,
+  constructor(
+    private cartService: CartService,
     private productsService: ProductsService,
     private session: SessionService,
     private alert: AlertService,
@@ -94,7 +95,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.cartSubscription = this.cartService.cartObservable.subscribe(action => {
       const orderItems: any[] = this.cartService.getCartItems();
       this.productsQuantity = 0;
-      this.subtotalQuantity = 0.00;
+      this.subtotalQuantity = 0.0;
       for (let index = 0; index < orderItems.length; index++) {
         this.productsQuantity += Number.parseInt(orderItems[index].quantity);
         this.subtotalQuantity += Number.parseFloat(orderItems[index].subtotal);
@@ -103,14 +104,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.orderItems = this.cartService.getCartItems();
 
     this.router.events.subscribe(() => {
-      if (this.location.path() !== '') {
+      if (this.location.path() !== "") {
         this.showHideNavButtons(this.location.path());
       }
     });
   }
 
   showHideNavButtons(path: string) {
-    if (path === '/products' || path === '/products/new' || path === '/products/special') {
+    if (path === "/products" || path === "/products/new" || path === "/products/special") {
       this.showBack = false;
       this.showAddCart = true;
       this.showGetPDF = true;
@@ -122,7 +123,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showGetExcel = false;
     }
 
-    if (path === '/order') {
+    if (path === "/order") {
       this.showEditCart = true;
     } else {
       this.showEditCart = false;
@@ -134,18 +135,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showMyAccount = true;
       // #navbarDropdown
       this.showMenu = true;
-      if (path === '/user/details') {
+      if (path === "/user/details") {
         this.showMyAccount = false;
       }
       // FAQ item visibility
       const category = JSON.parse(this.session.retrieveUserData()).category;
-      if (category === 'Customer') {
-        if (path === '/aboutus') {
+      if (category === "Customer") {
+        if (path === "/aboutus") {
           this.showAboutUs = false;
         } else {
           this.showAboutUs = true;
         }
-        if (path === '/contactus') {
+        if (path === "/contactus") {
           this.showContactUs = false;
         } else {
           this.showContactUs = true;
@@ -166,21 +167,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
       } else {
         this.showMenu = true;
       }
-      if (path === '/user/login') {
+      if (path === "/user/login") {
         this.showMyAccount = false;
         this.showLogin = false;
         this.showAddCart = false;
       }
-      if (path === '/user/register') {
+      if (path === "/user/register") {
         this.showSignup = false;
       }
       // FAQ item visibility
-      if (path === '/aboutus') {
+      if (path === "/aboutus") {
         this.showAboutUs = false;
       } else {
         this.showAboutUs = true;
       }
-      if (path === '/contactus') {
+      if (path === "/contactus") {
         this.showContactUs = false;
       } else {
         this.showContactUs = true;
@@ -189,7 +190,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (this.session.retrieveUserData()) {
       const userCategory = JSON.parse(this.session.retrieveUserData()).category;
-      if (userCategory !== 'Customer') {
+      if (userCategory === "Customer") {
+        this.showCart = true;
+        this.showGetPDF = true;
+        this.showGetExcel = true;
+        this.showAddItem = false;
+        this.showListItem = false;
+        this.showOrders = false;
+        this.showUsers = false;
+        this.showUploadProducts = false;
+        this.showMngData = false;
+      } else {
         this.showCart = false;
         this.showAddCart = false;
         this.showEditCart = false;
@@ -201,16 +212,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMngData = true;
         this.showGetPDF = false;
         this.showGetExcel = false;
-      } else {
-        this.showCart = true;
-        this.showGetPDF = true;
-        this.showGetExcel = true;
-        this.showAddItem = false;
-        this.showListItem = false;
-        this.showOrders = false;
-        this.showUsers = false;
-        this.showUploadProducts = false;
-        this.showMngData = false;
       }
     } else {
       this.showGetPDF = false;
@@ -242,18 +243,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   showCartDetails() {
     this.session.saveCartData(JSON.stringify(this.cartService.getCartItems()));
-    this.router.navigate(['/order']);
+    this.router.navigate(["/order"]);
   }
 
   promptExportCsv(event) {
-    $('#exportDialogModal').modal('show');
+    $("#exportDialogModal").modal("show");
     event.stopPropagation(); // PREVENT multiple modals open
   }
 
   promptGetPDF(event) {
-
     // Only pt supported (not mm or in)
-    
+
     this.spinner.show();
     const userId = this.session.retrieveUserId();
     this.productsService.getPDF(userId).then(
@@ -261,43 +261,43 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (data.success) {
           try {
             const columns = [
-              {title: "Brand", dataKey: "brand", width: 30},
-              {title: "Type", dataKey: "type", width: 30},
-              {title: "SKU", dataKey: "SKU", width: 30},
-              {title: "Description", dataKey: "description", width: 30},
-              {title: "Price", dataKey: "price", width: 230},
-              {title: "Avaiable", dataKey: "stock", width: 330}
-              ];
+              { title: "Brand", dataKey: "brand", width: 30 },
+              { title: "Type", dataKey: "type", width: 30 },
+              { title: "SKU", dataKey: "SKU", width: 30 },
+              { title: "Description", dataKey: "description", width: 30 },
+              { title: "Price", dataKey: "price", width: 230 },
+              { title: "Avaiable", dataKey: "stock", width: 330 }
+            ];
 
-            const products = data.products && data.products || [];
-            
+            const products = (data.products && data.products) || [];
+
             let blobArr: any = [];
             blobArr.push(this.getCsvBlob(products));
-            
-//            const timestamp: String = this.getTimestampStr();
-            const current_date : String = this.getDateStr();
+
+            //            const timestamp: String = this.getTimestampStr();
+            const current_date: String = this.getDateStr();
             const pdfPath = `PriceList_${current_date}.pdf`;
-            
+
             this.spinner.hide();
-            var pdf = new jsPDF('l', 'pt', 'a4'); //('p', 'pt');
+            var pdf = new jsPDF("l", "pt", "a4"); //('p', 'pt');
             pdf.cellInitialize();
             pdf.setFontSize(10);
-            pdf.autoTable(columns, products, { 
+            pdf.autoTable(columns, products, {
               columnStyles: {
-                brand: {cellWidth: 80},
-                type: {cellWidth: 80},
-                SKU: {cellWidth: 40},
-                description: {cellWidth: 200},
-                price: {cellWidth: 20},
-                stock: {cellWidth: 20},
+                brand: { cellWidth: 80 },
+                type: { cellWidth: 80 },
+                SKU: { cellWidth: 40 },
+                description: { cellWidth: 200 },
+                price: { cellWidth: 20 },
+                stock: { cellWidth: 20 }
               },
-              margin: {top: 30,left:15,right:15,bottom:20}});
+              margin: { top: 30, left: 15, right: 15, bottom: 20 }
+            });
             pdf.save(pdfPath);
-
           } catch (e) {
             this.spinner.hide();
             console.log(e);
-            this.alert.error('Failed to export CSV data');
+            this.alert.error("Failed to export CSV data");
           }
         } else {
           // exception handler | access denied
@@ -306,14 +306,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       },
       error => {
         this.spinner.hide();
-        console.log('service down ', error);
-      });
-      
+        console.log("service down ", error);
+      }
+    );
   }
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
     //Excel Title, Header, Data
-    const headersArray = ["Brand","Type","SKU","Description","Price","Avaiable"];
+    const headersArray = ["Brand", "Type", "SKU", "Description", "Price", "Avaiable"];
     const header = headersArray;
     const data = json;
     //Create workbook and worksheet
@@ -323,20 +323,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     let headerRow = worksheet.addRow(header);
     // Cell Style : Fill and Border
     headerRow.eachCell((cell, number) => {
-      cell.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'FF2980BA' }
+      (cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FF2980BA" }
         //bgColor: { argb: 'FF0000FF' }
-      },
-      //cell.font = {
-      //  name: 'Calibri', family: 4, size: 11, bold: false, strike: true 
-      //},
-      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    })
+      }),
+        //cell.font = {
+        //  name: 'Calibri', family: 4, size: 11, bold: false, strike: true
+        //},
+        (cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } });
+    });
     // Add Data and Conditional Formatting
-    
-    data.forEach((element) => {
+
+    data.forEach(element => {
       let eachRow = [];
       eachRow.push(element["brand"]);
       eachRow.push(element["type"]);
@@ -345,23 +345,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
       eachRow.push(element["price"]);
       eachRow.push(element["stock"]);
       worksheet.addRow(eachRow);
-    })
+    });
     //worksheet.properties.defaultRowHeight = 150;
-    
+
     worksheet.getColumn(1).width = 32;
     worksheet.getColumn(2).width = 32;
     worksheet.getColumn(3).width = 16;
     worksheet.getColumn(4).width = 80;
     worksheet.getColumn(5).width = 10;
     worksheet.getColumn(6).width = 10;
-    
+
     //Generate Excel File with given name
-    workbook.xlsx.writeBuffer().then((data) => {
+    workbook.xlsx.writeBuffer().then(data => {
       let blob = new Blob([data], { type: EXCEL_TYPE });
       fs.saveAs(blob, excelFileName + EXCEL_EXTENSION);
-    })
+    });
   }
-  
+
   promptGetExcel(event) {
     this.spinner.show();
     const userId = this.session.retrieveUserId();
@@ -369,8 +369,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data.success) {
           try {
-            const products = data.products && data.products || [];
-            var blob = this.getCsvBlob(products)
+            const products = (data.products && data.products) || [];
+            var blob = this.getCsvBlob(products);
             const timestamp: String = this.getTimestampStr();
             var path = `PriceList__${timestamp}.csv`;
             saveAs(blob, path);
@@ -394,7 +394,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           } catch (e) {
             this.spinner.hide();
             console.log(e);
-            this.alert.error('Failed to export CSV data');
+            this.alert.error("Failed to export CSV data");
           }
         } else {
           // exception handler | access denied
@@ -403,29 +403,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
       },
       error => {
         this.spinner.hide();
-        console.log('service down ', error);
-      });
-      
+        console.log("service down ", error);
+      }
+    );
   }
-  
+
   downloadCsvFiles() {
-    $('#exportDialogModal').modal('hide');
+    $("#exportDialogModal").modal("hide");
     this.spinner.show();
     const userId = this.session.retrieveUserId();
     this.productsService.getExportData(userId).then(
       (data: any) => {
         if (data.success) {
           try {
-            const products = data.products && data.products || [];
-            const customers = data.customers && data.customers || [];
-            const orders = data.orders && data.orders || [];
+            const products = (data.products && data.products) || [];
+            const customers = (data.customers && data.customers) || [];
+            const orders = (data.orders && data.orders) || [];
 
             let blobArr: any = [];
             if (products.length) blobArr.push(this.getCsvBlob(products));
             if (customers.length) blobArr.push(this.getCsvBlob(customers));
             if (orders.length) blobArr.push(this.getCsvBlob(orders));
             const timestamp: String = this.getTimestampStr();
-            const pathArr: any = []
+            const pathArr: any = [];
             if (products.length) pathArr.push(`export_products_${timestamp}.csv`);
             if (customers.length) pathArr.push(`export_customers_${timestamp}.csv`);
             if (orders.length) pathArr.push(`export_orders_${timestamp}.csv`);
@@ -438,7 +438,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           } catch (e) {
             this.spinner.hide();
             console.log(e);
-            this.alert.error('Failed to export CSV data');
+            this.alert.error("Failed to export CSV data");
           }
         } else {
           // exception handler | access denied
@@ -447,49 +447,62 @@ export class NavbarComponent implements OnInit, OnDestroy {
       },
       error => {
         this.spinner.hide();
-        console.log('service down ', error);
-      });
+        console.log("service down ", error);
+      }
+    );
   }
 
   private getTimestampStr() {
-    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
-    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5).replace(/-|:|T/g, '');
+    const tzoffset = new Date().getTimezoneOffset() * 60000; // offset in milliseconds
+    return new Date(Date.now() - tzoffset)
+      .toISOString()
+      .slice(0, -5)
+      .replace(/-|:|T/g, "");
   }
 
-  private getDateStr(){
-    const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
-    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -13).replace(/-|:|T/g, '');
+  private getDateStr() {
+    const tzoffset = new Date().getTimezoneOffset() * 60000; // offset in milliseconds
+    return new Date(Date.now() - tzoffset)
+      .toISOString()
+      .slice(0, -13)
+      .replace(/-|:|T/g, "");
   }
 
   private getCsvBlob(params) {
-    const replacer = (key, value) => value === null ? '' : value;
+    const replacer = (key, value) => (value === null ? "" : value);
     const header = Object.keys(params[0]);
     // let csv = params.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-    let csv = params.map(row => header.map(fieldName => {
-      if (typeof row[fieldName] === 'object') {
-        // multiline in a CSV field
-        return `"${JSON.stringify(row[fieldName], replacer).replace(/"|{|}|\[|\]/g, '').replace(/,/g, '\r\n')}"`;
-      } else {
-        return JSON.stringify(row[fieldName], replacer);
-      }
-    }).join(','));
-    csv.unshift(header.join(','));
-    let csvArr = csv.join('\r\n');
-    const BOM = '\uFEFF';
+    let csv = params.map(row =>
+      header
+        .map(fieldName => {
+          if (typeof row[fieldName] === "object") {
+            // multiline in a CSV field
+            return `"${JSON.stringify(row[fieldName], replacer)
+              .replace(/"|{|}|\[|\]/g, "")
+              .replace(/,/g, "\r\n")}"`;
+          } else {
+            return JSON.stringify(row[fieldName], replacer);
+          }
+        })
+        .join(",")
+    );
+    csv.unshift(header.join(","));
+    let csvArr = csv.join("\r\n");
+    const BOM = "\uFEFF";
     csvArr = BOM + csvArr;
-    return new Blob([csvArr], { type: 'text/csv;charset=utf-8' });
+    return new Blob([csvArr], { type: "text/csv;charset=utf-8" });
   }
 
   promptDelete(event) {
     this.deleteItemList = [
-      { name: 'radioProducts', caption: 'Products', value: 'products' },
-      { name: 'radioCustomers', caption: 'Customers', value: 'customers' },
-      { name: 'radioOrders', caption: 'Orders', value: 'orders' }
+      { name: "radioProducts", caption: "Products", value: "products" },
+      { name: "radioCustomers", caption: "Customers", value: "customers" },
+      { name: "radioOrders", caption: "Orders", value: "orders" }
     ];
-    this.radioSelected = 'products';
+    this.radioSelected = "products";
     this.getSelectedItem();
 
-    $('#deleteDialogModal').modal('show');
+    $("#deleteDialogModal").modal("show");
     event.stopPropagation(); // PREVENT multiple modals open
   }
 
@@ -506,7 +519,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   deleteData(item) {
-    $('#deleteDialogModal').modal('hide');
+    $("#deleteDialogModal").modal("hide");
     this.spinner.show();
     const userId = this.session.retrieveUserId();
     this.productsService.retreiveDeleteData(userId, item).then(
@@ -537,8 +550,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       },
       error => {
         this.spinner.hide();
-        console.log('service down ', error);
-      });
+        console.log("service down ", error);
+      }
+    );
   }
 
   logout() {
@@ -547,8 +561,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.cartService.clearCart();
       this.productsQuantity = 0; // clear cache
       this.authService.isLoggedIn.next(false);
-      this.alert.success('Successfully signed out');
-      this.router.navigate(['/user/login']);
+      this.alert.success("Successfully signed out");
+      this.router.navigate(["/user/login"]);
     }
   }
 

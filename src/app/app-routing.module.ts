@@ -4,6 +4,7 @@ import { OrdersListComponent } from './core/orders/orders-list/orders-list.compo
 import { ListAddressesComponent } from './core/users/list-addresses/list-addresses.component';
 import { AddAddressComponent } from './core/users/add-address/add-address.component';
 import { UploadProductsComponent } from './core/products/upload-products/upload-products.component';
+import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListProductsComponent } from './core/products/list-products/list-products.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'user/reset/:token', component: ResetPasswordComponent },
   { path: 'user/details', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'order', component: CartDetailsComponent },
+  { path: 'add-vendor', component: AddVendorComponent, canActivate: [AdminGuard] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'product-details/:sku', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'upload-products', component: UploadProductsComponent, canActivate: [AdminGuard] },
