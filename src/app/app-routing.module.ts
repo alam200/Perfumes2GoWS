@@ -23,7 +23,6 @@ import { ContactusComponent } from './core/faq/contactus/contactus.component';
 import { AddUserComponent } from './core/users/add-user/add-user.component';
 import { ListUsersComponent } from './core/users/list-users/list-users.component';
 import { VendorsListComponent } from './core/vendors/vendors-list/vendors-list.component';
-import { TestComponent } from './core/vendors/test/test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },

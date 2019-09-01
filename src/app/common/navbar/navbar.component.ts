@@ -48,8 +48,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showAddItem = false;
   public showListItem = false;
   public showOrders = false;
-  public showAddVendor = true;
-  public showVendors = true;
+  public showAddVendor = false;
+  public showVendors = false;
   public showUsers = false;
   public showUploadProducts = false;
   public showMenu = true;
@@ -214,6 +214,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMngData = true;
         this.showGetPDF = false;
         this.showGetExcel = false;
+        this.showAddVendor = true;
+        this.showVendors = true;
       }
     } else {
       this.showGetPDF = false;

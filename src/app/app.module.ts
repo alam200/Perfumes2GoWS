@@ -50,7 +50,6 @@ import { ListUsersComponent } from './core/users/list-users/list-users.component
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.component';
 import { VendorsListComponent } from './core/vendors/vendors-list/vendors-list.component';
-import { TestComponent } from './core/vendors/test/test.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,8 +80,7 @@ import { TestComponent } from './core/vendors/test/test.component';
     AddUserComponent,
     ListUsersComponent,
     AddVendorComponent,
-    VendorsListComponent,
-    TestComponent
+    VendorsListComponent
   ],
   imports: [
     BrowserModule,
