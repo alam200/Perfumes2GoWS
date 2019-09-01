@@ -19,9 +19,6 @@
                             (change)="skuChange($event)"
                             [(ngModel)]="modelSKU"
                             [ngModelOptions]="{standalone: true}">
-                    <ng-template ng-tag-tmp let-search="searchTerm">
-                        <b>create new</b>: {{search}}
-                    </ng-template>
                 </ng-select>
                 </div>
               </div>
@@ -38,7 +35,7 @@
             <div class="row">
               <label for="vendorID" class="col-md-3 col-sm-12 text-right col-form-label">Vendor ID:</label>
               <div class="col-md-9 col-sm-12">
-                <input formControlName="vendorID" class="form-control"/>
+                <input formControlName="vendorID" class="form-control" maxlength="6"/>
               </div>
             </div>
           </div>

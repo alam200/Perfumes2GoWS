@@ -9,7 +9,7 @@ interface vendor{
   SKU: String,
   vendorID: String,
   productDescription: String,
-  purchaseDate: Date,
+  purchaseDate: string,
   lastPurchasePrice: Number,
   lastPurchasedQty: Number
 }
@@ -31,12 +31,28 @@ export class VendorsListComponent implements OnInit {
     this.getVendorsData();
   }
 
+  dateFormater(time:string) {
+    if(!time || time == ""){
+      return "No data"
+    }
+    var date = new Date(time);
+    var day = date.getDate();
+    var month: Number | String = date.getMonth() + 1;
+    if (month < 10) {
+      month = "0" + month;
+    }
+    var year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   getVendorsData(){
     this.spinner.show();
     this.vendorService.getVendors().subscribe(
       (response: vendor[]) => {
-        this.vendors = response;
-        console.log(response);
+        this.vendors = response.map(res => {
+          res.purchaseDate = this.dateFormater(res.purchaseDate);
+          return res;
+        });
       },
       error => {
         console.log(error);

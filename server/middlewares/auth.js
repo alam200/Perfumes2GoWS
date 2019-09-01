@@ -24,6 +24,7 @@ const {
 } = require('../routes/route.constants');
 
 const ADMIN = 'Admin';
+const SUPERADMIN = 'Superadmin';
 const CUSTOMER = 'Customer';
 
 const LOGGED_USER = '_loggedUser';
@@ -53,7 +54,7 @@ function isUserAuthorized(req, user) {
     case 'POST':
       switch (apiUrl) {
         case LIST_PRODUCTS:// create product
-          if (user.category === ADMIN) {
+          if (user.category === ADMIN || user.category === SUPERADMIN) {
             return true;
           }
           break;
@@ -71,7 +72,7 @@ function isUserAuthorized(req, user) {
         case GET_USER:
         case REMOVE_ORDER:
         case USER_UPDATE:
-          if (user.category === ADMIN) {
+          if (user.category === ADMIN || user.category === SUPERADMIN) {
             return true;
           }
           break;

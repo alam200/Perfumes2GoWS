@@ -3,9 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { delay } from "rxjs/operators";
 import { AlertService } from '../../../common/alert/alert.service';
 import { ProductsService } from '../../../services/products.service';
+import { VendorsService } from '../../../services/vendors.service';
 
+interface SKU{
+  SKU: String,
+}
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -19,6 +24,7 @@ export class AddProductComponent implements OnInit {
   public brands = [];
   public types = [];
   public productCodes = [];
+  public vendorCodes = [];
   public isSKUEditable = true;
 
   constructor(private productService: ProductsService,
@@ -26,7 +32,8 @@ export class AddProductComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private location: Location
+    private location: Location,
+    private vendorService: VendorsService,
   ) { }
 
   ngOnInit() {
@@ -38,6 +45,7 @@ export class AddProductComponent implements OnInit {
     }
     this.getBrands();
     this.getTypes();
+    this.getSKU();
     this.getProductCode(this.productCode);
     this.model = {
       category: 'normal',
@@ -94,6 +102,19 @@ export class AddProductComponent implements OnInit {
       error => {
         console.log('service down ', error);
       });
+  }
+
+  getSKU() {
+    this.vendorService.getSKU().pipe(delay(500)).subscribe(
+      (response: SKU[]) => {
+        this.vendorCodes = response.map(res => {
+          return res.SKU
+        });
+      },
+      e => {
+        console.log(e);
+      }
+    )
   }
 
   onSubmit() {

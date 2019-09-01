@@ -31,6 +31,9 @@ const productSchema = new Schema({
   image: {
     type: String,
     default: '/products/product_placeholder.png'
+  },
+  vendorid: {
+    type: String
   }
 }, {
   timestamps: true
