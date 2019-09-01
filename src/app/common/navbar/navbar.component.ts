@@ -48,6 +48,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public showAddItem = false;
   public showListItem = false;
   public showOrders = false;
+  public showAddVendor = true;
+  public showVendors = true;
   public showUsers = false;
   public showUploadProducts = false;
   public showMenu = true;

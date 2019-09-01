@@ -7,7 +7,7 @@ const passport = require('passport');
 const strategies = require('./server/config/passport');
 const cors = require('cors');
 const helmet = require('helmet')
-
+const morgan= require('morgan');
 const port = 3000;
 
 const app = express();
@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(cors());
 app.use(helmet())
+app.use(morgan("combined"));
 // parse body params and attache them to req.body
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

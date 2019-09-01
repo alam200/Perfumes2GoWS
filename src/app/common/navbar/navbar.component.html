@@ -76,6 +76,12 @@
         <a class="btn btn-sm btn-outline-light" [routerLink]="['orders']" *ngIf="showOrders">
             <i class="fa fa-arrow-right"></i>&nbsp;Orders
         </a>
+        <a class="btn btn-sm btn-outline-light" [routerLink]="['add-vendor']" *ngIf="showAddVendor">
+            <i class="fa fa-plus"></i>&nbsp;Add Vendor
+        </a>
+        <a class="btn btn-sm btn-outline-light" [routerLink]="['vendors']" *ngIf="showVendors">
+          <i class="fa fa-arrow-right"></i>&nbsp;Vendors
+      </a>
         <a class="btn btn-sm btn-outline-light" [routerLink]="['users']" *ngIf="showUsers">
             <i class="fa fa-address-book-o"></i>&nbsp;Users
          </a>

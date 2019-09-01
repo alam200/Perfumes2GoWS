@@ -30,31 +30,7 @@
           <div class="row">
             <label for="description" class="col-md-3 col-sm-12 text-right col-form-label">Product Description:</label>
             <div class="col-md-9 col-sm-12">
-              <textarea formControlName="productDescription" class="form-control"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-              <label for="vendorID" class="col-md-3 col-sm-12 text-right col-form-label">Vendor ID:</label>
-              <div class="col-md-9 col-sm-12">
-                <input formControlName="vendorID" class="form-control"/>
-              </div>
-            </div>
-          </div>
-        <div class="form-group">
-          <div class="row">
-            <label for="lastPurchasePrice" class="col-md-3 col-sm-12 text-right col-form-label">Last Purchase Price:</label>
-            <div class="col-md-9 col-sm-12">
-              <input formControlName="lastPurchasePrice" class="form-control" type="number"/>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <label for="lastPurchasedQty" class="col-md-3 col-sm-12 text-right col-form-label">Last Purchased Qty:</label>
-            <div class="col-md-9 col-sm-12">
-              <input formControlName="lastPurchasedQty" class="form-control" type="number"/>
+              <textarea formControlName="productDescription"></textarea>
             </div>
           </div>
         </div>
@@ -69,16 +45,14 @@
           </div>
         </div>
         <div class="form-group text-center">
-          <button *ngIf="!ShouldupdateVendor"(click)="createVendor()" name="submitted" value="true" class="btn btn-success btn-sm place-order">
+          <button type="submit" name="submitted" value="true" class="btn btn-success btn-sm place-order">
             <i class="fa fa-send-o"></i> Save Vendor
           </button>
-          <button *ngIf="ShouldupdateVendor" (click)="updateVendor()" name="submitted" value="true" class="btn btn-success btn-sm place-order">
-              <i class="fa fa-send-o"></i> Update Vendor
-            </button>
           &nbsp;
           <button type="button" class="btn btn-danger btn-sm" (click)="cancel()"><i class="fa fa-send-o"></i> Cancel</button>
         </div>
       </form>
+      Value: {{vendorForm.value | json}}
     </div>
   </div>
 </div>

@@ -22,6 +22,8 @@ import { AboutusComponent } from './core/faq/aboutus/aboutus.component';
 import { ContactusComponent } from './core/faq/contactus/contactus.component';
 import { AddUserComponent } from './core/users/add-user/add-user.component';
 import { ListUsersComponent } from './core/users/list-users/list-users.component';
+import { VendorsListComponent } from './core/vendors/vendors-list/vendors-list.component';
+import { TestComponent } from './core/vendors/test/test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },
@@ -39,6 +41,7 @@ const routes: Routes = [
   { path: 'user/details', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'order', component: CartDetailsComponent },
   { path: 'add-vendor', component: AddVendorComponent, canActivate: [AdminGuard] },
+  { path: 'vendors', component:  VendorsListComponent},
   { path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'product-details/:sku', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'upload-products', component: UploadProductsComponent, canActivate: [AdminGuard] },

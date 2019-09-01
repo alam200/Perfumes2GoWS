@@ -1,6 +1,7 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
@@ -48,6 +49,8 @@ import { AddUserComponent } from './core/users/add-user/add-user.component';
 import { ListUsersComponent } from './core/users/list-users/list-users.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.component';
+import { VendorsListComponent } from './core/vendors/vendors-list/vendors-list.component';
+import { TestComponent } from './core/vendors/test/test.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +80,9 @@ import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.compone
     ConfirmationDialogComponent,
     AddUserComponent,
     ListUsersComponent,
-    AddVendorComponent
+    AddVendorComponent,
+    VendorsListComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +97,8 @@ import { AddVendorComponent } from './core/vendors/add-vendor/add-vendor.compone
     NgSelectModule,
     NgImageSliderModule,
     NgbModule.forRoot(),
-    NgbModalModule
+    NgbModalModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AlertService,
