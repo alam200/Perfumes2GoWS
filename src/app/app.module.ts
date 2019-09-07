@@ -30,6 +30,7 @@ import { LoginComponent } from './core/users/login/login.component';
 import { RegisterComponent } from './core/users/register/register.component';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { AdminGuardService } from './services/admin.guard.service';
+import { SuperAdminGuardService } from './services/superadmin.guard.service';
 import { AuthGuardService } from './services/auth.guard.service';
 import { HttpsRequestInterceptor } from './services/http.request.interceptor';
 import { SessionService } from './services/session.service';
@@ -102,6 +103,7 @@ import { VendorsListComponent } from './core/vendors/vendors-list/vendors-list.c
     AlertService,
     AuthGuardService,
     AdminGuardService,
+    SuperAdminGuardService,
     SessionService,
     ConfirmationDialogService,
     {

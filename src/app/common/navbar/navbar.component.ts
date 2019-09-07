@@ -214,8 +214,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showMngData = true;
         this.showGetPDF = false;
         this.showGetExcel = false;
-        this.showAddVendor = true;
-        this.showVendors = true;
+        if (userCategory === "Superadmin") {
+          this.showAddVendor = true;
+          this.showVendors = true;
+        }
       }
     } else {
       this.showGetPDF = false;

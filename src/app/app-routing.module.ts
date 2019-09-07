@@ -16,6 +16,7 @@ import { OrderPlacedComponent } from './core/orders/order-placed/order-placed.co
 import { ForgetPasswordComponent } from './core/users/forget-password/forget-password.component';
 import { AuthGuardService as AuthGuard } from './services/auth.guard.service';
 import { AdminGuardService as AdminGuard } from './services/admin.guard.service';
+import { SuperAdminGuardService as SuperAdminGuard } from './services/superadmin.guard.service';
 import { ResetPasswordComponent } from './core/users/reset-password/reset-password.component';
 import { MessageComponent } from './core/users/core/users/message/message.component';
 import { AboutusComponent } from './core/faq/aboutus/aboutus.component';
@@ -39,8 +40,8 @@ const routes: Routes = [
   { path: 'user/reset/:token', component: ResetPasswordComponent },
   { path: 'user/details', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'order', component: CartDetailsComponent },
-  { path: 'add-vendor', component: AddVendorComponent, canActivate: [AdminGuard] },
-  { path: 'vendors', component:  VendorsListComponent},
+  { path: 'add-vendor', component: AddVendorComponent, canActivate: [SuperAdminGuard] },
+  { path: 'vendors', component:  VendorsListComponent, canActivate: [SuperAdminGuard]},
   { path: 'add-product', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'product-details/:sku', component: AddProductComponent, canActivate: [AdminGuard] },
   { path: 'upload-products', component: UploadProductsComponent, canActivate: [AdminGuard] },

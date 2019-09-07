@@ -34,7 +34,7 @@ function sendOrderEmail(customerEmail, htmlTamp, orderNumber) {
     if (error) {
       return console.log(error);
     }
-    console.log('Message sent: %s', info.messageId);
+    //console.log('Message sent: %s', info.messageId);
   });
 }
 
@@ -82,7 +82,7 @@ async function updateProductsStock(orderItems, oldStatus, newStatus) {
     try {
       product.save()
         .then(savedProduct => {
-          console.log("product saved success");
+          //console.log("product saved success");
         })
         .catch(e => console.log("product error", e));
     } catch (e) {
@@ -217,7 +217,7 @@ exports.remove = (req, res, next) => {
   const { order } = req.locals;
   Order.deleteOne({ _id: order.id })
     .then(() => {
-      console.log(`${order.id} deleted`);
+      //console.log(`${order.id} deleted`);
       res.json({ done: "done" });
     })
     .catch(e => next(e));
