@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { delay } from "rxjs/operators";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
+import { AlertService } from '../../../common/alert/alert.service';
 
 interface SKU{
   SKU: String,
@@ -30,6 +32,8 @@ export class AddVendorComponent implements OnInit {
   vendorForm: FormGroup;
   constructor(private fb: FormBuilder, 
     private location: Location,
+    private alertService: AlertService,
+    private router: Router,
     private vendorService: VendorsService,
     private spinner: NgxSpinnerService,) {}
 
@@ -43,13 +47,11 @@ export class AddVendorComponent implements OnInit {
       lastPurchasePrice: null,
       lastPurchasedQty: null
     })
-    // this.vendorForm.valueChanges.subscribe(console.log)
   }
 
   addTagPromise(SKU) {
     return new Promise((resolve) => {
       this.loading = true;
-      // Simulate backend call.
       setTimeout(() => {
             resolve({ SKU: SKU });
             this.loading = false;
@@ -93,12 +95,13 @@ export class AddVendorComponent implements OnInit {
         this.listSKU = response;
       },
       e => {
-        console.log(e);
+        console.error(e);
       }
     )
   }
 
   createVendor(){
+    this.spinner.show();
     let data = {};
     for (let field in this.vendorForm.value) {
       let formElement = this.vendorForm.get(`${field}`).value;
@@ -114,13 +117,21 @@ export class AddVendorComponent implements OnInit {
       }
     }
     this.vendorService.createVendor(data).subscribe(res => {
-      console.log(res)
+      this.spinner.hide();
+      if (res["_id"]) {
+        this.alertService.success('Vendor added successfully.', true);    
+        this.router.navigate(['/vendors']);   
+      }
     }, 
-      e => console.log(e)
+      e => {
+        this.spinner.hide();
+        this.alertService.error(e.statusText);
+      }
     )
   }
   
   updateVendor(){
+    this.spinner.show();
     let data = {};
     for (let field in this.vendorForm.value) {
       let formElement = this.vendorForm.get(`${field}`).value;
@@ -130,13 +141,18 @@ export class AddVendorComponent implements OnInit {
      } else {
         data[field] = formElement;
       }
-    }
-    console.log(this.modelSKU);
-    
+    }    
     this.vendorService.updateVendor(this.modelSKU, data).subscribe(res => {
-      console.log(res);
+      this.spinner.hide();
+      if (res["query"] === "done") {
+        this.alertService.success('Vendor updated successfully.', true);       
+        this.router.navigate(['/vendors']);   
+      }
     },
-    e => console.log(e)
+    e => {
+      this.spinner.hide();
+      this.alertService.error(e.statusText);
+    }
     );
   }
   cancel() {
