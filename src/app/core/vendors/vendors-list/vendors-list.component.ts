@@ -95,9 +95,9 @@ export class VendorsListComponent implements OnInit {
           const searchString = dataTablesParameters.search.value;
           if (searchString !== "") { 
             this.vendors = this.vendorsOrig.filter(vendor => {
-              const isVendorID = vendor.vendorID.search(searchString) > -1;
-              const isSKU = vendor.SKU.search(searchString) > -1;
-              const isProductDescription = vendor.productDescription.search(searchString) > -1;
+              const isVendorID = vendor.vendorID.toLowerCase().search(searchString.toLowerCase()) > -1;
+              const isSKU = vendor.SKU.toLowerCase().search(searchString.toLowerCase()) > -1;
+              const isProductDescription = vendor.productDescription.toLowerCase().search(searchString.toLowerCase()) > -1;
               return isVendorID || isSKU || isProductDescription;
             });
           } else {
