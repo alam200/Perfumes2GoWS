@@ -27,7 +27,7 @@ export class VendorsService {
       catchError(err => Promise.reject(err))
     )
   }
-  getUpdateVendor(params){
+  getUpdateVendor(params){ 
     return this.httpCLient.get(this.VENDORS_URL + '/' + params.SKU +'/update').pipe(
       map(response => response),
       catchError(err => Promise.reject(err))
@@ -44,5 +44,11 @@ export class VendorsService {
       map(response => response),
       catchError(err => Promise.reject(err))
     )
+  }
+  deleteVendor(id){
+    return this.httpCLient.post(this.VENDORS_URL + '/' + id + '/delete', id).pipe(
+      map(response => response),
+      catchError(err => Promise.reject(err))
+    );
   }
 }

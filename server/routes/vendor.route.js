@@ -8,6 +8,6 @@ router.post('/create', vendor_controller.vendors_create);
 router.get('/sku', vendor_controller.vendors_sku_list);
 router.get('/:SKU/update', vendor_controller.vendor_update_get);
 router.post('/:SKU/update', vendor_controller.vendor_update_post);
-
+router.post('/:id/delete', vendor_controller.vendor_delete_post);
 
 module.exports = router;

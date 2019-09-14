@@ -1,6 +1,16 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple">
 </ngx-spinner>
 
+
+<div class="form-element product-filters">
+  <div class="form-group row clearfix">
+    <label class="col-md col-sm col-form-label-sm type-left">Search: </label>
+    <div class="col-md-5 col-sm-5">
+      <input type="text" [(ngModel)]="vendorID" (input)="Search()">
+    </div>
+  </div>
+</div>
+
 <section>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -12,6 +22,7 @@
                 <th>purchaseDate</th>
                 <th>lastPurchasePrice</th>
                 <th>lastPurchasedQty</th>
+                <th>Delete</th> 
              </tr>
             </thead>
             <tbody>
@@ -22,8 +33,31 @@
                 <td>{{ vendor.purchaseDate }}</td>
                 <td>{{ vendor.lastPurchasePrice | currency: 'USD' }}</td>
                 <td>{{ vendor.lastPurchasedQty }}</td>
+                <td class="text-center">
+                  <a (click)="delete(vendor.vendorID)">
+                    <span class="btn btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </span>
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>
     </div>
+</section>
+
+<section>
+  <div id="orderConfirmationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">Are you sure you want to delete this vendor?</div>
+        <div class="modal-footer" align="right">
+          <button type="button" id="btnOK" class="btn btn-primary btn-sm" (click)="deleteTrue()">
+            Yes, delete it</button>
+          <button type="button" id="btnClose" class="btn btn-danger btn-sm" (click)=" closeModal() ">
+            No, Keep it</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
