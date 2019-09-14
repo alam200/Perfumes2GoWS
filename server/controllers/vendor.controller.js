@@ -56,8 +56,6 @@ exports.vendors_sku_list = async (req, res, next) =>{
 
 }
 exports.vendor_delete_post = async (req, res, next) => {
-    console.log(req.params.id);
-    
     try {
         await Vendor.deleteOne({ vendorID: req.params.id });
         res.status(httpStatus.OK);

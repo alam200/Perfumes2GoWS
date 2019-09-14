@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorsService } from '../../../services/vendors.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Router } from '@angular/router';
 import { SessionService } from './../../../services/session.service';
 import { environment } from '../../../../environments/environment';
 
@@ -44,6 +44,7 @@ export class VendorsListComponent implements OnInit {
   columnDefsTarget = [6];
   constructor(private http: HttpClient, 
     private vendorService: VendorsService,
+    private router: Router,
     private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -157,10 +158,9 @@ export class VendorsListComponent implements OnInit {
   }
 
   deleteTrue() {
-    console.log(this.vendorToDelete);
     this.vendorService.deleteVendor(this.vendorToDelete).subscribe(
       response => {
-        console.log(response);
+        this.router.navigate(['/vendors']);   
       },
       error => {
         console.log(error);
